@@ -10,6 +10,7 @@ void pushToPile(Pile* pile, Card* card)
     if (pile->firstCard == NULL)
     {
         pile->firstCard = card;
+        pile->lastCard = card;
         return;
     }
     pile->lastCard->nextCard = card;
