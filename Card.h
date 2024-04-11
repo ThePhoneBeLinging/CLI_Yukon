@@ -12,4 +12,4 @@ typedef struct{
 typedef struct{
     struct Card* firstCard;
     struct Card* lastCard;
-} pile;
+} Pile;
