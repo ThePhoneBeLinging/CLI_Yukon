@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Card.h"
+
 int main (void)
 {
-    Pile* c1;
-    c1 = malloc(sizeof(Pile));
-    printf("Hello, World!\n");
-    Card *card;
-    card = malloc(sizeof(Card));
-    pushToPile(c1,card);
-    printf("%d",c1->firstCard->number);
+    int AMOUNT_OF_COLOUMNS = 7;
+    int AMOUNT_OF_FOUNDATIONS = 4;
+    Pile* coloumns[AMOUNT_OF_COLOUMNS];
+    Pile* foundations[AMOUNT_OF_FOUNDATIONS];
+    mallocPile(foundations, AMOUNT_OF_FOUNDATIONS);
+    mallocPile(coloumns,AMOUNT_OF_COLOUMNS);
 
+    printf("Hello, World!\n");
     return 0;
 }

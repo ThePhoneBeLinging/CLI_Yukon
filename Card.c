@@ -3,6 +3,7 @@
 //
 #include <stddef.h>
 #include "Card.h"
+#include <stdlib.h>
 
 void pushToPile(Pile* pile, Card* card)
 {
@@ -15,4 +16,12 @@ void pushToPile(Pile* pile, Card* card)
     }
     pile->lastCard->nextCard = card;
     pile->lastCard = card;
+}
+
+void mallocPile (Pile** pile, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        pile[i] = malloc(sizeof (Pile));
+    }
 }
