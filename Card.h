@@ -1,15 +1,19 @@
 //
 // Created by Elias Aggergaard Larsen on 11/04/2024.
 //
-typedef struct{
-    struct Card* nextCard;
-    int cardNumber;
+typedef struct Card Card;
+struct Card{
+    Card* nextCard;
+    int number;
     char suit;
     bool faceUp;
 
-} Card;
+};
 
 typedef struct{
-    struct Card* firstCard;
-    struct Card* lastCard;
+    Card* firstCard;
+    Card* lastCard;
+    int size;
 } Pile;
+
+void pushToPile(Pile* pile, Card* card);
