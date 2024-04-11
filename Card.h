@@ -17,4 +17,4 @@ typedef struct{
 } Pile;
 
 void pushToPile(Pile* pile, Card* card);
-void mallocPile (Pile** pile, int size);
+void mallocPileArr (Pile** pile, int size);
