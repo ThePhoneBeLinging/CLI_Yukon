@@ -3,6 +3,7 @@
 #include <string.h>
 #include "Card.h"
 #include "main.h"
+#include "Utility.h"
 int main (void)
 {
     Pile deck;
@@ -51,5 +52,9 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
     //Argument is now an array of char*, specifying whatever came after the first space in inputStr.
     // Use strcmp to compare strings in future switch
 
+    if (stringsAreEqual(&command[0],"LD"))
+    {
+        printf("%s",argument);
+    }
 
 }
