@@ -52,9 +52,34 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
     //Argument is now an array of char*, specifying whatever came after the first space in inputStr.
     // Use strcmp to compare strings in future switch
 
-    if (stringsAreEqual(&command[0],"LD"))
+    char* commandToExectute = &command[0];
+    if (stringsAreEqual(commandToExectute,"LD"))
     {
-        printf("%s",argument);
+        // TODO LoadFromDeck()
+        return;
+    }
+    if (stringsAreEqual(commandToExectute,"SW"))
+    {
+        // TODO SW
+        return;
+    }
+    if (stringsAreEqual(commandToExectute,"SL"))
+    {
+        // TODO SD
+        return;
+    }
+    if (stringsAreEqual(commandToExectute,"SR"))
+    {
+        // TODO SR
+        return;
+    }
+    if (stringsAreEqual(commandToExectute,"SD"))
+    {
+        // TODO SD
+    }
+    if (stringsAreEqual(commandToExectute,"QQ"))
+    {
+        // TODO QQ
     }
 
 }
