@@ -1,1 +1,1 @@
-void handleInput();
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[]);
