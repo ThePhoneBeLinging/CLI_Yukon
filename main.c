@@ -21,8 +21,8 @@ int main (void)
 void handleInput()
 {
     char inputStr[50];
-    char raraStr[50];
     printf("Board should be shown and show last message and output \n");
+    //The scanf function adds all given characters to the char arr, until a next line is given.
     scanf("%[^\n]s",inputStr);
     printf("%s",inputStr);
 }
