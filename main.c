@@ -4,8 +4,11 @@
 #include "Card.h"
 #include "main.h"
 #include "Utility.h"
+#include "StateMachine.h"
 int main (void)
 {
+    // Set the current phase to the startup phase
+    STATE state = STARTUP;
     Pile deck;
     int AMOUNT_OF_COLOUMNS = 7;
     int AMOUNT_OF_FOUNDATIONS = 4;
@@ -15,11 +18,11 @@ int main (void)
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
 
     printf("Hello, World!\n");
-    handleInput(&deck,coloumns,foundations);
+    handleInput(&deck,coloumns,foundations,&state);
     return 0;
 }
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state)
 {
     char inputStr[50];
     printf("Board should be shown and show last message and output \n");
@@ -53,33 +56,42 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
     // Use strcmp to compare strings in future switch
 
     char* commandToExectute = &command[0];
-    if (stringsAreEqual(commandToExectute,"LD"))
+    if (*state == STARTUP)
     {
-        // TODO LoadFromDeck()
-        return;
+        if (stringsAreEqual(commandToExectute,"LD"))
+        {
+            // TODO LoadFromDeck()
+            return;
+        }
+        if (stringsAreEqual(commandToExectute,"SW"))
+        {
+            // TODO SW
+            return;
+        }
+        if (stringsAreEqual(commandToExectute,"SL"))
+        {
+            // TODO SD
+            return;
+        }
+        if (stringsAreEqual(commandToExectute,"SR"))
+        {
+            // TODO SR
+            return;
+        }
+        if (stringsAreEqual(commandToExectute,"SD"))
+        {
+            // TODO SD
+        }
+        if (stringsAreEqual(commandToExectute,"QQ"))
+        {
+            // TODO QQ
+        }
     }
-    if (stringsAreEqual(commandToExectute,"SW"))
+    else if (*state == STARTUP)
     {
-        // TODO SW
-        return;
+        if (stringsAreEqual(commandToExectute,"Q"))
+        {
+            // TODO QQ
+        }
     }
-    if (stringsAreEqual(commandToExectute,"SL"))
-    {
-        // TODO SD
-        return;
-    }
-    if (stringsAreEqual(commandToExectute,"SR"))
-    {
-        // TODO SR
-        return;
-    }
-    if (stringsAreEqual(commandToExectute,"SD"))
-    {
-        // TODO SD
-    }
-    if (stringsAreEqual(commandToExectute,"QQ"))
-    {
-        // TODO QQ
-    }
-
 }

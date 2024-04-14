@@ -9,4 +9,5 @@ add_executable(CLI_Yukon main.c
         main.h
         Utility.h
         Utility.c
+        StateMachine.h
 )
