@@ -7,4 +7,6 @@ add_executable(CLI_Yukon main.c
         Card.h
         Card.c
         main.h
+        Utility.h
+        Utility.c
 )
