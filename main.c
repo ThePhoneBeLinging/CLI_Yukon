@@ -79,10 +79,17 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SD"))
         {
             // TODO SD
+            return;
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
         {
             // TODO QQ
+            return;
+        }
+        if (stringsAreEqual(commandToExectute,"P"))
+        {
+            *state = PLAY;
+            return;
         }
     }
     else if (*state == STARTUP)
@@ -90,6 +97,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"Q"))
         {
             // TODO QQ
+            return;
         }
     }
 }
