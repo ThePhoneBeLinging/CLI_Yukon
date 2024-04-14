@@ -16,8 +16,6 @@ int main (void)
     Pile* foundations[AMOUNT_OF_FOUNDATIONS];
     mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
-
-    printf("Hello, World!\n");
     handleInput(&deck,coloumns,foundations,&state);
     return 0;
 }
