@@ -32,7 +32,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
     {
         if (inputStr[i] == ' ')
         {
-            //if (indexOfFirstSpace != 0) break;
+            if (indexOfFirstSpace != 0) break;
             indexOfFirstSpace = i + 1;
             workingIndex = 0;
             continue;
@@ -50,4 +50,6 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[])
     //Command is now an array of char*, containing all letters before the first space
     //Argument is now an array of char*, specifying whatever came after the first space in inputStr.
     // Use strcmp to compare strings in future switch
+
+
 }
