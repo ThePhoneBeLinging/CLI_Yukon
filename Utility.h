@@ -1,0 +1,1 @@
+bool stringsAreEqual(char*, char*);
