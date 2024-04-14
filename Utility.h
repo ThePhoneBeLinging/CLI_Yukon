@@ -1,1 +1,1 @@
-bool stringsAreEqual(char*, char*);
+bool stringsAreEqual(char* firstString, char* secondsString);
