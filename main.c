@@ -4,7 +4,6 @@
 #include "Card.h"
 #include "main.h"
 #include "Utility.h"
-#include "StateMachine.h"
 int main (void)
 {
     // Set the current phase to the startup phase
