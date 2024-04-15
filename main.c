@@ -92,11 +92,11 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             return;
         }
     }
-    else if (*state == STARTUP)
+    else if (*state == PLAY)
     {
         if (stringsAreEqual(commandToExectute,"Q"))
         {
-            // TODO QQ
+            *state = STARTUP;
             return;
         }
     }
