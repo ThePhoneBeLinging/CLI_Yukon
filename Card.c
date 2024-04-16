@@ -62,7 +62,6 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     int i = 0;
     while (fgets(readDeck,50,filePTR))
     {
-        printf("%s",readDeck);
         int cardNumber = getIntFromCardLetter(readDeck[0]);
         if (cardNumber == -1)
         {
@@ -95,5 +94,16 @@ int getIntFromCardLetter (char letter)
     if (letter == 'Q') return 12;
     if (letter == 'K') return 13;
     return -1;
+}
+
+char getCharFromCardNumber (int cardNumber)
+{
+    if (cardNumber == 1) return 'A';
+    if (cardNumber == 10) return 'T';
+    if (cardNumber == 11) return 'J';
+    if (cardNumber == 12) return 'Q';
+    if (cardNumber == 13) return 'K';
+    return (char) cardNumber + '0';
+
 }
 
