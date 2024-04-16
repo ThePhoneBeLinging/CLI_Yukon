@@ -94,7 +94,6 @@ void showDeck (Pile* deck)
     {
         currentCard->faceUp = true;
         currentCard = currentCard->nextCard;
-        printf("card flipped ");
     }
 }
 
