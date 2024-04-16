@@ -87,6 +87,17 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     }
 }
 
+void showDeck (Pile* deck)
+{
+    Card* currentCard = deck->firstCard;
+    while (currentCard != NULL)
+    {
+        currentCard->faceUp = true;
+        currentCard = currentCard->nextCard;
+        printf("card flipped ");
+    }
+}
+
 int getIntFromCardLetter (char letter)
 {
     if (letter == 'A') return 1;
