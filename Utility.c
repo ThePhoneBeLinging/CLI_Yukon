@@ -13,7 +13,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     char inputStr[50];
     printf("Board should be shown and show last message and output \n");
     //The scanf function adds all given characters to the char arr, until a next line is given.
-    scanf("%[^\n]s",inputStr);
+    scanf(" %[^\n]s",inputStr);
     char command[50];
     char argument[50];
     int indexOfFirstSpace = 0;
@@ -52,6 +52,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SW"))
         {
             // TODO SW
+            showDeck(deck);
 
         }
         if (stringsAreEqual(commandToExectute,"SL"))
@@ -88,4 +89,5 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             return;
         }
     }
+
 }

@@ -19,5 +19,6 @@ typedef struct{
 void pushToPile(Pile* pile, Card* card);
 void mallocPileArr (Pile** pile, int size);
 void loadDeckFromFile(Pile* deck, char fileName[]);
+void showDeck(Pile* deck);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);
