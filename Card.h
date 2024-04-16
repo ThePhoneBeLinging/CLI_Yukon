@@ -18,4 +18,6 @@ typedef struct{
 
 void pushToPile(Pile* pile, Card* card);
 void mallocPileArr (Pile** pile, int size);
-void loadDeckFromFile(Pile* deck, char filename[]);
+void loadDeckFromFile(Pile* deck, char fileName[]);
+int getIntFromCardLetter(char letter);
+char getCharFromCardNumber(int cardNumber);
