@@ -2,6 +2,7 @@
 #include "Card.h"
 #include "Utility.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 bool stringsAreEqual(char* firstString, char* secondString)
 {
@@ -46,8 +47,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
-            // TODO LoadFromDeck()
             loadDeckFromFile(deck,argument);
+            populateColoumns(deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
@@ -89,5 +90,70 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             return;
         }
     }
+    printBoard(coloumns,foundations,state);
+}
 
+void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
+{
+    // Print Coloumn names
+    for (int i = 1; i < 8; i++)
+    {
+        printf("C%d\t",i);
+    }
+    printf("\n\n");
+    for (int i = 0; i < 25; i++)
+    {
+        bool addedToPrint = false;
+        for (int k = 0; k < 7; k++)
+        {
+            Card* cardToPrint = coloumns[k]->firstCard;
+            if (coloumns[k]->size < i) continue;
+            for (int j = 0; j < i; j++)
+            {
+                if (cardToPrint->nextCard == NULL) break;
+                cardToPrint = cardToPrint->nextCard;
+            }
+            if (cardToPrint->faceUp) printf("%c%c\t", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
+            else printf("[]\t");
+            addedToPrint = true;
+        }
+        if (i < 4)
+        {
+            printf("\t");
+            if (foundations[i]->lastCard == NULL) printf("[]\t");
+            else printf("%c%c", getCharFromCardNumber(foundations[i]->lastCard->number),foundations[i]->lastCard->suit);
+            printf("F%d",(i+1));
+            addedToPrint = true;
+        }
+
+        if (addedToPrint) printf("\n");
+    }
+
+
+    return;
+}
+
+void populateColoumns (Pile *deck, Pile *coloumns[])
+{
+    Card* cardToAddToColoumn;
+    cardToAddToColoumn = deck->firstCard;
+    for (int i = 0; i < 7; i++)
+    {
+        coloumns[i]->firstCard = cardToAddToColoumn;
+        coloumns[i]->lastCard = cardToAddToColoumn;
+        coloumns[i]->size += 1;
+        cardToAddToColoumn = cardToAddToColoumn->nextCard;
+    }
+    for (int i = 0; i < 52; i++)
+    {
+        if (cardToAddToColoumn == NULL) break;
+        coloumns[i % 7]->lastCard->nextCard = cardToAddToColoumn;
+        coloumns[i%7]->lastCard = cardToAddToColoumn;
+        coloumns[i%7]->size += 1;
+        cardToAddToColoumn = cardToAddToColoumn->nextCard;
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        coloumns[i]->lastCard->nextCard = NULL;
+    }
 }
