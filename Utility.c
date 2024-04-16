@@ -2,6 +2,7 @@
 #include "Card.h"
 #include "Utility.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 bool stringsAreEqual(char* firstString, char* secondString)
 {
@@ -46,8 +47,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
-            // TODO LoadFromDeck()
             loadDeckFromFile(deck,argument);
+            populateColoumns(deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
@@ -87,5 +88,56 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             *state = STARTUP;
             return;
         }
+    }
+    //printBoard(coloumns,foundations,state);
+}
+
+void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
+{
+    // Print Coloumn names
+    for (int i = 1; i < 8; i++)
+    {
+        printf("C%d\t",i);
+    }
+
+    for (int i = 0; i < 25; i++)
+    {
+
+        for (int k = 0; k < 7; k++)
+        {
+            Card* cardToPrint = coloumns[k]->firstCard;
+            for (int j = 0; j < i; j++)
+            {
+                cardToPrint = cardToPrint->nextCard;
+            }
+        }
+    }
+
+
+    return;
+}
+
+void populateColoumns (Pile *deck, Pile *coloumns[])
+{
+    Card* cardToAddToColoumn;
+    cardToAddToColoumn = deck->firstCard;
+    for (int i = 0; i < 7; i++)
+    {
+        coloumns[i]->firstCard = cardToAddToColoumn;
+        coloumns[i]->lastCard = cardToAddToColoumn;
+        coloumns[i]->size += 1;
+        cardToAddToColoumn = cardToAddToColoumn->nextCard;
+    }
+    for (int i = 0; i < 52; i++)
+    {
+        if (cardToAddToColoumn == NULL) break;
+        coloumns[i % 7]->lastCard->nextCard = cardToAddToColoumn;
+        coloumns[i%7]->lastCard = cardToAddToColoumn;
+        coloumns[i%7]->size += 1;
+        cardToAddToColoumn = cardToAddToColoumn->nextCard;
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        coloumns[i]->lastCard->nextCard = NULL;
     }
 }
