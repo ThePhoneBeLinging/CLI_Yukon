@@ -52,8 +52,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
-            // TODO SW
-            showDeck(deck);
+            showDeck(coloumns);
 
         }
         if (stringsAreEqual(commandToExectute,"SL"))

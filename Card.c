@@ -85,14 +85,18 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     }
 }
 
-void showDeck (Pile* deck)
+void showDeck (Pile* coloumns[])
 {
-    Card* currentCard = deck->firstCard;
-    while (currentCard != NULL)
+    for (int i = 0; i < 7; i++)
     {
-        currentCard->faceUp = true;
-        currentCard = currentCard->nextCard;
+        Card* currentCard = coloumns[i]->firstCard;
+        while (currentCard != NULL)
+        {
+            currentCard->faceUp = true;
+            currentCard = currentCard->nextCard;
+        }
     }
+
 }
 
 int getIntFromCardLetter (char letter)
