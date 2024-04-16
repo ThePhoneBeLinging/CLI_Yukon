@@ -45,7 +45,6 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     }
     strcat(fileToLoad,".txt");
     FILE* filePTR;
-    printf("%s",fileToLoad);
     filePTR = fopen(&fileToLoad[0],"r");
     if (filePTR == NULL)
     {
