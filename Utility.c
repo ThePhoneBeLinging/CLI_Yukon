@@ -89,7 +89,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             return;
         }
     }
-    //printBoard(coloumns,foundations,state);
+    printBoard(coloumns,foundations,state);
 }
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
@@ -99,18 +99,23 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
     {
         printf("C%d\t",i);
     }
-
+    printf("\n\n");
     for (int i = 0; i < 25; i++)
     {
-
+        bool addedToPrint = false;
         for (int k = 0; k < 7; k++)
         {
             Card* cardToPrint = coloumns[k]->firstCard;
+            if (coloumns[k]->size < i) continue;
             for (int j = 0; j < i; j++)
             {
+                if (cardToPrint->nextCard == NULL) break;
                 cardToPrint = cardToPrint->nextCard;
             }
+            printf("%c%c\t", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
+            addedToPrint = true;
         }
+        if (addedToPrint) printf("\n");
     }
 
 
