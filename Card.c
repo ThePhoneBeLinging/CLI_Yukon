@@ -34,7 +34,15 @@ void loadDeckFromFile (Pile *deck, char *fileName)
 {
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
-    strcat(fileToLoad,fileName);
+    if (*fileName == ' ')
+    {
+        strcat(fileToLoad,fileName);
+    }
+    else
+    {
+        strcat(fileToLoad,"unsorted");
+    }
+
     strcat(fileToLoad,".txt");
     for (int i = 0; i < 50; i++)
     {
@@ -43,7 +51,7 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     filePTR = fopen(&fileToLoad[0],"r");
     if (filePTR == NULL)
     {
-        printf("DEAN");
+        //printf("DEAN");
         return;
     }
     Card* cards[52];
