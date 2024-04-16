@@ -112,9 +112,19 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
                 if (cardToPrint->nextCard == NULL) break;
                 cardToPrint = cardToPrint->nextCard;
             }
-            printf("%c%c\t", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
+            if (cardToPrint->faceUp) printf("%c%c\t", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
+            else printf("[]\t");
             addedToPrint = true;
         }
+        if (i < 4)
+        {
+            printf("\t");
+            if (foundations[i]->lastCard == NULL) printf("[]\t");
+            else printf("%c%c", getCharFromCardNumber(foundations[i]->lastCard->number),foundations[i]->lastCard->suit);
+            printf("F%d",(i+1));
+            addedToPrint = true;
+        }
+
         if (addedToPrint) printf("\n");
     }
 
