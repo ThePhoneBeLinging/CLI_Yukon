@@ -58,32 +58,32 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"LD"))
         {
             // TODO LoadFromDeck()
-            return;
+            loadDeckFromFile(deck,argument);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
             // TODO SW
-            return;
+
         }
         if (stringsAreEqual(commandToExectute,"SL"))
         {
             // TODO SD
-            return;
+
         }
         if (stringsAreEqual(commandToExectute,"SR"))
         {
             // TODO SR
-            return;
+
         }
         if (stringsAreEqual(commandToExectute,"SD"))
         {
             // TODO SD
-            return;
+
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
         {
             // TODO QQ
-            return;
+
         }
         if (stringsAreEqual(commandToExectute,"P"))
         {
