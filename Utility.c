@@ -48,7 +48,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"LD"))
         {
             loadDeckFromFile(deck,argument);
-            populateColoumns(*deck,coloumns);
+            populateColoumns(deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
@@ -58,8 +58,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SL"))
         {
             // TODO SL
-            splitDeck(deck,atoi(argument));
-            populateColoumns(*deck,coloumns);
+            splitDeck(deck,coloumns,atoi(argument));
+            populateColoumns(deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SR"))
         {
@@ -130,11 +130,10 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
     }
 }
 
-void populateColoumns (Pile deck, Pile *coloumns[])
+void populateColoumns (Pile* deck, Pile *coloumns[])
 {
-    Pile* workingDeck = &deck;
     Card* cardToAddToColoumn;
-    cardToAddToColoumn = workingDeck->firstCard;
+    cardToAddToColoumn = deck->firstCard;
     for (int i = 0; i < 7; i++)
     {
         coloumns[i]->size = 0;
@@ -156,3 +155,22 @@ void populateColoumns (Pile deck, Pile *coloumns[])
         coloumns[i]->lastCard->nextCard = NULL;
     }
 }
+
+Card* linkColoumnsToSingleLinkedList (Pile *coloumns[])
+{
+    Card* firstCard = coloumns[0]->firstCard;
+    for (int k = 0; k < 25; k++)
+    {
+        for (int i = 0; i < 7; i++)
+        {
+
+            if (coloumns[i]->firstCard == NULL) break;
+            Card* temp = coloumns[i]->firstCard;
+            coloumns[i]->firstCard = coloumns[i]->firstCard->nextCard;
+            temp->nextCard = coloumns[(i+1)%7]->firstCard;
+
+        }
+    }
+    return firstCard;
+}
+
