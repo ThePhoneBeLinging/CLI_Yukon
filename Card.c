@@ -3,6 +3,7 @@
 //
 #include <stddef.h>
 #include "Card.h"
+#include "Utility.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
@@ -109,12 +110,64 @@ char getCharFromCardNumber (int cardNumber)
 
 }
 
-void splitDeck (Pile *coloumns[],int toSplitAt)
+void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
 {
     if (toSplitAt == 0)
     {
         // TODO insert random int here
         toSplitAt = 15;
+    }
+    deck->firstCard = NULL;
+    deck->lastCard = NULL;
+    deck->size = 0;
+    deck->firstCard = linkColoumnsToSingleLinkedList(coloumns);
+    deck->lastCard = deck->firstCard;
+    Pile* firstPile = malloc(sizeof(Pile));
+    Pile* secondPile = malloc(sizeof(Pile));
+
+    firstPile->firstCard = deck->firstCard;
+    firstPile->lastCard = deck->firstCard;
+    for (int i = 0; i < toSplitAt; i++)
+    {
+        Card* iterationCard = malloc(sizeof(Card));
+        iterationCard = firstPile->lastCard->nextCard;
+        if (iterationCard == NULL) break;
+        if (i == (toSplitAt - 2))
+        {
+            secondPile->firstCard = firstPile->lastCard->nextCard;
+            secondPile->lastCard = firstPile->lastCard->nextCard;
+            firstPile->lastCard->nextCard = NULL;
+        }
+        firstPile->lastCard->nextCard = iterationCard;
+        firstPile->lastCard = iterationCard;
+    }
+    while (true)
+    {
+        Card* iterationCard = malloc(sizeof(Card));
+        iterationCard = secondPile->lastCard->nextCard;
+        if (iterationCard == NULL) break;
+        secondPile->lastCard->nextCard = iterationCard;
+        secondPile->lastCard = iterationCard;
+    }
+    int i = 0;
+    while (firstPile->firstCard != NULL || secondPile->firstCard != NULL)
+    {
+        Card* iterationCard = malloc(sizeof(Card));
+        if (i % 2 == 0 && firstPile->firstCard != NULL)
+        {
+            iterationCard = firstPile->firstCard;
+            firstPile->firstCard = firstPile->firstCard->nextCard;
+        }
+        else if (secondPile->firstCard != NULL)
+        {
+            iterationCard = secondPile->firstCard;
+            secondPile->firstCard = secondPile->firstCard->nextCard;
+        }
+        deck->lastCard->nextCard = iterationCard;
+        deck->lastCard = iterationCard;
+        printf("%d%c,",iterationCard->number,iterationCard->suit);
+        i++;
+        if (i > 52) break;
     }
 }
 
