@@ -58,8 +58,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SL"))
         {
             // TODO SL
-
-
+            splitDeck(deck,atoi(argument));
+            populateColoumns(*deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SR"))
         {
@@ -137,6 +137,7 @@ void populateColoumns (Pile deck, Pile *coloumns[])
     cardToAddToColoumn = workingDeck->firstCard;
     for (int i = 0; i < 7; i++)
     {
+        coloumns[i]->size = 0;
         coloumns[i]->firstCard = cardToAddToColoumn;
         coloumns[i]->lastCard = cardToAddToColoumn;
         coloumns[i]->size += 1;
