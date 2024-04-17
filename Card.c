@@ -27,6 +27,9 @@ void mallocPileArr (Pile** pile, int size)
     for (int i = 0; i < size; i++)
     {
         pile[i] = malloc(sizeof (Pile));
+        pile[i]->size = 0;
+        pile[i]->firstCard = NULL;
+        pile[i]->lastCard = NULL;
     }
 }
 
