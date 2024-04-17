@@ -109,3 +109,12 @@ char getCharFromCardNumber (int cardNumber)
 
 }
 
+void splitDeck (Pile *coloumns[],int toSplitAt)
+{
+    if (toSplitAt == 0)
+    {
+        // TODO insert random int here
+        toSplitAt = 15;
+    }
+}
+
