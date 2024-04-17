@@ -14,8 +14,9 @@ int main (void)
     Pile* foundations[AMOUNT_OF_FOUNDATIONS];
     mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
-    while (true){
-    handleInput(&deck,coloumns,foundations,&state);
+    while (true)
+    {
+        handleInput(&deck,coloumns,foundations,&state);
     }
     return 0;
 }
