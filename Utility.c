@@ -48,7 +48,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"LD"))
         {
             loadDeckFromFile(deck,argument);
-            populateColoumns(deck,coloumns);
+            populateColoumns(*deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
@@ -107,7 +107,7 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
         for (int k = 0; k < 7; k++)
         {
             Card* cardToPrint = coloumns[k]->firstCard;
-            if (coloumns[k]->size < i) continue;
+            if (coloumns[k]->size <= i) continue;
             for (int j = 0; j < i; j++)
             {
                 if (cardToPrint->nextCard == NULL) break;
@@ -128,15 +128,13 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
 
         if (addedToPrint) printf("\n");
     }
-
-
-    return;
 }
 
-void populateColoumns (Pile *deck, Pile *coloumns[])
+void populateColoumns (Pile deck, Pile *coloumns[])
 {
+    Pile* workingDeck = &deck;
     Card* cardToAddToColoumn;
-    cardToAddToColoumn = deck->firstCard;
+    cardToAddToColoumn = workingDeck->firstCard;
     for (int i = 0; i < 7; i++)
     {
         coloumns[i]->firstCard = cardToAddToColoumn;

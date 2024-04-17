@@ -6,4 +6,4 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 
-void populateColoumns(Pile* deck, Pile* coloumns[]);
+void populateColoumns(Pile deck, Pile* coloumns[]);
