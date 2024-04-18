@@ -17,6 +17,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     scanf(" %[^\n]s",inputStr);
     char command[50];
     char argument[50];
+    char response[50];
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
     for (int i = indexOfFirstSpace; i < 50; i++)
@@ -55,7 +56,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             showDeck(coloumns);
 
         }
-        if (stringsAreEqual(commandToExectute,"SL"))
+        if (stringsAreEqual(commandToExectute,"SI"))
         {
             // TODO SL
             splitDeck(deck,coloumns,atoi(argument));
