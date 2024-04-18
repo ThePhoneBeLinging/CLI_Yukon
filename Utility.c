@@ -135,7 +135,7 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
 
         if (addedToPrint) printf("\n");
     }
-
+    printf("\n");
 }
 
 void populateColoumns (Pile* deck, Pile *coloumns[])
