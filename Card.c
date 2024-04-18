@@ -177,3 +177,56 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
         if (i > 52) break;
     }
 }
+
+void shuffleDeck(Pile* deck, Pile * coloumns[]){
+    srand(time(NULL));
+
+    deck->firstCard =NULL;
+    deck->lastCard = NULL;
+    deck->size = 52;
+    deck->firstCard = linkColoumnsToSingleLinkedList(coloumns);
+    deck->lastCard = deck->firstCard;
+    Pile* shuffledDeck = malloc(sizeof(Pile));
+    shuffledDeck->firstCard = NULL;
+    shuffledDeck->lastCard = NULL;
+    shuffledDeck->size = 0;
+
+    while (deck->size > 0) {
+
+        int index = rand() % deck->size;
+
+
+        Card* prevCard = NULL;
+        Card* currentCard = deck->firstCard;
+        for (int i = 0; i < index; i++) {
+            prevCard = currentCard;
+            currentCard = currentCard->nextCard;
+        }
+
+
+        if (prevCard == NULL) {
+            deck->firstCard = currentCard->nextCard;
+        } else {
+            prevCard->nextCard = currentCard->nextCard;
+        }
+        if (currentCard == deck->lastCard) {
+            deck->lastCard = prevCard;
+        }
+        deck->size--;
+
+
+        if (shuffledDeck->firstCard == NULL) {
+            shuffledDeck->firstCard = currentCard;
+            shuffledDeck->lastCard = currentCard;
+        } else {
+            shuffledDeck->lastCard->nextCard = currentCard;
+            shuffledDeck->lastCard = currentCard;
+        }
+        currentCard->nextCard = NULL;
+        shuffledDeck->size++;
+    }
+
+
+    *deck = *shuffledDeck;
+    free(shuffledDeck);
+}

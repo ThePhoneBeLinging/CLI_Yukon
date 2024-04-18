@@ -65,6 +65,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SR"))
         {
             // TODO SR
+            shuffleDeck(deck,coloumns);
+            populateColoumns(deck,coloumns);
 
         }
         if (stringsAreEqual(commandToExectute,"SD"))

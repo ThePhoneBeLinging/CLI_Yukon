@@ -22,3 +22,4 @@ void showDeck(Pile* coloumn[]);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);
 void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt);
+void shuffleDeck(Pile* deck, Pile * coloumns[]);
