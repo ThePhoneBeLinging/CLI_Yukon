@@ -101,33 +101,41 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
         printf("C%d\t",i);
     }
     printf("\n\n");
+    int foundationsDrawn = 0;
     for (int i = 0; i < 25; i++)
     {
         bool addedToPrint = false;
         for (int k = 0; k < 7; k++)
         {
             Card* cardToPrint = coloumns[k]->firstCard;
+            if (k != 0)
+            {
+                printf("\t");
+            }
             if (coloumns[k]->size <= i) continue;
             for (int j = 0; j < i; j++)
             {
                 if (cardToPrint->nextCard == NULL) break;
                 cardToPrint = cardToPrint->nextCard;
             }
-            if (cardToPrint->faceUp) printf("%c%c\t", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
-            else printf("[]\t");
+            if (cardToPrint->faceUp) printf("%c%c", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit);
+            else printf("[]");
+
             addedToPrint = true;
         }
-        if (i < 4)
+        if (i % 2 == 0 && foundationsDrawn != 4)
         {
-            printf("\t");
-            if (foundations[i]->lastCard == NULL) printf("[]\t");
-            else printf("%c%c", getCharFromCardNumber(foundations[i]->lastCard->number),foundations[i]->lastCard->suit);
-            printf("F%d",(i+1));
+            printf("\t\t");
+            if (foundations[foundationsDrawn]->lastCard == NULL) printf("[]");
+            else printf("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit);
+            printf("\tF%d",foundationsDrawn+1);
             addedToPrint = true;
+            foundationsDrawn++;
         }
 
         if (addedToPrint) printf("\n");
     }
+
 }
 
 void populateColoumns (Pile* deck, Pile *coloumns[])
