@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
+#include <time.h>
 
 // Malloc with sizeof Pile on every position in a Pile Arr;
 void mallocPileArr (Pile** pile, int size)
@@ -114,8 +115,8 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
 {
     if (toSplitAt == 0)
     {
-        // TODO insert random int here
-        toSplitAt = 15;
+        srand(time(NULL));
+        toSplitAt = (rand()+1)%52;
     }
     deck->firstCard = NULL;
     deck->lastCard = NULL;
