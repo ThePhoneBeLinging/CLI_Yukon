@@ -118,6 +118,14 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
         srand(time(NULL));
         toSplitAt = (rand()+1)%52;
     }
+    if (toSplitAt < 2)
+    {
+        toSplitAt = 3;
+    }
+    if (toSplitAt > 52)
+    {
+        toSplitAt = 51;
+    }
     deck->firstCard = NULL;
     deck->lastCard = NULL;
     deck->size = 52;
