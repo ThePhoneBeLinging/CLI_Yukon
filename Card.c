@@ -130,8 +130,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
     firstPile->lastCard = deck->firstCard;
     for (int i = 0; i < toSplitAt; i++)
     {
-        Card* iterationCard = malloc(sizeof(Card));
-        iterationCard = firstPile->lastCard->nextCard;
+        Card* iterationCard = firstPile->lastCard->nextCard;
         if (iterationCard == NULL) break;
         if (i == (toSplitAt - 2))
         {
@@ -145,8 +144,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
     }
     while (true)
     {
-        Card* iterationCard = malloc(sizeof(Card));
-        iterationCard = secondPile->lastCard->nextCard;
+        Card* iterationCard = secondPile->lastCard->nextCard;
         if (iterationCard == NULL) break;
         secondPile->lastCard->nextCard = iterationCard;
         secondPile->lastCard = iterationCard;
@@ -154,7 +152,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
     int i = 0;
     while (firstPile->firstCard != NULL || secondPile->firstCard != NULL)
     {
-        Card* iterationCard = malloc(sizeof(Card));
+        Card* iterationCard;
         if (i % 2 == 0 && firstPile->firstCard != NULL)
         {
             iterationCard = firstPile->firstCard;
@@ -171,4 +169,3 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
         if (i > 52) break;
     }
 }
-
