@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 //
 // Created by Elias Aggergaard Larsen on 11/04/2024.
 //
@@ -22,4 +24,5 @@ void showDeck(Pile* coloumn[]);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);
 void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt);
+FILE* getFilePointer(char* fileName, char* readMode);
 void shuffleDeck(Pile* deck, Pile * coloumns[]);

@@ -20,6 +20,12 @@ void mallocPileArr (Pile** pile, int size)
         pile[i]->lastCard = NULL;
     }
 }
+FILE* getFilePointer(char* fileName, char* readMode)
+{
+    FILE* filePTR = malloc(sizeof (FILE));
+    filePTR = fopen(&fileName[0],readMode);
+    return filePTR;
+}
 
 void loadDeckFromFile (Pile *deck, char *fileName)
 {
@@ -35,8 +41,7 @@ void loadDeckFromFile (Pile *deck, char *fileName)
         strcat(fileToLoad,"unshuffledDeck");
     }
     strcat(fileToLoad,".txt");
-    FILE* filePTR = malloc(sizeof (FILE));
-    filePTR = fopen(&fileToLoad[0],"r");
+    FILE* filePTR = getFilePointer(fileToLoad,"r");
     if (filePTR == NULL)
     {
         printf("File not found");
