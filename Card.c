@@ -119,7 +119,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
     }
     deck->firstCard = NULL;
     deck->lastCard = NULL;
-    deck->size = 0;
+    deck->size = 52;
     deck->firstCard = linkColoumnsToSingleLinkedList(coloumns);
     deck->lastCard = deck->firstCard;
     Pile* firstPile = malloc(sizeof(Pile));
@@ -137,6 +137,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
             secondPile->firstCard = firstPile->lastCard->nextCard;
             secondPile->lastCard = firstPile->lastCard->nextCard;
             firstPile->lastCard->nextCard = NULL;
+            break;
         }
         firstPile->lastCard->nextCard = iterationCard;
         firstPile->lastCard = iterationCard;
@@ -165,7 +166,6 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
         }
         deck->lastCard->nextCard = iterationCard;
         deck->lastCard = iterationCard;
-        printf("%d%c,",iterationCard->number,iterationCard->suit);
         i++;
         if (i > 52) break;
     }
