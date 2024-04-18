@@ -181,4 +181,9 @@ Card* linkColoumnsToSingleLinkedList (Pile *coloumns[])
     }
     return firstCard;
 }
-
+FILE* getFilePointer(char* fileName, char* readMode)
+{
+    FILE* filePTR = malloc(sizeof (FILE));
+    filePTR = fopen(&fileName[0],readMode);
+    return filePTR;
+}

@@ -9,3 +9,5 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 void populateColoumns(Pile* deck, Pile* coloumns[]);
 
 Card* linkColoumnsToSingleLinkedList(Pile* coloumns[]);
+
+FILE* getFilePointer(char* fileName, char* readMode);

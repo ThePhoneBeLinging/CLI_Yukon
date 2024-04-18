@@ -24,4 +24,3 @@ void showDeck(Pile* coloumn[]);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);
 void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt);
-FILE* getFilePointer(char* fileName, char* readMode);

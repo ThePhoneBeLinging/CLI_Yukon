@@ -20,12 +20,7 @@ void mallocPileArr (Pile** pile, int size)
         pile[i]->lastCard = NULL;
     }
 }
-FILE* getFilePointer(char* fileName, char* readMode)
-{
-    FILE* filePTR = malloc(sizeof (FILE));
-    filePTR = fopen(&fileName[0],readMode);
-    return filePTR;
-}
+
 
 void loadDeckFromFile (Pile *deck, char *fileName)
 {
