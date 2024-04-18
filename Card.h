@@ -26,3 +26,4 @@ char getCharFromCardNumber(int cardNumber);
 void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt);
 FILE* getFilePointer(char* fileName, char* readMode);
 void shuffleDeck(Pile* deck, Pile * coloumns[]);
+void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[]);

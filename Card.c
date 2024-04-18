@@ -21,6 +21,37 @@ void mallocPileArr (Pile** pile, int size)
     }
 }
 
+void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
+{
+    char fileToLoad[50];
+    strcpy(fileToLoad, "../");
+    strcat(fileToLoad,"Decks/");
+    printf("s",fileName);
+    if (*fileName == ' ')
+    {
+        strcat(fileToLoad,fileName);
+    }
+    else
+    {
+        strcat(fileToLoad,"cards");
+    }
+    strcat(fileToLoad,".txt");
+    FILE* filePTR = getFilePointer(fileToLoad,"w");
+    if (filePTR == NULL)
+    {
+        printf("File not found");
+        return;
+    }
+
+    Card* iterationCard = linkColoumnsToSingleLinkedList(coloumns);
+    printf("%d",iterationCard == NULL);
+    while (iterationCard != NULL)
+    {
+        fprintf(filePTR,"%c%c\n", getCharFromCardNumber(iterationCard->number),iterationCard->suit);
+        iterationCard = iterationCard->nextCard;
+    }
+    fclose(filePTR);
+}
 
 void loadDeckFromFile (Pile *deck, char *fileName)
 {

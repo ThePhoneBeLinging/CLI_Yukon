@@ -72,7 +72,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"SD"))
         {
             // TODO SD
-
+            saveDeckFromColoumnsToFile(coloumns,argument);
+            populateColoumns(deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
         {
