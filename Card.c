@@ -23,7 +23,7 @@ void mallocPileArr (Pile** pile, int size)
 
 void loadDeckFromFile (Pile *deck, char *fileName)
 {
-    char fileToLoad[50];
+    char fileToLoad[500];
     strcpy(fileToLoad, "../");
     if (*fileName == ' ')
     {
@@ -35,7 +35,7 @@ void loadDeckFromFile (Pile *deck, char *fileName)
         strcat(fileToLoad,"unshuffledDeck");
     }
     strcat(fileToLoad,".txt");
-    FILE* filePTR;
+    FILE* filePTR = malloc(sizeof (FILE));
     filePTR = fopen(&fileToLoad[0],"r");
     if (filePTR == NULL)
     {
