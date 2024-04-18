@@ -73,7 +73,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
         {
-            // TODO QQ
+            exit(0);
 
         }
         if (stringsAreEqual(commandToExectute,"P"))
