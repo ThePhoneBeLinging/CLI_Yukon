@@ -23,7 +23,7 @@ void mallocPileArr (Pile** pile, int size)
 
 void loadDeckFromFile (Pile *deck, char *fileName)
 {
-    char fileToLoad[500];
+    char fileToLoad[50];
     strcpy(fileToLoad, "../");
     if (*fileName == ' ')
     {
