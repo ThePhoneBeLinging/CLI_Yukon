@@ -27,11 +27,6 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     strcpy(fileToLoad, "../");
     strcat(fileToLoad,"Decks/");
     printf("s",fileName);
-    if(*fileName=='p')
-    {
-        strcat(fileToLoad,"cards");
-    }
-    else
     if (*fileName != '\0')
     {
         strcat(fileToLoad,fileName);
@@ -62,11 +57,7 @@ void loadDeckFromFile (Pile *deck, char *fileName)
 {
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
-    if(strlen(fileName) ==1)
-    {
-        strcat(fileToLoad,"unshuffledDeck");
-    }
-    else if (*fileName != '\0')
+    if (*fileName != '\0')
     {
         strcat(fileToLoad,"Decks/");
         strcat(fileToLoad,fileName);

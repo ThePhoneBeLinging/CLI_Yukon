@@ -16,7 +16,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     //The scanf function adds all given characters to the char arr, until a next line is given.
     scanf(" %[^\n]s",inputStr);
     char command[50];
-    char argument[50];
+    char argument[50]={0};
     char response[50];
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
@@ -48,6 +48,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
+            printf("%s",argument);
             loadDeckFromFile(deck,argument);
             populateColoumns(deck,coloumns);
         }
