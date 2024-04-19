@@ -27,7 +27,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     strcpy(fileToLoad, "../");
     strcat(fileToLoad,"Decks/");
     printf("s",fileName);
-    if(strlen(fileName) == 1)
+    if(*fileName=='p')
     {
         strcat(fileToLoad,"cards");
     }
