@@ -57,7 +57,11 @@ void loadDeckFromFile (Pile *deck, char *fileName)
 {
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
-    if (*fileName == ' ')
+    if(strlen(fileName) ==1)
+    {
+        strcat(fileToLoad,"unshuffledDeck");
+    }
+    else if (*fileName != '\0')
     {
         strcat(fileToLoad,"Decks/");
         strcat(fileToLoad,fileName);
