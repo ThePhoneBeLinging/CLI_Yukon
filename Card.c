@@ -26,7 +26,6 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
     strcat(fileToLoad,"Decks/");
-    printf("s",fileName);
     if (*fileName != '\0')
     {
         strcat(fileToLoad,fileName);
@@ -44,7 +43,6 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     }
 
     Card* iterationCard = linkColoumnsToSingleLinkedList(coloumns);
-    printf("%d",iterationCard == NULL);
     while (iterationCard != NULL)
     {
         fprintf(filePTR,"%c%c\n", getCharFromCardNumber(iterationCard->number),iterationCard->suit);

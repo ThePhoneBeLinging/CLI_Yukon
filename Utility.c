@@ -48,7 +48,6 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
-            printf("%s",argument);
             loadDeckFromFile(deck,argument);
             populateColoumns(deck,coloumns);
         }
