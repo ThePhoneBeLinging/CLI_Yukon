@@ -104,6 +104,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
 {
+    printf("\n");
     // Print Coloumn names
     for (int i = 1; i < 8; i++)
     {
