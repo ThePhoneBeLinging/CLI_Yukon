@@ -12,12 +12,11 @@ bool stringsAreEqual(char* firstString, char* secondString)
 void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state)
 {
     char inputStr[50];
-    printf("Board should be shown and show last message and output \n");
     //The scanf function adds all given characters to the char arr, until a next line is given.
-    scanf(" %[^\n]s",inputStr);
-    char command[50];
+
+    char command[50] = {0};
     char argument[50]={0};
-    char response[50];
+    char response[50] = {0};
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
     for (int i = indexOfFirstSpace; i < 50; i++)
@@ -83,7 +82,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"P"))
         {
             *state = PLAY;
-            return;
+            saveDeckFromColoumnsToFile(coloumns,"temp/temp");
+            populateColoumns(deck,coloumns);
         }
     }
     else if (*state == PLAY)
@@ -91,10 +91,15 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"Q"))
         {
             *state = STARTUP;
-            return;
+            loadDeckFromFile(deck,"temp/temp");
         }
     }
     printBoard(coloumns,foundations,state);
+    printf("Last Command > %s\n",command);
+    printf("Response > %s\n",response);
+    printf("Input > ");
+    scanf(" %[^\n]s",inputStr);
+
 }
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
