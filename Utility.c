@@ -15,8 +15,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     //The scanf function adds all given characters to the char arr, until a next line is given.
 
     char command[50] = {0};
-    char argument[50]={0};
-    char response[50] = {0};
+    char argument[50]= {0};
+    char* response[50] = {0};
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
     for (int i = indexOfFirstSpace; i < 50; i++)
@@ -81,6 +81,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         if (stringsAreEqual(commandToExectute,"P"))
         {
+            if (deck->firstCard == NULL) response[0] = "No deck has been loaded";
             *state = PLAY;
             saveDeckFromColoumnsToFile(coloumns,"temp/temp");
             populateColoumns(state,deck,coloumns);
@@ -95,10 +96,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             populateColoumns(state,deck,coloumns);
         }
     }
-    printBoard(coloumns,foundations,state);
-    printf("Last Command > %s\n",command);
-    printf("Response > %s\n",response);
-    printf("Input > ");
+    printUI(coloumns,foundations,state,command,response);
     scanf(" %[^\n]s",inputStr);
 
 }
@@ -223,4 +221,13 @@ FILE* getFilePointer(char* fileName, char* readMode)
     FILE* filePTR = malloc(sizeof (FILE));
     filePTR = fopen(&fileName[0],readMode);
     return filePTR;
+}
+
+void printUI (Pile *coloumns[], Pile *foundations[], STATE *state, char * command, char * response[])
+{
+    printBoard(coloumns,foundations,state);
+    printf("Last Command > %s\n",command);
+    printf("Response > %s",*response);
+    printf("\n");
+    printf("Input > ");
 }

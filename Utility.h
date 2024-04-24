@@ -6,6 +6,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 
+void printUI(Pile* coloumns[], Pile* foundations[], STATE* state, char[], char*[]);
+
 void populateColoumns(STATE* state, Pile* deck, Pile* coloumns[]);
 
 Card* linkColoumnsToSingleLinkedList(Pile* coloumns[]);
