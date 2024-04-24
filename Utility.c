@@ -48,7 +48,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"LD"))
         {
             loadDeckFromFile(deck,argument);
-            populateColoumns(deck,coloumns);
+            populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
@@ -59,20 +59,20 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         {
             // TODO SL
             splitDeck(deck,coloumns,atoi(argument));
-            populateColoumns(deck,coloumns);
+            populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SR"))
         {
             // TODO SR
             shuffleDeck(deck,coloumns);
-            populateColoumns(deck,coloumns);
+            populateColoumns(state,deck,coloumns);
 
         }
         if (stringsAreEqual(commandToExectute,"SD"))
         {
             // TODO SD
             saveDeckFromColoumnsToFile(coloumns,argument);
-            populateColoumns(deck,coloumns);
+            populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
         {
@@ -83,7 +83,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         {
             *state = PLAY;
             saveDeckFromColoumnsToFile(coloumns,"temp/temp");
-            populateColoumns(deck,coloumns);
+            populateColoumns(state,deck,coloumns);
         }
     }
     else if (*state == PLAY)
@@ -92,6 +92,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         {
             *state = STARTUP;
             loadDeckFromFile(deck,"temp/temp");
+            populateColoumns(state,deck,coloumns);
         }
     }
     printBoard(coloumns,foundations,state);
@@ -148,8 +149,9 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
     }
 }
 
-void populateColoumns (Pile* deck, Pile *coloumns[])
+void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
 {
+    int amountOfCardsInColoumns[7] = {1,6,7,8,9,10,11};
     Card* cardToAddToColoumn;
     cardToAddToColoumn = deck->firstCard;
     for (int i = 0; i < 7; i++)
@@ -162,10 +164,17 @@ void populateColoumns (Pile* deck, Pile *coloumns[])
     }
     for (int i = 0; i < 52; i++)
     {
+        int coloumnToInsertTo = i % 7;
+        while (*state == PLAY && coloumns[coloumnToInsertTo]->size > amountOfCardsInColoumns[coloumnToInsertTo])
+        {
+            coloumnToInsertTo++;
+            coloumnToInsertTo %= 7;
+            printf("%d\n",coloumns[coloumnToInsertTo]->size);
+        }
         if (cardToAddToColoumn == NULL) break;
-        coloumns[i % 7]->lastCard->nextCard = cardToAddToColoumn;
-        coloumns[i%7]->lastCard = cardToAddToColoumn;
-        coloumns[i%7]->size += 1;
+        coloumns[coloumnToInsertTo]->lastCard->nextCard = cardToAddToColoumn;
+        coloumns[coloumnToInsertTo]->lastCard = cardToAddToColoumn;
+        coloumns[coloumnToInsertTo]->size += 1;
         cardToAddToColoumn = cardToAddToColoumn->nextCard;
     }
     for (int i = 0; i < 7; i++)
