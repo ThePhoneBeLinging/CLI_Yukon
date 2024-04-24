@@ -227,7 +227,8 @@ void printUI (Pile *coloumns[], Pile *foundations[], STATE *state, char * comman
 {
     printBoard(coloumns,foundations,state);
     printf("Last Command > %s\n",command);
-    printf("Response > %s",*response);
+    printf("Response > ");
+    if (*response != NULL) printf("%s",*response);
     printf("\n");
     printf("Input > ");
 }
