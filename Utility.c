@@ -153,6 +153,8 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
 void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
 {
     int amountOfCardsInColoumns[7] = {1,6,7,8,9,10,11};
+    // one is subtracted from the facedownCard array, as we manually insert the first card into each array.
+    int faceDownCardsInColoumn[7] = {0,0,1,2,3,4,5};
     Card* cardToAddToColoumn;
     cardToAddToColoumn = deck->firstCard;
     for (int i = 0; i < 7; i++)
@@ -161,6 +163,11 @@ void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
         coloumns[i]->firstCard = cardToAddToColoumn;
         coloumns[i]->lastCard = cardToAddToColoumn;
         coloumns[i]->size += 1;
+        if (*state == PLAY)
+        {
+            if (i == 0) cardToAddToColoumn->faceUp = true;
+            else cardToAddToColoumn->faceUp = false;
+        }
         cardToAddToColoumn = cardToAddToColoumn->nextCard;
     }
     int i = -1;
@@ -168,16 +175,25 @@ void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
     {
         i++;
         int coloumnToInsertTo = i % 7;
-        if (*state == PLAY && coloumns[coloumnToInsertTo]->size >= amountOfCardsInColoumns[coloumnToInsertTo])
+
+        if (*state == PLAY)
         {
-            continue;
+            if (coloumns[coloumnToInsertTo]->size >= amountOfCardsInColoumns[coloumnToInsertTo])
+            {
+                continue;
+            }
+            if (faceDownCardsInColoumn[coloumnToInsertTo] != 0)
+            {
+                faceDownCardsInColoumn[coloumnToInsertTo] --;
+                cardToAddToColoumn->faceUp = false;
+            }
+            else cardToAddToColoumn->faceUp = true;
         }
         //printf("Current coloumn: %d Size of coloumn: %d\n",coloumnToInsertTo, coloumns[coloumnToInsertTo]->size);
         coloumns[coloumnToInsertTo]->lastCard->nextCard = cardToAddToColoumn;
         coloumns[coloumnToInsertTo]->lastCard = cardToAddToColoumn;
         coloumns[coloumnToInsertTo]->size += 1;
         cardToAddToColoumn = cardToAddToColoumn->nextCard;
-
     }
     for (int i = 0; i < 7; i++)
     {
