@@ -162,20 +162,21 @@ void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
         coloumns[i]->size += 1;
         cardToAddToColoumn = cardToAddToColoumn->nextCard;
     }
-    for (int i = 0; i < 52; i++)
+    int i = -1;
+    while (cardToAddToColoumn != NULL)
     {
+        i++;
         int coloumnToInsertTo = i % 7;
-        while (*state == PLAY && coloumns[coloumnToInsertTo]->size > amountOfCardsInColoumns[coloumnToInsertTo])
+        if (*state == PLAY && coloumns[coloumnToInsertTo]->size >= amountOfCardsInColoumns[coloumnToInsertTo])
         {
-            coloumnToInsertTo++;
-            coloumnToInsertTo %= 7;
-            printf("%d\n",coloumns[coloumnToInsertTo]->size);
+            continue;
         }
-        if (cardToAddToColoumn == NULL) break;
+        //printf("Current coloumn: %d Size of coloumn: %d\n",coloumnToInsertTo, coloumns[coloumnToInsertTo]->size);
         coloumns[coloumnToInsertTo]->lastCard->nextCard = cardToAddToColoumn;
         coloumns[coloumnToInsertTo]->lastCard = cardToAddToColoumn;
         coloumns[coloumnToInsertTo]->size += 1;
         cardToAddToColoumn = cardToAddToColoumn->nextCard;
+
     }
     for (int i = 0; i < 7; i++)
     {
