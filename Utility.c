@@ -123,7 +123,7 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
             {
                 printf("\t");
             }
-            if (cardToPrint == NULL && i <= 7) printf("\t");
+            //if (cardToPrint == NULL && i <= 7) printf("\t");
             if (coloumns[k]->size <= i) continue;
             for (int j = 0; j < i; j++)
             {
@@ -145,8 +145,9 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
             foundationsDrawn++;
         }
 
-        if (addedToPrint || i <=7) printf("\n");
+        if (addedToPrint || i <=8) printf("\n");
     }
+    printf("\n");
 }
 
 void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
