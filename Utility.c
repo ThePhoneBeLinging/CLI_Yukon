@@ -119,7 +119,7 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
         for (int k = 0; k < 7; k++)
         {
             Card* cardToPrint = coloumns[k]->firstCard;
-            if (k != 0 && coloumns[k]->size > i)
+            if (k != 0)
             {
                 printf("\t");
             }
