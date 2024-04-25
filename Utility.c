@@ -254,6 +254,61 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
 {
     BeginDrawing();
     ClearBackground(WHITE);
+    int x = 0;
+    int y = 0;
+    if(hasDeckBeenLoaded(coloumns))
+    {
+        // Print Coloumn names
+        for (int i = 1; i < 8; i++)
+        {
+            DrawText(TextFormat("C%d",i),x,y,15,BLACK);
+            x += 100;
+        }
+        x = 0;
+        y += 25;
+        int foundationsDrawn = 0;
+        for (int i = 0; i < 52; i++)
+        {
+            bool addedToPrint = false;
+            for (int k = 0; k < 7; k++)
+            {
+                Card* cardToPrint = coloumns[k]->firstCard;
+                if (k != 0)
+                {
+                    x += 25;
+                }
+                //if (cardToPrint == NULL && i <= 7) printf("\t");
+                if (coloumns[k]->size <= i) continue;
+                for (int j = 0; j < i; j++)
+                {
+                    if (cardToPrint->nextCard == NULL) break;
+                    cardToPrint = cardToPrint->nextCard;
+                }
+                if (cardToPrint->faceUp) DrawText(TextFormat("%c%c", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit),x,y,15,BLACK);
+                else printf("[]");
+
+                addedToPrint = true;
+            }
+            if (i % 2 == 0 && foundationsDrawn < 4)
+            {
+                printf("\t\t");
+                if (foundations[foundationsDrawn]->lastCard == NULL) printf("[]");
+                else printf("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit);
+                printf("\tF%d",foundationsDrawn+1);
+                addedToPrint = true;
+                foundationsDrawn++;
+            }
+
+            if (addedToPrint || i <=8)
+            {
+                x = 0;
+                y += 25;
+            }
+        }
+        x = 0;
+        y += 25;
+
+    }
     DrawText("Hello world",200,200,15,BLACK);
     EndDrawing();
 }
