@@ -275,7 +275,7 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
                 Card* cardToPrint = coloumns[k]->firstCard;
                 if (k != 0)
                 {
-                    x += 25;
+                    x += 100;
                 }
                 //if (cardToPrint == NULL && i <= 7) printf("\t");
                 if (coloumns[k]->size <= i) continue;
@@ -285,16 +285,17 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
                     cardToPrint = cardToPrint->nextCard;
                 }
                 if (cardToPrint->faceUp) DrawText(TextFormat("%c%c", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit),x,y,15,BLACK);
-                else printf("[]");
+                else DrawText("[]",x,y,15,BLACK);
 
                 addedToPrint = true;
             }
             if (i % 2 == 0 && foundationsDrawn < 4)
             {
-                printf("\t\t");
-                if (foundations[foundationsDrawn]->lastCard == NULL) printf("[]");
-                else printf("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit);
-                printf("\tF%d",foundationsDrawn+1);
+                x += 100;
+                if (foundations[foundationsDrawn]->lastCard == NULL) DrawText("[]",x,y,15,BLACK);
+                else DrawText(TextFormat("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit),x,y,15,BLACK);
+                x += 50;
+                DrawText(TextFormat("F%d",foundationsDrawn+1),x,y,15,BLACK);
                 addedToPrint = true;
                 foundationsDrawn++;
             }
@@ -309,6 +310,5 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
         y += 25;
 
     }
-    DrawText("Hello world",200,200,15,BLACK);
     EndDrawing();
 }

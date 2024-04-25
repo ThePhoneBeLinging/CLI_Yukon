@@ -24,8 +24,8 @@ int main (void)
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
-        drawFrame(coloumns,foundations,&state);
         handleInput(&deck,coloumns,foundations,&state,inputStr);
+        drawFrame(coloumns,foundations,&state);
     }
     CloseWindow();
     return 0;
