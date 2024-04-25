@@ -42,13 +42,25 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     // Use strcmp to compare strings in future switch
 
     char* commandToExectute = &command[0];
-    if (*state == STARTUP)
+    if (*state == NODECK)
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
             loadDeckFromFile(deck,argument, response);
             populateColoumns(state,deck,coloumns);
+            *state = STARTUP;
         }
+        else
+        {
+            response[0] = "No deck has been loaded";
+        }
+    }
+    if (stringsAreEqual(commandToExectute,"QQ"))
+    {
+        exit(1);
+    }
+    if (*state == STARTUP)
+    {
         if (stringsAreEqual(commandToExectute,"SW"))
         {
             showDeck(coloumns, response);
@@ -72,11 +84,6 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             // TODO SD
             saveDeckFromColoumnsToFile(coloumns,argument,response);
             populateColoumns(state,deck,coloumns);
-        }
-        if (stringsAreEqual(commandToExectute,"QQ"))
-        {
-            exit(1);
-
         }
         if (stringsAreEqual(commandToExectute,"P"))
         {
