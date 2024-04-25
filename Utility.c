@@ -367,7 +367,7 @@ void initializeTextures (Texture2D* textures[13][4])
             strcat(fileToLoad,".png");
             Texture2D texture = LoadTexture(fileToLoad);
             *textures[i][k] = texture;
-            if (texture.id == 0) initializeTextures(textures);
+            if (texture.id == 0) k--;
         }
     }
 }
