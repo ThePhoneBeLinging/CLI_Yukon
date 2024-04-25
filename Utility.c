@@ -254,7 +254,7 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
 {
     BeginDrawing();
     ClearBackground(WHITE);
-    int x = 0;
+    int x = 5;
     int y = 0;
     if(hasDeckBeenLoaded(coloumns))
     {
@@ -264,7 +264,7 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
             DrawText(TextFormat("C%d",i),x,y,15,BLACK);
             x += 100;
         }
-        x = 0;
+        x = 5;
         y += 25;
         int foundationsDrawn = 0;
         for (int i = 0; i < 52; i++)
@@ -302,11 +302,11 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
 
             if (addedToPrint || i <=8)
             {
-                x = 0;
+                x = 5;
                 y += 25;
             }
         }
-        x = 0;
+        x = 5;
         y += 25;
 
     }
