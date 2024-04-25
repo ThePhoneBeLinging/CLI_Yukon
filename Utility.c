@@ -257,7 +257,7 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* tex
     texture.height = 100;
     texture.width = texture.height * 0.7159090909;
     BeginDrawing();
-    ClearBackground(WHITE);
+    ClearBackground(GRAY);
     int x = 5;
     int y = 0;
     if(hasDeckBeenLoaded(coloumns))
@@ -346,8 +346,7 @@ void initializeTextures (Texture2D* textures[13][4])
                     strcat(fileToLoad,"king");
                     break;
                 default:
-                    char appendNum = i + 1 + '0';
-                    strcat(fileToLoad,&appendNum);
+                    strcat(fileToLoad, TextFormat("%d",i+1));
             }
             strcat(fileToLoad,"_of_");
             switch (k)
@@ -368,6 +367,7 @@ void initializeTextures (Texture2D* textures[13][4])
             strcat(fileToLoad,".png");
             Texture2D texture = LoadTexture(fileToLoad);
             *textures[i][k] = texture;
+            if (texture.id == 0) initializeTextures(textures);
         }
     }
 }
