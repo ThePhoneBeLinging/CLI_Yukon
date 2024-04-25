@@ -20,12 +20,11 @@ int main (void)
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
 
     InitWindow(screenWidth, screenHeight, "Yukon - Solitaire");
-    SetTargetFPS(30);
+    SetTargetFPS(60);
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
         handleInput(&deck,coloumns,foundations,&state,inputStr);
-        drawFrame(coloumns,foundations,&state);
     }
     CloseWindow();
     return 0;

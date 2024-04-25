@@ -105,6 +105,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     }
     if (*state == FIRSTPRINT) *state = NODECK;
     printUI(coloumns,foundations,state,command,response);
+    drawFrame(coloumns,foundations,state);
     scanf(" %[^\n]s",inputStr);
 
 }
