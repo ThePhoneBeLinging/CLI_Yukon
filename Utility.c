@@ -110,7 +110,7 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
     }
     printf("\n\n");
     int foundationsDrawn = 0;
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 52; i++)
     {
         bool addedToPrint = false;
         for (int k = 0; k < 7; k++)
