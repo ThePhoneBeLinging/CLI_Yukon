@@ -13,3 +13,5 @@ void populateColoumns(STATE* state, Pile* deck, Pile* coloumns[]);
 Card* linkColoumnsToSingleLinkedList(Pile* coloumns[]);
 
 FILE* getFilePointer(char* fileName, char* readMode);
+
+bool hasDeckBeenLoaded(Pile* coloumns[]);

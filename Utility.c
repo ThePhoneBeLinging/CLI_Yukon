@@ -231,3 +231,12 @@ void printUI (Pile *coloumns[], Pile *foundations[], STATE *state, char * comman
     printf("\n");
     printf("Input > ");
 }
+
+bool hasDeckBeenLoaded (Pile **coloumns)
+{
+    for (int i = 0; i < 7; i ++)
+    {
+        if (coloumns[i]->size == 0) return false;
+    }
+    return true;
+}

@@ -123,16 +123,9 @@ void showDeck (Pile* coloumns[], char* response[])
             currentCard = currentCard->nextCard;
         }
     }
-    for (int i = 0; i < 7; i++)
-    {
-        if (coloumns[i]->size == 0) break;
-        if (i == 6)
-        {
-            response[0] = "Cards shown successfully";
-            return;
-        }
-    }
-    response[0] = "No deck has been loaded";
+
+    if (hasDeckBeenLoaded(coloumns)) response[0] = "Cards shown successfully";
+    else response[0] = "No deck has been loaded";
 }
 
 int getIntFromCardLetter (char letter)
@@ -221,9 +214,16 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt, char* response[])
         i++;
         if (i > 52) break;
     }
+    if (hasDeckBeenLoaded(coloumns)) response[0] = "Deck has been split";
+    else response[0] = "No deck has been loaded";
 }
 
 void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
+    if (!hasDeckBeenLoaded(coloumns))
+    {
+        response[0] = "No deck has been loaded";
+        return;
+    }
     srand(time(NULL));
 
     deck->firstCard =NULL;
@@ -274,4 +274,5 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
 
     *deck = *shuffledDeck;
     free(shuffledDeck);
+    response[0] = "Deck has been shuffled";
 }
