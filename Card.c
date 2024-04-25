@@ -123,7 +123,16 @@ void showDeck (Pile* coloumns[], char* response[])
             currentCard = currentCard->nextCard;
         }
     }
-
+    for (int i = 0; i < 7; i++)
+    {
+        if (coloumns[i]->size == 0) break;
+        if (i == 6)
+        {
+            response[0] = "Cards shown successfully";
+            return;
+        }
+    }
+    response[0] = "No deck has been loaded";
 }
 
 int getIntFromCardLetter (char letter)
