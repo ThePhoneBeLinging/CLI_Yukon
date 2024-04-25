@@ -52,7 +52,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         else
         {
-            response[0] = "No deck has been loaded";
+            response[0] = "Use 'LD' to load a deck";
         }
     }
     if (stringsAreEqual(commandToExectute,"QQ"))
@@ -87,10 +87,10 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         if (stringsAreEqual(commandToExectute,"P"))
         {
-            if (deck->firstCard == NULL) response[0] = "No deck has been loaded";
             *state = PLAY;
             saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
             populateColoumns(state,deck,coloumns);
+            response[0] = "Let the games begin...";
         }
     }
     else if (*state == PLAY)
@@ -102,6 +102,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             populateColoumns(state,deck,coloumns);
         }
     }
+    if (*state == FIRSTPRINT) *state = NODECK;
     printUI(coloumns,foundations,state,command,response);
     scanf(" %[^\n]s",inputStr);
 

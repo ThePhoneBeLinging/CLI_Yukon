@@ -6,7 +6,7 @@
 int main (void)
 {
     // Set the current phase to the startup phase
-    STATE state = NODECK;
+    STATE state = FIRSTPRINT;
     Pile deck;
     int AMOUNT_OF_COLOUMNS = 7;
     int AMOUNT_OF_FOUNDATIONS = 4;
