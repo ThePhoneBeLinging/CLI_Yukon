@@ -7,8 +7,8 @@
 
 int main (void)
 {
-    int screenHeight = 500;
-    int screenWidth = 800;
+    int screenHeight = 800;
+    int screenWidth = 1400;
     // Set the current phase to the startup phase
     STATE state = FIRSTPRINT;
     Pile deck;

@@ -104,8 +104,8 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
     }
     if (*state == FIRSTPRINT) *state = NODECK;
-    printUI(coloumns,foundations,state,command,response);
     drawFrame(coloumns,foundations,state);
+    printUI(coloumns,foundations,state,command,response);
     scanf(" %[^\n]s",inputStr);
 
 }
@@ -253,6 +253,9 @@ bool hasDeckBeenLoaded (Pile **coloumns)
 
 void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
 {
+    Texture2D texture = LoadTexture("../PNG-cards-1.3/unshown.png");
+    texture.height = 100;
+    texture.width = texture.height * 0.7159090909;
     BeginDrawing();
     ClearBackground(WHITE);
     int x = 5;
@@ -286,22 +289,22 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
                     cardToPrint = cardToPrint->nextCard;
                 }
                 if (cardToPrint->faceUp) DrawText(TextFormat("%c%c", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit),x,y,15,BLACK);
-                else DrawText("[]",x,y,15,BLACK);
+                else DrawTexture(texture,x,y,WHITE);
 
                 addedToPrint = true;
             }
-            if (i % 2 == 0 && foundationsDrawn < 4)
+            if (i % 4 == 0 && foundationsDrawn < 4)
             {
                 x += 100;
-                if (foundations[foundationsDrawn]->lastCard == NULL) DrawText("[]",x,y,15,BLACK);
+                if (foundations[foundationsDrawn]->lastCard == NULL) DrawRectangleLines(x,y,texture.width,texture.height,BLACK);
                 else DrawText(TextFormat("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit),x,y,15,BLACK);
-                x += 50;
+                x += texture.width + 5;
                 DrawText(TextFormat("F%d",foundationsDrawn+1),x,y,15,BLACK);
                 addedToPrint = true;
                 foundationsDrawn++;
             }
 
-            if (addedToPrint || i <=8)
+            if (addedToPrint || i <=16)
             {
                 x = 5;
                 y += 25;
@@ -311,5 +314,6 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
         y += 25;
 
     }
+
     EndDrawing();
 }
