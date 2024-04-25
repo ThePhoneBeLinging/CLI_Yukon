@@ -51,26 +51,26 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
         if (stringsAreEqual(commandToExectute,"SW"))
         {
-            showDeck(coloumns);
+            showDeck(coloumns, response);
 
         }
         if (stringsAreEqual(commandToExectute,"SI"))
         {
             // TODO SL
-            splitDeck(deck,coloumns,atoi(argument));
+            splitDeck(deck,coloumns,atoi(argument),response);
             populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SR"))
         {
             // TODO SR
-            shuffleDeck(deck,coloumns);
+            shuffleDeck(deck,coloumns,response);
             populateColoumns(state,deck,coloumns);
 
         }
         if (stringsAreEqual(commandToExectute,"SD"))
         {
             // TODO SD
-            saveDeckFromColoumnsToFile(coloumns,argument);
+            saveDeckFromColoumnsToFile(coloumns,argument,response);
             populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"QQ"))
@@ -82,7 +82,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         {
             if (deck->firstCard == NULL) response[0] = "No deck has been loaded";
             *state = PLAY;
-            saveDeckFromColoumnsToFile(coloumns,"temp/temp");
+            saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
             populateColoumns(state,deck,coloumns);
         }
     }

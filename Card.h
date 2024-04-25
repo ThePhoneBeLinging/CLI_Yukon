@@ -20,10 +20,10 @@ typedef struct{
 
 void mallocPileArr (Pile** pile, int size);
 void loadDeckFromFile(Pile* deck, char fileName[], char* response[]);
-void showDeck(Pile* coloumn[]);
+void showDeck(Pile* coloumn[], char* response[]);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);
-void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt);
+void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt, char* response[]);
 FILE* getFilePointer(char* fileName, char* readMode);
-void shuffleDeck(Pile* deck, Pile * coloumns[]);
-void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[]);
+void shuffleDeck(Pile* deck, Pile * coloumns[], char* responsee[]);
+void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[],char* response[]);

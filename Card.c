@@ -21,7 +21,7 @@ void mallocPileArr (Pile** pile, int size)
     }
 }
 
-void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
+void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName, char* response[])
 {
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
@@ -38,7 +38,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     FILE* filePTR = getFilePointer(fileToLoad,"w");
     if (filePTR == NULL)
     {
-        printf("File not found");
+        response = "File not found";
         return;
     }
 
@@ -49,6 +49,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
         iterationCard = iterationCard->nextCard;
     }
     fclose(filePTR);
+    if (response != NULL) response[0] = "File saved successfully";
 }
 
 void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
@@ -111,7 +112,7 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
 
 }
 
-void showDeck (Pile* coloumns[])
+void showDeck (Pile* coloumns[], char* response[])
 {
     for (int i = 0; i < 7; i++)
     {
@@ -146,7 +147,7 @@ char getCharFromCardNumber (int cardNumber)
 
 }
 
-void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
+void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt, char* response[])
 {
     if (toSplitAt == 0)
     {
@@ -213,7 +214,7 @@ void splitDeck (Pile* deck, Pile * coloumns[],int toSplitAt)
     }
 }
 
-void shuffleDeck(Pile* deck, Pile * coloumns[]){
+void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
     srand(time(NULL));
 
     deck->firstCard =NULL;
