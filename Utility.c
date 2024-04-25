@@ -46,7 +46,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     {
         if (stringsAreEqual(commandToExectute,"LD"))
         {
-            loadDeckFromFile(deck,argument);
+            loadDeckFromFile(deck,argument, response);
             populateColoumns(state,deck,coloumns);
         }
         if (stringsAreEqual(commandToExectute,"SW"))
@@ -91,7 +91,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         if (stringsAreEqual(commandToExectute,"Q"))
         {
             *state = STARTUP;
-            loadDeckFromFile(deck,"temp/temp");
+            loadDeckFromFile(deck,"temp/temp",response);
             populateColoumns(state,deck,coloumns);
         }
     }

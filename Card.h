@@ -19,7 +19,7 @@ typedef struct{
 } Pile;
 
 void mallocPileArr (Pile** pile, int size);
-void loadDeckFromFile(Pile* deck, char fileName[]);
+void loadDeckFromFile(Pile* deck, char fileName[], char* response[]);
 void showDeck(Pile* coloumn[]);
 int getIntFromCardLetter(char letter);
 char getCharFromCardNumber(int cardNumber);

@@ -51,7 +51,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName)
     fclose(filePTR);
 }
 
-void loadDeckFromFile (Pile *deck, char *fileName)
+void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
 {
     char fileToLoad[50];
     strcpy(fileToLoad, "../");
@@ -68,7 +68,7 @@ void loadDeckFromFile (Pile *deck, char *fileName)
     FILE* filePTR = getFilePointer(fileToLoad,"r");
     if (filePTR == NULL)
     {
-        printf("File not found");
+        response[0] = "File not found";
         return;
     }
     Card* cards[52];
@@ -103,6 +103,12 @@ void loadDeckFromFile (Pile *deck, char *fileName)
         }
         i++;
     }
+    //TODO insert check if deck is complete
+    if (true)
+    {
+        response[0] = "Successfully loaded deck";
+    }
+
 }
 
 void showDeck (Pile* coloumns[])
