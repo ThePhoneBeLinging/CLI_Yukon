@@ -288,7 +288,7 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* tex
                     if (cardToPrint->nextCard == NULL) break;
                     cardToPrint = cardToPrint->nextCard;
                 }
-                if (cardToPrint->faceUp) DrawText(TextFormat("%c%c", getCharFromCardNumber(cardToPrint->number), cardToPrint->suit),x,y,15,BLACK);
+                if (cardToPrint->faceUp) DrawTexture(cardToTexture(*cardToPrint,textures),x,y,WHITE);
                 else DrawTexture(texture,x,y,WHITE);
 
                 addedToPrint = true;
@@ -372,7 +372,7 @@ void initializeTextures (Texture2D* textures[13][4])
     }
 }
 
-Texture2D cardToTexture (Card card, Texture2D textures[13][4])
+Texture2D cardToTexture (Card card, Texture2D* textures[13][4])
 {
     int suitNumber = -1;
     switch(card.suit)
@@ -390,5 +390,8 @@ Texture2D cardToTexture (Card card, Texture2D textures[13][4])
             suitNumber = 3;
             break;
     }
-    if (suitNumber != -1) return textures[card.number][suitNumber];
+    Texture2D textureToReturn = *textures[card.number - 1][suitNumber];
+    textureToReturn.height = 100;
+    textureToReturn.width = textureToReturn.height * 0.71;
+    return textureToReturn;
 }
