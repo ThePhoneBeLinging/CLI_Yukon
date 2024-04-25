@@ -20,3 +20,4 @@ bool hasDeckBeenLoaded(Pile* coloumns[]);
 void drawFrame(Pile* coloumns[], Pile* foundations[], STATE* state);
 
 void initializeTextures(Texture2D* textures[13][4]);
+Texture2D cardToTexture(Card card, Texture2D textures[13][4]);

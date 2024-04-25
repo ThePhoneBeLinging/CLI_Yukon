@@ -330,7 +330,7 @@ void initializeTextures (Texture2D* textures[13][4])
 
             switch (i)
             {
-                case 1:
+                case 0:
                     strcat(fileToLoad,"ace");
                     break;
                 case 9:
@@ -370,4 +370,25 @@ void initializeTextures (Texture2D* textures[13][4])
             *textures[i][k] = texture;
         }
     }
+}
+
+Texture2D cardToTexture (Card card, Texture2D textures[13][4])
+{
+    int suitNumber = -1;
+    switch(card.suit)
+    {
+        case 'C':
+            suitNumber = 0;
+            break;
+        case 'D':
+            suitNumber = 1;
+            break;
+        case 'H':
+            suitNumber = 2;
+            break;
+        case 'S':
+            suitNumber = 3;
+            break;
+    }
+    if (suitNumber != -1) return textures[card.number][suitNumber];
 }
