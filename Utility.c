@@ -10,7 +10,7 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[])
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],Texture2D* textures[13][4])
 {
     //The scanf function adds all given characters to the char arr, until a next line is given.
 
@@ -104,7 +104,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
         }
     }
     if (*state == FIRSTPRINT) *state = NODECK;
-    drawFrame(coloumns,foundations,state);
+    drawFrame(coloumns,foundations,state,textures);
     printUI(coloumns,foundations,state,command,response);
     scanf(" %[^\n]s",inputStr);
 
@@ -251,7 +251,7 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
+void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* textures[13][4])
 {
     Texture2D texture = LoadTexture("../PNG-cards-1.3/unshown.png");
     texture.height = 100;

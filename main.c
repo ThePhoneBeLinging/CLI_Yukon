@@ -35,7 +35,7 @@ int main (void)
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
-        handleInput(&deck,coloumns,foundations,&state,inputStr);
+        handleInput(&deck,coloumns,foundations,&state,inputStr,textures);
     }
     CloseWindow();
     return 0;
