@@ -15,3 +15,5 @@ Card* linkColoumnsToSingleLinkedList(Pile* coloumns[]);
 FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
+
+void drawFrame(Pile* coloumns[], Pile* foundations[], STATE* state);

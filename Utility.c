@@ -1,6 +1,7 @@
 #include <string.h>
 #include "Card.h"
 #include "Utility.h"
+#include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -247,4 +248,12 @@ bool hasDeckBeenLoaded (Pile **coloumns)
         if (coloumns[i]->size == 0) return false;
     }
     return true;
+}
+
+void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
+{
+    BeginDrawing();
+    ClearBackground(WHITE);
+    DrawText("Hello world",200,200,15,BLACK);
+    EndDrawing();
 }

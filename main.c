@@ -3,8 +3,12 @@
 #include <string.h>
 #include "Card.h"
 #include "Utility.h"
+#include "raylib.h"
+
 int main (void)
 {
+    int screenHeight = 500;
+    int screenWidth = 800;
     // Set the current phase to the startup phase
     STATE state = FIRSTPRINT;
     Pile deck;
@@ -14,10 +18,15 @@ int main (void)
     Pile* foundations[AMOUNT_OF_FOUNDATIONS];
     mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
+
+    InitWindow(screenWidth, screenHeight, "Yukon - Solitaire");
+    SetTargetFPS(30);
     char inputStr[50] = {};
-    while (true)
+    while (!WindowShouldClose())
     {
+        drawFrame(coloumns,foundations,&state);
         handleInput(&deck,coloumns,foundations,&state,inputStr);
     }
+    CloseWindow();
     return 0;
 }
