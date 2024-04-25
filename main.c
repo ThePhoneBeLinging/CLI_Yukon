@@ -9,6 +9,18 @@ int main (void)
 {
     int screenHeight = 800;
     int screenWidth = 1400;
+    InitWindow(screenWidth, screenHeight, "Yukon - Solitaire");
+    SetTargetFPS(60);
+    Texture2D* textures[13][4];
+    for (int i = 0; i < 13; i++)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            textures[i][k] = malloc(sizeof(Texture2D));
+        }
+    }
+    initializeTextures(textures);
+
     // Set the current phase to the startup phase
     STATE state = FIRSTPRINT;
     Pile deck;
@@ -19,8 +31,7 @@ int main (void)
     mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
     mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
 
-    InitWindow(screenWidth, screenHeight, "Yukon - Solitaire");
-    SetTargetFPS(60);
+
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {

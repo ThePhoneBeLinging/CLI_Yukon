@@ -317,3 +317,57 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state)
 
     EndDrawing();
 }
+
+void initializeTextures (Texture2D* textures[13][4])
+{
+    char fileToLoad[50];
+    for (int i = 0; i < 13; i++)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            printf("%d,%d\n",i,k);
+            strcpy(fileToLoad,"../PNG-cards-1.3/");
+
+            switch (i)
+            {
+                case 1:
+                    strcat(fileToLoad,"ace");
+                    break;
+                case 9:
+                    strcat(fileToLoad,"10");
+                    break;
+                case 10:
+                    strcat(fileToLoad,"jack");
+                    break;
+                case 11:
+                    strcat(fileToLoad,"queen");
+                    break;
+                case 12:
+                    strcat(fileToLoad,"king");
+                    break;
+                default:
+                    char appendNum = i + 1 + '0';
+                    strcat(fileToLoad,&appendNum);
+            }
+            strcat(fileToLoad,"_of_");
+            switch (k)
+            {
+                case 0:
+                    strcat(fileToLoad,"clubs");
+                    break;
+                case 1:
+                    strcat(fileToLoad,"diamonds");
+                    break;
+                case 2:
+                    strcat(fileToLoad,"hearts");
+                    break;
+                case 3:
+                    strcat(fileToLoad,"spades");
+                    break;
+            }
+            strcat(fileToLoad,".png");
+            Texture2D texture = LoadTexture(fileToLoad);
+            *textures[i][k] = texture;
+        }
+    }
+}

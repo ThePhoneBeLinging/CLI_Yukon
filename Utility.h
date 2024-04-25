@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include "raylib.h"
 
 bool stringsAreEqual(char* firstString, char* secondsString);
 
@@ -17,3 +18,5 @@ FILE* getFilePointer(char* fileName, char* readMode);
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
 void drawFrame(Pile* coloumns[], Pile* foundations[], STATE* state);
+
+void initializeTextures(Texture2D* textures[13][4]);
