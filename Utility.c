@@ -40,7 +40,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             splitDeck(deck,coloumns,atoi(argument),response);
             populateColoumns(state,deck,coloumns);
         }
-        if (command == SPLITDECK)
+        if (command == SHUFFLEDECK)
         {
             shuffleDeck(deck,coloumns,response);
             populateColoumns(state,deck,coloumns);
@@ -57,6 +57,10 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
             populateColoumns(state,deck,coloumns);
             response[0] = "Let the games begin...";
+        }
+        if (command == QUITGAME)
+        {
+            exit(0);
         }
     }
     else if (*state == PLAY)
@@ -386,7 +390,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     int x = 0;
     int y = 700;
     int buttonHeight = 100;
-    int buttonWidth = 250;
+    int buttonWidth = 150;
 
     buttons[0]->height = buttonHeight;
     buttons[0]->width = buttonWidth;
@@ -395,5 +399,57 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[0]->x = x;
     buttons[0]->y = y;
 
-    x+=buttonWidth + 50;
+    x += buttonWidth + 50;
+
+    buttons[1]->height = buttonHeight;
+    buttons[1]->width = buttonWidth;
+    buttons[1]->text = "Show";
+    buttons[1]->commandToExecute = SHOWDECK;
+    buttons[1]->x = x;
+    buttons[1]->y = y;
+
+    x += buttonWidth + 50;
+
+    buttons[2]->height = buttonHeight;
+    buttons[2]->width = buttonWidth;
+    buttons[2]->text = "Split";
+    buttons[2]->commandToExecute = SPLITDECK;
+    buttons[2]->x = x;
+    buttons[2]->y = y;
+
+    x += buttonWidth + 50;
+
+    buttons[3]->height = buttonHeight;
+    buttons[3]->width = buttonWidth;
+    buttons[3]->text = "Shuffle";
+    buttons[3]->commandToExecute = SHUFFLEDECK;
+    buttons[3]->x = x;
+    buttons[3]->y = y;
+
+    x += buttonWidth + 50;
+
+    buttons[4]->height = buttonHeight;
+    buttons[4]->width = buttonWidth;
+    buttons[4]->text = "Save";
+    buttons[4]->commandToExecute = SAVEDECK;
+    buttons[4]->x = x;
+    buttons[4]->y = y;
+
+    x += buttonWidth + 50;
+
+    buttons[5]->height = buttonHeight;
+    buttons[5]->width = buttonWidth;
+    buttons[5]->text = "Start";
+    buttons[5]->commandToExecute = STARTGAME;
+    buttons[5]->x = x;
+    buttons[5]->y = y;
+
+    x += buttonWidth + 50;
+
+buttons[6]->height = buttonHeight;
+    buttons[6]->width = buttonWidth;
+    buttons[6]->text = "Quit";
+    buttons[6]->commandToExecute = QUITGAME;
+    buttons[6]->x = x;
+    buttons[6]->y = y;
 }

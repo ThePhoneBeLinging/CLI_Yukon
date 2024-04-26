@@ -25,7 +25,7 @@ int main (void)
     faceDownCard.width = faceDownCard.height * 0.7159090909;
 
     //Remember to update the for loop in drawFrame as well (not optimal, but oh well)
-    int amountOfButtons = 1;
+    int amountOfButtons = 7;
     Button* buttons[amountOfButtons];
     createButtons(buttons,amountOfButtons);
 
