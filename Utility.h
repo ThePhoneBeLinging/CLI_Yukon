@@ -1,9 +1,10 @@
 #include "StateMachine.h"
 #include "raylib.h"
+#include "Commands.h"
 
 bool stringsAreEqual(char* firstString, char* secondsString);
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],Texture2D* textures[13][4]);
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, COMMAND command);
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 
@@ -17,7 +18,7 @@ FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
-void drawFrame(Pile* coloumns[], Pile* foundations[], STATE* state,Texture2D* textures[13][4]);
+void drawFrame(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state,Texture2D* textures[13][4],Texture2D faceDownCard,Texture2D buttonTextures[]);
 
 void initializeTextures(Texture2D* textures[13][4]);
 Texture2D cardToTexture(Card card, Texture2D* textures[13][4]);

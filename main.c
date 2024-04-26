@@ -20,6 +20,9 @@ int main (void)
         }
     }
     initializeTextures(textures);
+    Texture2D faceDownCard = LoadTexture("../PNG-cards-1.3/unshown.png");
+    faceDownCard.height = 100;
+    faceDownCard.width = faceDownCard.height * 0.7159090909;
 
     // Set the current phase to the startup phase
     STATE state = FIRSTPRINT;
@@ -35,7 +38,7 @@ int main (void)
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
-        handleInput(&deck,coloumns,foundations,&state,inputStr,textures);
+        drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard);
     }
     CloseWindow();
     return 0;

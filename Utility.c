@@ -10,83 +10,48 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],Texture2D* textures[13][4])
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, COMMAND command)
 {
-    //The scanf function adds all given characters to the char arr, until a next line is given.
-
-    char command[50] = {0};
-    char argument[50]= {0};
-    char* response[50] = {0};
-    int indexOfFirstSpace = 0;
-    int workingIndex = 0;
-    for (int i = indexOfFirstSpace; i < 50; i++)
+    // response is currently not used
+    char* response[50];
+    char* argument = "";
+    if (*state == NODECK || *state == STARTUP)
     {
-        if (inputStr[i] == ' ')
-        {
-            if (indexOfFirstSpace != 0) break;
-            indexOfFirstSpace = i + 1;
-            workingIndex = 0;
-            continue;
-        }
-        if (indexOfFirstSpace == 0)
-        {
-            command[workingIndex] = inputStr[i];
-        }
-        else
-        {
-            argument[workingIndex] = inputStr[i];
-        }
-        workingIndex++;
-    }
-    //Command is now an array of char*, containing all letters before the first space
-    //Argument is now an array of char*, specifying whatever came after the first space in inputStr.
-    // Use strcmp to compare strings in future switch
-
-    char* commandToExectute = &command[0];
-    if (*state == NODECK)
-    {
-        if (stringsAreEqual(commandToExectute,"LD"))
+        if (command == LOADDECK)
         {
             loadDeckFromFile(deck,argument, response);
             populateColoumns(state,deck,coloumns);
             *state = STARTUP;
         }
-        else
+        else if (*state == NODECK)
         {
             response[0] = "Use 'LD' to load a deck";
         }
     }
-    if (stringsAreEqual(commandToExectute,"QQ"))
-    {
-        exit(1);
-    }
     if (*state == STARTUP)
     {
-        if (stringsAreEqual(commandToExectute,"SW"))
+        if (command == SHOWDECK)
         {
             showDeck(coloumns, response);
 
         }
-        if (stringsAreEqual(commandToExectute,"SI"))
+        if (command == SPLITDECK)
         {
-            // TODO SL
             splitDeck(deck,coloumns,atoi(argument),response);
             populateColoumns(state,deck,coloumns);
         }
-        if (stringsAreEqual(commandToExectute,"SR"))
+        if (command == SPLITDECK)
         {
-            // TODO SR
             shuffleDeck(deck,coloumns,response);
             populateColoumns(state,deck,coloumns);
 
         }
-        if (stringsAreEqual(commandToExectute,"SD"))
+        if (command == SAVEDECK)
         {
-            // TODO SD
             saveDeckFromColoumnsToFile(coloumns,argument,response);
             populateColoumns(state,deck,coloumns);
         }
-        if (stringsAreEqual(commandToExectute,"P"))
+        if (command == STARTGAME)
         {
             *state = PLAY;
             saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
@@ -96,18 +61,13 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     }
     else if (*state == PLAY)
     {
-        if (stringsAreEqual(commandToExectute,"Q"))
+        if (command == QUITGAME)
         {
             *state = STARTUP;
             loadDeckFromFile(deck,"temp/temp",response);
             populateColoumns(state,deck,coloumns);
         }
     }
-    if (*state == FIRSTPRINT) *state = NODECK;
-    drawFrame(coloumns,foundations,state,textures);
-    printUI(coloumns,foundations,state,command,response);
-    scanf(" %[^\n]s",inputStr);
-
 }
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
@@ -251,11 +211,9 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* textures[13][4])
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Texture2D buttonTextures[])
 {
-    Texture2D texture = LoadTexture("../PNG-cards-1.3/unshown.png");
-    texture.height = 100;
-    texture.width = texture.height * 0.7159090909;
+    // Print board
     BeginDrawing();
     ClearBackground(GRAY);
     int x = 5;
@@ -289,16 +247,16 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* tex
                     cardToPrint = cardToPrint->nextCard;
                 }
                 if (cardToPrint->faceUp) DrawTexture(cardToTexture(*cardToPrint,textures),x,y,WHITE);
-                else DrawTexture(texture,x,y,WHITE);
+                else DrawTexture(faceDownCard,x,y,WHITE);
 
                 addedToPrint = true;
             }
             if (i % 4 == 0 && foundationsDrawn < 4)
             {
                 x += 100;
-                if (foundations[foundationsDrawn]->lastCard == NULL) DrawRectangleLines(x,y,texture.width,texture.height,BLACK);
+                if (foundations[foundationsDrawn]->lastCard == NULL) DrawRectangleLines(x,y,faceDownCard.width,faceDownCard.height,BLACK);
                 else DrawText(TextFormat("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit),x,y,15,BLACK);
-                x += texture.width + 5;
+                x += faceDownCard.width + 5;
                 DrawText(TextFormat("F%d",foundationsDrawn+1),x,y,15,BLACK);
                 addedToPrint = true;
                 foundationsDrawn++;
@@ -314,6 +272,11 @@ void drawFrame (Pile **coloumns, Pile **foundations, STATE *state,Texture2D* tex
         y += 25;
 
     }
+
+    //DrawButtons:
+    x = 0;
+    y = 700;
+
 
     EndDrawing();
 }
