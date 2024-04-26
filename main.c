@@ -30,7 +30,7 @@ int main (void)
     createButtons(buttons,amountOfButtons);
 
     // Set the current phase to the startup phase
-    STATE state = FIRSTPRINT;
+    STATE state = NODECK;
     Pile deck;
     int AMOUNT_OF_COLOUMNS = 7;
     int AMOUNT_OF_FOUNDATIONS = 4;
@@ -43,7 +43,7 @@ int main (void)
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
-        drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons);
+        drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons);
     }
     CloseWindow();
     return 0;

@@ -211,7 +211,7 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[])
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons)
 {
     // Print board
     BeginDrawing();
@@ -276,7 +276,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     //DrawButtons:
     //For now we use rectangles with text, could change to images easily in the future;
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < amountOfButtons; i++)
     {
         DrawRectangle(buttons[i]->x,buttons[i]->y,buttons[i]->width,buttons[i]->height,BLACK);
         DrawText(buttons[i]->text, buttons[i]->x,buttons[i]->y,15,RED);
@@ -285,7 +285,15 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     EndDrawing();
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
-
+        for (int i = 0; i < amountOfButtons; i++)
+        {
+            //NO support for overlapping buttons
+            if (buttons[i]->x < GetMouseX() && buttons[i]->x + buttons[i]->width > GetMouseX() && buttons[i]->y < GetMouseY() && buttons[i]->y + buttons[i]->height > GetMouseY())
+            {
+                printf("DEAJN");
+                handleInput(deck,coloumns,foundations,state,buttons[i]->commandToExecute);
+            }
+        }
     }
 
 }
