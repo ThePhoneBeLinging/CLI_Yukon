@@ -29,6 +29,7 @@ add_executable(CLI_Yukon main.c
         Utility.h
         Utility.c
         StateMachine.h
+        Commands.h
 )
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
