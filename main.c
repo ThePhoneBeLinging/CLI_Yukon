@@ -24,6 +24,11 @@ int main (void)
     faceDownCard.height = 100;
     faceDownCard.width = faceDownCard.height * 0.7159090909;
 
+    //Remember to update the for loop in drawFrame as well (not optimal, but oh well)
+    int amountOfButtons = 1;
+    Button* buttons[amountOfButtons];
+    createButtons(buttons,amountOfButtons);
+
     // Set the current phase to the startup phase
     STATE state = FIRSTPRINT;
     Pile deck;
@@ -38,7 +43,7 @@ int main (void)
     char inputStr[50] = {};
     while (!WindowShouldClose())
     {
-        drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard);
+        drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons);
     }
     CloseWindow();
     return 0;

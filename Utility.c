@@ -211,7 +211,7 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Texture2D buttonTextures[])
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[])
 {
     // Print board
     BeginDrawing();
@@ -274,11 +274,20 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     }
 
     //DrawButtons:
-    x = 0;
-    y = 700;
+    //For now we use rectangles with text, could change to images easily in the future;
 
+    for (int i = 0; i < 1; i++)
+    {
+        DrawRectangle(buttons[i]->x,buttons[i]->y,buttons[i]->width,buttons[i]->height,BLACK);
+        DrawText(buttons[i]->text, buttons[i]->x,buttons[i]->y,15,RED);
+    }
 
     EndDrawing();
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+
+    }
+
 }
 
 void initializeTextures (Texture2D* textures[13][4])
@@ -357,4 +366,26 @@ Texture2D cardToTexture (Card card, Texture2D* textures[13][4])
     textureToReturn.height = 100;
     textureToReturn.width = textureToReturn.height * 0.71;
     return textureToReturn;
+}
+
+void
+createButtons (Button *buttons[], int amountOfButtons)
+{
+    for (int i = 0; i < amountOfButtons; i++)
+    {
+        buttons[i] = malloc(sizeof (Button));
+    }
+    int x = 0;
+    int y = 700;
+    int buttonHeight = 100;
+    int buttonWidth = 250;
+
+    buttons[0]->height = buttonHeight;
+    buttons[0]->width = buttonWidth;
+    buttons[0]->text = "Load";
+    buttons[0]->commandToExecute = LOADDECK;
+    buttons[0]->x = x;
+    buttons[0]->y = y;
+
+    x+=buttonWidth + 50;
 }
