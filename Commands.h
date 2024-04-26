@@ -6,4 +6,4 @@ typedef enum {
     SAVEDECK,
     STARTGAME,
     QUITGAME
-} COMMANDS;
+} COMMAND;
