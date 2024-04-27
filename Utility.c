@@ -219,7 +219,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
 {
     // Print board
     BeginDrawing();
-    ClearBackground(GRAY);
+    ClearBackground(GetColor(0x34A249FF));
     int x = 5;
     int y = 0;
     if(hasDeckBeenLoaded(coloumns))
@@ -283,7 +283,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     for (int i = 0; i < amountOfButtons; i++)
     {
         DrawRectangle(buttons[i]->x,buttons[i]->y,buttons[i]->width,buttons[i]->height,BLACK);
-        DrawText(buttons[i]->text, buttons[i]->x,buttons[i]->y,15,RED);
+        // Calculate the position of the text to center it
+        int textWidth = MeasureText(buttons[i]->text, 15);
+        int textX = buttons[i]->x + (buttons[i]->width - textWidth) / 2;
+        int textY = buttons[i]->y + (buttons[i]->height - 15) / 2; // assuming the height of the text is approximately 15
+
+        DrawText(buttons[i]->text, textX,textY,15,RED);
     }
 
     EndDrawing();
