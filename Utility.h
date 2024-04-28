@@ -18,4 +18,4 @@ bool hasDeckBeenLoaded(Pile* coloumns[]);
 
 void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove);
 
-Card* getCardFromString(Pile* coloumn, char* cardStr);
+void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation);

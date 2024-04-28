@@ -308,11 +308,23 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
             // If the move is legal, return the card
             return currentCard;
         }
-        2
+
         // Move to the next card in the source column
         currentCard = currentCard->nextCard;
     }
 
     // If no legal move is found, return NULL
     return NULL;
+}
+
+bool LegalMoveFoundation(Pile* foundation, Card* cardToMove) {
+    // Check if the foundation is empty
+    if (foundation->size == 0) {
+        // If the foundation is empty, the card number has to be 1
+        return cardToMove->number == 1;
+    } else {
+        // If the foundation is not empty, the card being put in the foundation
+        // has to be 1 higher in number and of the same suit as the last card in the foundation
+        return cardToMove->number == foundation->lastCard->number + 1 && cardToMove->suit == foundation->lastCard->suit;
+    }
 }
