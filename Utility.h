@@ -33,3 +33,5 @@ bool hasDeckBeenLoaded(Pile* coloumns[]);
 
 
 COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],char* response[]);
+
+void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex);

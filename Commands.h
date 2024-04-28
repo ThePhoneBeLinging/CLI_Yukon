@@ -8,5 +8,6 @@ typedef enum {
     STARTGAME,
     QUITGAME,
     EXIT,
-    INVALID_COMMAND
+    INVALID_COMMAND,
+    MOVEDCARD
 } COMMAND;
