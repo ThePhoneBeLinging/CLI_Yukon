@@ -11,8 +11,13 @@ int main (void)
     int screenHeight = 800;
     int screenWidth = 1400;
     char inputStr[50] = {};
-    printf("For GUI type 'GUI'\nFor CLI type 'CLI'\n");
-    scanf("%s",inputStr);
+
+    while (! stringsAreEqual(inputStr,"CLI") && ! stringsAreEqual(inputStr,"GUI"))
+    {
+        printf("For GUI type 'GUI'\nFor CLI type 'CLI'\n");
+        scanf("%s",inputStr);
+    }
+
     if (stringsAreEqual(inputStr,"GUI"))
     {
         InitWindow(screenWidth, screenHeight, "Yukon - Solitaire");
