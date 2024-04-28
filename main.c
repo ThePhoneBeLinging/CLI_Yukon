@@ -4,6 +4,7 @@
 #include "Card.h"
 #include "Utility.h"
 #include "raylib.h"
+#include "GUI.h"
 
 int main (void)
 {

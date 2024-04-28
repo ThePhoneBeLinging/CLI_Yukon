@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#pragma once
 //
 // Created by Elias Aggergaard Larsen on 11/04/2024.
 //

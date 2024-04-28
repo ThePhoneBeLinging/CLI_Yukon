@@ -1,6 +1,8 @@
+#pragma once
 #include "StateMachine.h"
 #include "raylib.h"
 #include "Commands.h"
+#include "Card.h"
 typedef struct
 {
     int x;
@@ -28,7 +30,6 @@ FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
-void drawFrame(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state,Texture2D* textures[13][4],Texture2D faceDownCard, Button* buttons[], int amountOfButtons);
 void initializeTextures(Texture2D* textures[13][4]);
 Texture2D cardToTexture(Card card, Texture2D* textures[13][4]);
 void createButtons(Button* buttons[], int amountOfButtons);
