@@ -308,7 +308,7 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
             // If the move is legal, return the card
             return currentCard;
         }
-        2
+
         // Move to the next card in the source column
         currentCard = currentCard->nextCard;
     }

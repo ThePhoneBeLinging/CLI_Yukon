@@ -261,12 +261,17 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
         int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
 
         // Call the function to move the card if the move is legal
-        if(LegalMove(coloumns, sourceIndex, destIndex)){
-            moveCardBetweenColoumns(coloumns, sourceIndex, destIndex);
-            *response = "Card Moved";
-        }
-        else{
-            *response = "Illegal move";
+        if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && command[4] == 'C') {
+            // Extract the source and destination indices
+            int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+
+            Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
+            if (cardToMove == NULL) {
+                response[0] = "Illegal move";
+            } else {
+                moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+            }
         }
         return MOVEDCARD;
     }
