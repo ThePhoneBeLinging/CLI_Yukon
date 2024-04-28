@@ -23,7 +23,7 @@ void runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state,
             populateColoumns(state,deck,coloumns);
             *state = STARTUP;
         }
-        if (command == QUITGAME)
+        if (command == EXIT)
         {
             exit(0);
         }
