@@ -214,9 +214,12 @@ bool hasDeckBeenLoaded (Pile **coloumns)
 
 COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *state, char *inputStr, char **response)
 {
+
     //The scanf function adds all given characters to the char arr, until a next line is given.
     char command[50] = {0};
     char argument[50]= {0};
+    printUI(coloumns,foundations,state,command,response);
+    scanf(" %[^\n]s",inputStr);
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
     for (int i = indexOfFirstSpace; i < 50; i++)
@@ -252,8 +255,6 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
     if (stringsAreEqual(commandToExectute,"P")) return STARTGAME;
     if (stringsAreEqual(commandToExectute, "Q")) return QUITGAME;
     if (stringsAreEqual(commandToExectute,"QQ")) return EXIT;
-    printUI(coloumns,foundations,state,command,response);
-    scanf(" %[^\n]s",inputStr);
     return INVALID_COMMAND;
 }
 
