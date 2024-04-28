@@ -277,14 +277,42 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
     response[0] = "Deck has been shuffled";
 }
 
-bool LegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
+bool LegalMove(Pile* coloumns[], Card* cardToMove, int destIndex)
 {
-    if (coloumns[sourceIndex]->size == 0) return false;
-    if (coloumns[sourceIndex]->lastCard->suit == coloumns[destIndex]->lastCard->suit) {
+    if (cardToMove==NULL) return false;
+    if (cardToMove->suit == coloumns[destIndex]->lastCard->suit) {
         return false;
     }
-    if (coloumns[sourceIndex]->lastCard->number+1!=coloumns[destIndex]->lastCard->number) {
+    if (cardToMove->number+1!=coloumns[destIndex]->lastCard->number) {
         return false;
     }
     return true;
+}
+
+Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
+{
+    // Check if the source column is empty
+    if (coloumns[sourceIndex]->size == 0) {
+        printf("Source column is empty. No card to move.\n");
+        return NULL;
+    }
+
+    // Start from the bottom card
+    Card* currentCard = coloumns[sourceIndex]->firstCard;
+
+    // Iterate over the cards in the source column
+    while (currentCard != NULL) {
+
+        // Check if the move is legal
+        if (LegalMove(coloumns, currentCard, destIndex)) {
+            // If the move is legal, return the card
+            return currentCard;
+        }
+        2
+        // Move to the next card in the source column
+        currentCard = currentCard->nextCard;
+    }
+
+    // If no legal move is found, return NULL
+    return NULL;
 }

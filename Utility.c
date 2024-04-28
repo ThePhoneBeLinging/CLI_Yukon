@@ -9,30 +9,24 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[])
-{
+void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[]) {
     //The scanf function adds all given characters to the char arr, until a next line is given.
 
     char command[50] = {0};
-    char argument[50]= {0};
-    char* response[50] = {0};
+    char argument[50] = {0};
+    char *response[50] = {0};
     int indexOfFirstSpace = 0;
     int workingIndex = 0;
-    for (int i = indexOfFirstSpace; i < 50; i++)
-    {
-        if (inputStr[i] == ' ')
-        {
+    for (int i = indexOfFirstSpace; i < 50; i++) {
+        if (inputStr[i] == ' ') {
             if (indexOfFirstSpace != 0) break;
             indexOfFirstSpace = i + 1;
             workingIndex = 0;
             continue;
         }
-        if (indexOfFirstSpace == 0)
-        {
+        if (indexOfFirstSpace == 0) {
             command[workingIndex] = inputStr[i];
-        }
-        else
-        {
+        } else {
             argument[workingIndex] = inputStr[i];
         }
         workingIndex++;
@@ -41,86 +35,71 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
     //Argument is now an array of char*, specifying whatever came after the first space in inputStr.
     // Use strcmp to compare strings in future switch
 
-    char* commandToExectute = &command[0];
-    if (*state == NODECK)
-    {
-        if (stringsAreEqual(commandToExectute,"LD"))
-        {
-            loadDeckFromFile(deck,argument, response);
-            populateColoumns(state,deck,coloumns);
+    char *commandToExectute = &command[0];
+    if (*state == NODECK) {
+        if (stringsAreEqual(commandToExectute, "LD")) {
+            loadDeckFromFile(deck, argument, response);
+            populateColoumns(state, deck, coloumns);
             *state = STARTUP;
-        }
-        else
-        {
+        } else {
             response[0] = "Use 'LD' to load a deck";
         }
     }
-    if (stringsAreEqual(commandToExectute,"QQ"))
-    {
+    if (stringsAreEqual(commandToExectute, "QQ")) {
         exit(1);
     }
-    if (*state == STARTUP)
-    {
-        if (stringsAreEqual(commandToExectute,"SW"))
-        {
+    if (*state == STARTUP) {
+        if (stringsAreEqual(commandToExectute, "SW")) {
             showDeck(coloumns, response);
 
         }
-        if (stringsAreEqual(commandToExectute,"SI"))
-        {
+        if (stringsAreEqual(commandToExectute, "SI")) {
             // TODO SL
-            splitDeck(deck,coloumns,atoi(argument),response);
-            populateColoumns(state,deck,coloumns);
+            splitDeck(deck, coloumns, atoi(argument), response);
+            populateColoumns(state, deck, coloumns);
         }
-        if (stringsAreEqual(commandToExectute,"SR"))
-        {
+        if (stringsAreEqual(commandToExectute, "SR")) {
             // TODO SR
-            shuffleDeck(deck,coloumns,response);
-            populateColoumns(state,deck,coloumns);
+            shuffleDeck(deck, coloumns, response);
+            populateColoumns(state, deck, coloumns);
 
         }
-        if (stringsAreEqual(commandToExectute,"SD"))
-        {
+        if (stringsAreEqual(commandToExectute, "SD")) {
             // TODO SD
-            saveDeckFromColoumnsToFile(coloumns,argument,response);
-            populateColoumns(state,deck,coloumns);
+            saveDeckFromColoumnsToFile(coloumns, argument, response);
+            populateColoumns(state, deck, coloumns);
         }
-        if (stringsAreEqual(commandToExectute,"P"))
-        {
+        if (stringsAreEqual(commandToExectute, "P")) {
             *state = PLAY;
-            saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
-            populateColoumns(state,deck,coloumns);
+            saveDeckFromColoumnsToFile(coloumns, "temp/temp", NULL);
+            populateColoumns(state, deck, coloumns);
             response[0] = "Let the games begin...";
         }
-    }
-    else if (*state == PLAY)
-    {
-        if (stringsAreEqual(commandToExectute,"Q"))
-        {
+    } else if (*state == PLAY) {
+        if (stringsAreEqual(commandToExectute, "Q")) {
             *state = STARTUP;
-            loadDeckFromFile(deck,"temp/temp",response);
-            populateColoumns(state,deck,coloumns);
+            loadDeckFromFile(deck, "temp/temp", response);
+            populateColoumns(state, deck, coloumns);
         }
         if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && command[4] == 'C') {
             // Extract the source and destination indices
             int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
 
-            // Call the function to move the card if the move is legal
-            if(LegalMove(coloumns, sourceIndex, destIndex)){
-            moveCardBetweenColoumns(coloumns, sourceIndex, destIndex);
-            }
-            else{
+            Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
+            if (cardToMove == NULL) {
                 response[0] = "Illegal move";
+            } else {
+                moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
             }
         }
     }
-    if (*state == FIRSTPRINT) *state = NODECK;
-    printUI(coloumns,foundations,state,command,response);
-    scanf(" %[^\n]s",inputStr);
+        if (*state == FIRSTPRINT) *state = NODECK;
+        printUI(coloumns, foundations, state, command, response);
+        scanf(" %[^\n]s", inputStr);
+
 
 }
-
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
 {
     printf("\n");
@@ -262,45 +241,63 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex) {
+void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove) {
     // Check if the source column is empty
     if (coloumns[sourceIndex]->size == 0) {
         printf("Source column is empty. No card to move.\n");
         return;
     }
 
-    // Get the last card from the source column
-    Card* cardToMove = coloumns[sourceIndex]->lastCard;
+    // Find the card in the source column
+    Card* currentCard = coloumns[sourceIndex]->firstCard;
+    Card* prevCard = NULL;
+    while (currentCard != cardToMove) {
+        prevCard = currentCard;
+        currentCard = currentCard->nextCard;
+    }
 
-    // If there's more than one card in the source column
-    if (coloumns[sourceIndex]->size > 1) {
-        Card* currentCard = coloumns[sourceIndex]->firstCard;
-        while (currentCard->nextCard != cardToMove) {
-            currentCard = currentCard->nextCard;
-        }
-        // Update the last card of the source column
-        coloumns[sourceIndex]->lastCard = currentCard;
-        currentCard->nextCard = NULL;
+    // If the card is not found in the source column
+    if (currentCard == NULL) {
+        printf("Card not found in source column.\n");
+        return;
+    }
+
+    // If the card is not the last card in the source column
+    if (prevCard != NULL) {
+        prevCard->nextCard = NULL;
+        coloumns[sourceIndex]->lastCard = prevCard;
     } else {
-        // If there's only one card in the source column
         coloumns[sourceIndex]->firstCard = NULL;
         coloumns[sourceIndex]->lastCard = NULL;
     }
 
-    // Decrease the size of the source column
-    coloumns[sourceIndex]->size--;
-
-    // Add the card to the destination column
-    if (coloumns[destIndex]->size == 0) {
-        // If the destination column is empty
-        coloumns[destIndex]->firstCard = cardToMove;
-        coloumns[destIndex]->lastCard = cardToMove;
-    } else {
-        // If the destination column is not empty
-        coloumns[destIndex]->lastCard->nextCard = cardToMove;
-        coloumns[destIndex]->lastCard = cardToMove;
+    // Decrease the size of the source column by the number of moved cards
+    Card* tempCard = currentCard;
+    while (tempCard != NULL) {
+        coloumns[sourceIndex]->size--;
+        tempCard = tempCard->nextCard;
     }
 
-    // Increase the size of the destination column
-    coloumns[destIndex]->size++;
+    // Add the cards to the destination column
+    if (coloumns[destIndex]->size == 0) {
+        // If the destination column is empty
+        coloumns[destIndex]->firstCard = currentCard;
+        coloumns[destIndex]->lastCard = coloumns[sourceIndex]->lastCard;
+    } else {
+        // If the destination column is not empty
+        coloumns[destIndex]->lastCard->nextCard = currentCard;
+        coloumns[destIndex]->lastCard = coloumns[sourceIndex]->lastCard;
+    }
+
+    // Increase the size of the destination column by the number of moved cards
+    tempCard = currentCard;
+    while (tempCard != NULL) {
+        coloumns[destIndex]->size++;
+        tempCard = tempCard->nextCard;
+    }
+    // If the last card in the source column is facedown, turn it face up
+    if (coloumns[sourceIndex]->lastCard != NULL && !coloumns[sourceIndex]->lastCard->faceUp) {
+        coloumns[sourceIndex]->lastCard->faceUp = true;
+    }
+
 }

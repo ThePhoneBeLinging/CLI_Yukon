@@ -16,4 +16,6 @@ FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
-void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex);
+void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove);
+
+Card* getCardFromString(Pile* coloumn, char* cardStr);
