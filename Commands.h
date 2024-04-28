@@ -6,5 +6,7 @@ typedef enum {
     SHUFFLEDECK,
     SAVEDECK,
     STARTGAME,
-    QUITGAME
+    QUITGAME,
+    EXIT,
+    INVALID_COMMAND
 } COMMAND;

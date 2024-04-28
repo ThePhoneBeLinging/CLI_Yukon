@@ -212,8 +212,7 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-COMMAND
-getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *state, char *inputStr, char **response)
+COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *state, char *inputStr, char **response)
 {
     //The scanf function adds all given characters to the char arr, until a next line is given.
     char command[50] = {0};
@@ -245,5 +244,15 @@ getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *st
     // Use strcmp to compare strings in future switch
 
     char* commandToExectute = &command[0];
+
+    if (stringsAreEqual(commandToExectute,"LD")) return LOADDECK;
+    if (stringsAreEqual(commandToExectute,"SW")) return SHOWDECK;
+    if (stringsAreEqual(commandToExectute,"SI")) return SPLITDECK;
+    if (stringsAreEqual(commandToExectute,"SR")) return SHUFFLEDECK;
+    if (stringsAreEqual(commandToExectute,"SD")) return SAVEDECK;
+    if (stringsAreEqual(commandToExectute,"P")) return STARTGAME;
+    if (stringsAreEqual(commandToExectute, "Q")) return QUITGAME;
+    if (stringsAreEqual(commandToExectute,"QQ")) return EXIT;
+    return INVALID_COMMAND;
 }
 
