@@ -11,6 +11,7 @@ int main (void)
     int screenHeight = 800;
     int screenWidth = 1400;
     char inputStr[50] = {};
+    char* response[50] = {0};
 
     while (! stringsAreEqual(inputStr,"CLI") && ! stringsAreEqual(inputStr,"GUI"))
     {
@@ -56,7 +57,16 @@ int main (void)
     }
     else if (stringsAreEqual(inputStr,"CLI"))
     {
-        printf("CLI NEEDED TO BE HERE");
+        while (true)
+        {
+            COMMAND command = getInputFromTerminal(&deck, coloumns, foundations, &state, inputStr, response);
+            if (command == INVALID_COMMAND)
+            {
+                *response = "Invalid Command";
+                continue;
+            }
+            break;
+        }
     }
 
     return 0;
