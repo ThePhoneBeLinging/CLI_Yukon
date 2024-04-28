@@ -17,6 +17,15 @@ int main (void)
         printf("For GUI type 'GUI'\nFor CLI type 'CLI'\n");
         scanf("%s",inputStr);
     }
+    // Set the current phase to the startup phase
+    STATE state = NODECK;
+    Pile deck;
+    int AMOUNT_OF_COLOUMNS = 7;
+    int AMOUNT_OF_FOUNDATIONS = 4;
+    Pile* coloumns[AMOUNT_OF_COLOUMNS];
+    Pile* foundations[AMOUNT_OF_FOUNDATIONS];
+    mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
+    mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
 
     if (stringsAreEqual(inputStr,"GUI"))
     {
@@ -39,19 +48,6 @@ int main (void)
         int amountOfButtons = 7;
         Button* buttons[amountOfButtons];
         createButtons(buttons,amountOfButtons);
-
-        // Set the current phase to the startup phase
-        STATE state = NODECK;
-        Pile deck;
-        int AMOUNT_OF_COLOUMNS = 7;
-        int AMOUNT_OF_FOUNDATIONS = 4;
-        Pile* coloumns[AMOUNT_OF_COLOUMNS];
-        Pile* foundations[AMOUNT_OF_FOUNDATIONS];
-        mallocPileArr(foundations, AMOUNT_OF_FOUNDATIONS);
-        mallocPileArr(coloumns,AMOUNT_OF_COLOUMNS);
-
-
-
         while (!WindowShouldClose())
         {
             drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons);
@@ -60,7 +56,7 @@ int main (void)
     }
     else if (stringsAreEqual(inputStr,"CLI"))
     {
-        printf("DEAN");
+        printf("CLI NEEDED TO BE HERE");
     }
 
     return 0;
