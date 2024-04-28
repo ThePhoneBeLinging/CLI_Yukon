@@ -101,6 +101,14 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             loadDeckFromFile(deck,"temp/temp",response);
             populateColoumns(state,deck,coloumns);
         }
+        if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && command[4] == 'C') {
+            // Extract the source and destination indices
+            int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+
+            // Call the function to move the card
+            moveCardBetweenColoumns(coloumns, sourceIndex, destIndex);
+        }
     }
     if (*state == FIRSTPRINT) *state = NODECK;
     printUI(coloumns,foundations,state,command,response);
@@ -247,4 +255,47 @@ bool hasDeckBeenLoaded (Pile **coloumns)
         if (coloumns[i]->size == 0) return false;
     }
     return true;
+}
+
+void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex) {
+    // Check if the source column is empty
+    if (coloumns[sourceIndex]->size == 0) {
+        printf("Source column is empty. No card to move.\n");
+        return;
+    }
+
+    // Get the last card from the source column
+    Card* cardToMove = coloumns[sourceIndex]->lastCard;
+
+    // If there's more than one card in the source column
+    if (coloumns[sourceIndex]->size > 1) {
+        Card* currentCard = coloumns[sourceIndex]->firstCard;
+        while (currentCard->nextCard != cardToMove) {
+            currentCard = currentCard->nextCard;
+        }
+        // Update the last card of the source column
+        coloumns[sourceIndex]->lastCard = currentCard;
+        currentCard->nextCard = NULL;
+    } else {
+        // If there's only one card in the source column
+        coloumns[sourceIndex]->firstCard = NULL;
+        coloumns[sourceIndex]->lastCard = NULL;
+    }
+
+    // Decrease the size of the source column
+    coloumns[sourceIndex]->size--;
+
+    // Add the card to the destination column
+    if (coloumns[destIndex]->size == 0) {
+        // If the destination column is empty
+        coloumns[destIndex]->firstCard = cardToMove;
+        coloumns[destIndex]->lastCard = cardToMove;
+    } else {
+        // If the destination column is not empty
+        coloumns[destIndex]->lastCard->nextCard = cardToMove;
+        coloumns[destIndex]->lastCard = cardToMove;
+    }
+
+    // Increase the size of the destination column
+    coloumns[destIndex]->size++;
 }
