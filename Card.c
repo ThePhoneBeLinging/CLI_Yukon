@@ -276,3 +276,15 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
     free(shuffledDeck);
     response[0] = "Deck has been shuffled";
 }
+
+bool LegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
+{
+    if (coloumns[sourceIndex]->size == 0) return false;
+    if (coloumns[sourceIndex]->lastCard->suit == coloumns[destIndex]->lastCard->suit) {
+        return false;
+    }
+    if (coloumns[sourceIndex]->lastCard->number+1!=coloumns[destIndex]->lastCard->number) {
+        return false;
+    }
+    return true;
+}

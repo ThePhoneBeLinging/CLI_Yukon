@@ -27,3 +27,4 @@ void splitDeck(Pile* deck,Pile* coloumns[], int toSplitAt, char* response[]);
 FILE* getFilePointer(char* fileName, char* readMode);
 void shuffleDeck(Pile* deck, Pile * coloumns[], char* responsee[]);
 void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[],char* response[]);
+bool LegalMove(Pile* coloumns[], int sourceIndex, int destIndex);
