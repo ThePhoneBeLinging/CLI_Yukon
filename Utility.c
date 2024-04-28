@@ -10,7 +10,7 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, COMMAND command)
+void runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command)
 {
     // response is currently not used
     char* response[50];
@@ -212,5 +212,8 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-
+COMMAND getInputFromTerminal()
+{
+    //TODO insert old handleinput function here
+}
 

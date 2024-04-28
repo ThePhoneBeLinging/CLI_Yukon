@@ -16,7 +16,7 @@ typedef struct
 
 bool stringsAreEqual(char* firstString, char* secondsString);
 
-void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, COMMAND command);
+void runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command);
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 
