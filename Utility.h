@@ -30,6 +30,6 @@ FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
-void initializeTextures(Texture2D* textures[13][4]);
-Texture2D cardToTexture(Card card, Texture2D* textures[13][4]);
-void createButtons(Button* buttons[], int amountOfButtons);
+
+
+COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],char* response[]);
