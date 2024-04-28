@@ -238,8 +238,24 @@ void createButtons (Button *buttons[], int amountOfButtons)
     buttons[6]->height = buttonHeight;
     buttons[6]->width = buttonWidth;
     buttons[6]->text = "Quit";
-    buttons[6]->commandToExecute = QUITGAME;
+    buttons[6]->commandToExecute = EXIT;
     buttons[6]->x = x;
     buttons[6]->y = y;
-    buttons[6]->state = ALWAYS;
+    buttons[6]->state = NODECK;
+
+    buttons[7]->height = buttonHeight;
+    buttons[7]->width = buttonWidth;
+    buttons[7]->text = "Quit";
+    buttons[7]->commandToExecute = EXIT;
+    buttons[7]->x = x;
+    buttons[7]->y = y;
+    buttons[7]->state = STARTUP;
+
+    buttons[8]->height = buttonHeight;
+    buttons[8]->width = buttonWidth;
+    buttons[8]->text = "Quit";
+    buttons[8]->commandToExecute = QUITGAME;
+    buttons[8]->x = x;
+    buttons[8]->y = y;
+    buttons[8]->state = PLAY;
 }
