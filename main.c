@@ -65,7 +65,8 @@ int main (void)
                 *response = "Invalid Command";
                 continue;
             }
-            break;
+            runCommand(&deck,coloumns,foundations,&state,command);
+            //break;
         }
     }
 
