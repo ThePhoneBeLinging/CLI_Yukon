@@ -9,6 +9,7 @@ typedef struct
     int width;
     char* text;
     COMMAND commandToExecute;
+    STATE state;
 } Button;
 
 bool stringsAreEqual(char* firstString, char* secondsString);

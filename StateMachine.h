@@ -1,5 +1,6 @@
 typedef enum {
     NODECK,
     STARTUP,
-    PLAY
+    PLAY,
+    ALWAYS
 } STATE;

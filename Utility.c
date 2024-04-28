@@ -23,9 +23,9 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             populateColoumns(state,deck,coloumns);
             *state = STARTUP;
         }
-        else if (*state == NODECK)
+        if (command == QUITGAME)
         {
-            response[0] = "Use 'LD' to load a deck";
+            exit(0);
         }
     }
     if (*state == STARTUP)
@@ -58,10 +58,7 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
             populateColoumns(state,deck,coloumns);
             response[0] = "Let the games begin...";
         }
-        if (command == QUITGAME)
-        {
-            exit(0);
-        }
+
     }
     else if (*state == PLAY)
     {
@@ -282,6 +279,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
 
     for (int i = 0; i < amountOfButtons; i++)
     {
+        if (buttons[i]->state != *state && buttons[i]->state != ALWAYS) continue;
         DrawRectangle(buttons[i]->x,buttons[i]->y,buttons[i]->width,buttons[i]->height, GetColor(0x2B7B3BEF
         ));
         // Calculate the position of the text to center it
@@ -290,21 +288,14 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         int textY = buttons[i]->y + (buttons[i]->height - 20) / 2; // assuming the height of the text is approximately 15
 
         DrawText(buttons[i]->text, textX,textY,20,RED);
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && buttons[i]->x < GetMouseX() && buttons[i]->x + buttons[i]->width > GetMouseX() && buttons[i]->y < GetMouseY() && buttons[i]->y + buttons[i]->height > GetMouseY())
+        {
+            handleInput(deck,coloumns,foundations,state,buttons[i]->commandToExecute);
+            if (i == 0) buttons[i]->state = STARTUP;
+        }
     }
 
     EndDrawing();
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-    {
-        for (int i = 0; i < amountOfButtons; i++)
-        {
-            //NO support for overlapping buttons
-            if (buttons[i]->x < GetMouseX() && buttons[i]->x + buttons[i]->width > GetMouseX() && buttons[i]->y < GetMouseY() && buttons[i]->y + buttons[i]->height > GetMouseY())
-            {
-                printf("DEAJN");
-                handleInput(deck,coloumns,foundations,state,buttons[i]->commandToExecute);
-            }
-        }
-    }
 
 }
 
@@ -404,6 +395,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[0]->commandToExecute = LOADDECK;
     buttons[0]->x = x;
     buttons[0]->y = y;
+    buttons[0]->state = NODECK;
 
     x += buttonWidth + 50;
 
@@ -413,6 +405,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[1]->commandToExecute = SHOWDECK;
     buttons[1]->x = x;
     buttons[1]->y = y;
+    buttons[1]->state = STARTUP;
 
     x += buttonWidth + 50;
 
@@ -422,6 +415,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[2]->commandToExecute = SPLITDECK;
     buttons[2]->x = x;
     buttons[2]->y = y;
+    buttons[2]->state = STARTUP;
 
     x += buttonWidth + 50;
 
@@ -431,6 +425,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[3]->commandToExecute = SHUFFLEDECK;
     buttons[3]->x = x;
     buttons[3]->y = y;
+    buttons[3]->state = STARTUP;
 
     x += buttonWidth + 50;
 
@@ -440,6 +435,7 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[4]->commandToExecute = SAVEDECK;
     buttons[4]->x = x;
     buttons[4]->y = y;
+    buttons[4]->state = STARTUP;
 
     x += buttonWidth + 50;
 
@@ -449,13 +445,15 @@ createButtons (Button *buttons[], int amountOfButtons)
     buttons[5]->commandToExecute = STARTGAME;
     buttons[5]->x = x;
     buttons[5]->y = y;
+    buttons[5]->state = STARTUP;
 
     x += buttonWidth + 50;
 
-buttons[6]->height = buttonHeight;
+    buttons[6]->height = buttonHeight;
     buttons[6]->width = buttonWidth;
     buttons[6]->text = "Quit";
     buttons[6]->commandToExecute = QUITGAME;
     buttons[6]->x = x;
     buttons[6]->y = y;
+    buttons[6]->state = ALWAYS;
 }
