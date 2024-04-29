@@ -88,6 +88,11 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     {
         if (*coloumnOfSelectedItems != -1)
         {
+            int coloumnOfCard = (GetMouseX() + 5) / 100;
+            if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
+            {
+                *coloumnOfSelectedItems = coloumnOfCard;
+            }
             moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
             *coloumnOfSelectedItems = -1;
         }
