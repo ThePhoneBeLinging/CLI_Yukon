@@ -6,8 +6,6 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     ClearBackground(GetColor(0x34A249FF));
     int x = 5;
     int y = 0;
-    if(hasDeckBeenLoaded(coloumns))
-    {
         // Print Coloumn names
         for (int i = 1; i < 8; i++)
         {
@@ -59,7 +57,6 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         x = 5;
         y += 25;
 
-    }
 
     //DrawButtons:
     //For now we use rectangles with text, could change to images easily in the future;
