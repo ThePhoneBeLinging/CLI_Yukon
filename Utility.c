@@ -13,7 +13,7 @@ bool stringsAreEqual(char* firstString, char* secondString)
 char** runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command)
 {
     // response is currently not used
-    char* response[50];
+    char* response[50] = {0};
     char* argument = "";
     if (*state == NODECK || *state == STARTUP)
     {
