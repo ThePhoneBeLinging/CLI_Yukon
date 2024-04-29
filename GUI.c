@@ -58,15 +58,19 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         x = 5;
         y += 25;
         Card* drawOnCursor = coloumns[7]->firstCard;
+        int xToDrawOnCursor = GetMouseX();
+        int yToDrawOnCursor = GetMouseY();
         while(drawOnCursor != NULL)
         {
-            DrawTexture(cardToTexture(*drawOnCursor,textures),GetMouseX(),GetMouseY(),WHITE);
+            DrawTexture(cardToTexture(*drawOnCursor,textures),xToDrawOnCursor,yToDrawOnCursor,WHITE);
             drawOnCursor = drawOnCursor->nextCard;
+            yToDrawOnCursor += 25;
         }
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && *state == PLAY)
     {
         int coloumnOfCard = (GetMouseX() + 5) / 100;
+        if (coloumnOfCard > 6) coloumnOfCard = 6;
         int positionOfCardInColoumn = (GetMouseY() - 25) / 25;
         if (coloumns[coloumnOfCard]->size + 2 >= positionOfCardInColoumn)
         {
@@ -80,8 +84,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                 if (cardToTake == NULL || cardToTake->nextCard == NULL) break;
                 cardToTake = cardToTake->nextCard;
             }
-            moveCardBetweenColoumns(coloumns,coloumnOfCard,7,cardToTake);
-            *coloumnOfSelectedItems = coloumnOfCard;
+            if (cardToTake->faceUp)
+            {
+                moveCardBetweenColoumns(coloumns,coloumnOfCard,7,cardToTake);
+                *coloumnOfSelectedItems = coloumnOfCard;
+            }
+
         }
     }
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && *state == PLAY)
@@ -89,6 +97,8 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         if (*coloumnOfSelectedItems != -1)
         {
             int coloumnOfCard = (GetMouseX() + 5) / 100;
+            if (coloumnOfCard > 6) coloumnOfCard = 6;
+
             if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
                 turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
