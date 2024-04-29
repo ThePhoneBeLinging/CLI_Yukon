@@ -91,6 +91,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
             int coloumnOfCard = (GetMouseX() + 5) / 100;
             if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
+                turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
                 *coloumnOfSelectedItems = coloumnOfCard;
             }
             moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);

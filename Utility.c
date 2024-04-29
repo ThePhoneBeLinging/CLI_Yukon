@@ -293,10 +293,12 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                     response[0] = "Illegal move";
                 } else {
                     moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+                    turnOverLastCard(coloumns[sourceIndex]);
                 }
             } else if (command[4] == 'F') {
                 if (LegalMoveFoundation(foundations[destIndex], coloumns[sourceIndex]->lastCard)) {
                     moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                    turnOverLastCard(coloumns[sourceIndex]);
                 } else {
                     response[0] = "Illegal move";
                 }
@@ -309,12 +311,14 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
             if(command[7]=='C'){
                 if(LegalMove(coloumns, cardToMove, destIndex)){
                     moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+                    turnOverLastCard(coloumns[sourceIndex]);
                 } else {
                     response[0] = "Illegal move";
                 }
             } else if (command[7] == 'F') {
                 if(LegalMoveFoundation(foundations[destIndex], cardToMove)) {
                     moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                    turnOverLastCard(coloumns[sourceIndex]);
                 } else {
                     response[0] = "Illegal move";
                 }
@@ -381,10 +385,6 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
         coloumns[destIndex]->size++;
         tempCard = tempCard->nextCard;
     }
-    // If the last card in the source column is facedown, turn it face up
-    if (coloumns[sourceIndex]->lastCard != NULL && !coloumns[sourceIndex]->lastCard->faceUp) {
-        coloumns[sourceIndex]->lastCard->faceUp = true;
-    }
 
 }
 
@@ -431,4 +431,9 @@ void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation) {
     if (coloumn->lastCard != NULL && !coloumn->lastCard->faceUp) {
         coloumn->lastCard->faceUp = true;
     }
+}
+
+void turnOverLastCard (Pile *coloumn)
+{
+    if (coloumn->lastCard != NULL) coloumn->lastCard->faceUp = true;
 }

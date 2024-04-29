@@ -39,3 +39,5 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
 void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation);
 
 Card* getCardFromString(Pile* coloumn, char cardString[]);
+
+void turnOverLastCard(Pile* coloumn);
