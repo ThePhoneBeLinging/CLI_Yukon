@@ -5,7 +5,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     BeginDrawing();
     ClearBackground(GetColor(0x34A249FF));
     int x = 5;
-    int y = 0;
+    int y = 5;
         // Print Coloumn names
         for (int i = 1; i < 8; i++)
         {
@@ -71,7 +71,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     {
         int coloumnOfCard = (GetMouseX() + 5) / 100;
         if (coloumnOfCard > 6) coloumnOfCard = 6;
-        int positionOfCardInColoumn = (GetMouseY() - 25) / 25;
+        int positionOfCardInColoumn = (GetMouseY() - 30) / 25;
         if (coloumns[coloumnOfCard]->size + 2 >= positionOfCardInColoumn)
         {
             if (coloumns[coloumnOfCard]->size <= positionOfCardInColoumn)
