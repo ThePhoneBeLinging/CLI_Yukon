@@ -270,22 +270,28 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
     if (stringsAreEqual(commandToExectute,"P")) return STARTGAME;
     if (stringsAreEqual(commandToExectute, "Q")) return QUITGAME;
     if (stringsAreEqual(commandToExectute,"QQ")) return EXIT;
-    if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && command[4] == 'C') {
         // Extract the source and destination indices
         int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
         int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
 
         // Call the function to move the card if the move is legal
-        if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && command[4] == 'C') {
+        if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && (command[4] == 'C'||command[4] == 'F')) {
             // Extract the source and destination indices
             int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
-
-            Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
-            if (cardToMove == NULL) {
-                response[0] = "Illegal move";
-            } else {
-                moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+            if (command[4] == 'C') {
+                Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
+                if (cardToMove == NULL) {
+                    response[0] = "Illegal move";
+                } else {
+                    moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+                }
+            } else if (command[4] == 'F') {
+                if (LegalMoveFoundation(foundations[destIndex], coloumns[sourceIndex]->lastCard)) {
+                    moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                } else {
+                    response[0] = "Illegal move";
+                }
             }
         }else if(command[0]=='C'&&command[2]==':'&&command[5]=='-'&&command[6]=='>'&&(command[7]=='C'||command[7]=='F')){
             int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
@@ -308,7 +314,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
         }
 
         return MOVEDCARD;
-    }
+
     return INVALID_COMMAND;
 }
 
@@ -412,4 +418,9 @@ void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation) {
     }
     foundation->size++;
     cardToMove->nextCard = NULL;
+
+    // If the last card in the source column is facedown, turn it face up
+    if (coloumn->lastCard != NULL && !coloumn->lastCard->faceUp) {
+        coloumn->lastCard->faceUp = true;
+    }
 }
