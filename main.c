@@ -21,7 +21,7 @@ int main (void)
     // Set the current phase to the startup phase
     STATE state = NODECK;
     Pile deck;
-    int AMOUNT_OF_COLOUMNS = 7;
+    int AMOUNT_OF_COLOUMNS = 8;
     int AMOUNT_OF_FOUNDATIONS = 4;
     Pile* coloumns[AMOUNT_OF_COLOUMNS];
     Pile* foundations[AMOUNT_OF_FOUNDATIONS];
@@ -52,7 +52,7 @@ int main (void)
         int coloumnOfSelectedItems = -1;
         while (!WindowShouldClose())
         {
-            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,coloumnOfSelectedItems);
+            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems);
         }
         CloseWindow();
     }

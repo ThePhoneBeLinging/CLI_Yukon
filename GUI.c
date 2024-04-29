@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int coloumnOfSelectedItems)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems)
 {
     // Print board
     BeginDrawing();
@@ -21,6 +21,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
             for (int k = 0; k < 7; k++)
             {
                 Card* cardToPrint = coloumns[k]->firstCard;
+
                 if (k != 0)
                 {
                     x += 100;
@@ -56,8 +57,26 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         }
         x = 5;
         y += 25;
+        Card* drawOnCursor = coloumns[7]->firstCard;
+        while(drawOnCursor != NULL)
+        {
+            DrawTexture(cardToTexture(*drawOnCursor,textures),GetMouseX(),GetMouseY(),WHITE);
+            drawOnCursor = drawOnCursor->nextCard;
+        }
 
-
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && *state == PLAY)
+    {
+        moveCardBetweenColoumns(coloumns,0,7,coloumns[0]->firstCard);
+        *coloumnOfSelectedItems = 0;
+    }
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && *state == PLAY)
+    {
+        if (*coloumnOfSelectedItems != -1)
+        {
+            moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
+            *coloumnOfSelectedItems = -1;
+        }
+    }
     //DrawButtons:
     //For now we use rectangles with text, could change to images easily in the future;
 
