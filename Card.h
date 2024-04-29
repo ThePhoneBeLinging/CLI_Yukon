@@ -29,3 +29,4 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* responsee[]);
 void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[],char* response[]);
 bool LegalMove(Pile* coloumns[], Card* cardToMove, int destIndex);
 Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex);
+bool LegalMoveFoundation(Pile* foundation, Card* cardToMove);

@@ -135,7 +135,8 @@ int getIntFromCardLetter (char letter)
     if (letter == 'J') return 11;
     if (letter == 'Q') return 12;
     if (letter == 'K') return 13;
-    return -1;
+
+    return letter- '0';
 }
 
 char getCharFromCardNumber (int cardNumber)
@@ -299,7 +300,7 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
 
     // Start from the bottom card
     Card* currentCard = coloumns[sourceIndex]->lastCard;
-    
+
 
         // Check if the move is legal
         if (LegalMove(coloumns, currentCard, destIndex)) {
@@ -311,4 +312,16 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
 
     // If no legal move is found, return NULL
     return NULL;
+}
+
+bool LegalMoveFoundation(Pile* foundation, Card* cardToMove) {
+    // Check if the foundation is empty
+    if (foundation->size == 0) {
+        // If the foundation is empty, the card number has to be 1
+        return cardToMove->number == 1;
+    } else {
+        // If the foundation is not empty, the card being put in the foundation
+        // has to be 1 higher in number and of the same suit as the last card in the foundation
+        return cardToMove->number == foundation->lastCard->number + 1 && cardToMove->suit == foundation->lastCard->suit;
+    }
 }
