@@ -54,6 +54,7 @@ void runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state,
         if (command == STARTGAME)
         {
             *state = PLAY;
+            clearFoundations(foundations);
             saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
             populateColoumns(state,deck,coloumns);
             response[0] = "Let the games begin...";
@@ -65,6 +66,7 @@ void runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state,
         if (command == QUITGAME)
         {
             *state = STARTUP;
+            clearFoundations(foundations);
             loadDeckFromFile(deck,"temp/temp",response);
             populateColoumns(state,deck,coloumns);
         }
@@ -118,7 +120,13 @@ void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state)
     }
     printf("\n");
 }
-
+void clearFoundations(Pile* foundations[]) {
+    for (int i = 0; i < 4; i++) {
+        foundations[i]->size = 0;
+        foundations[i]->firstCard = NULL;
+        foundations[i]->lastCard = NULL;
+    }
+}
 void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
 {
     int amountOfCardsInColoumns[7] = {1,6,7,8,9,10,11};

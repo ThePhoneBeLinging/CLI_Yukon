@@ -30,7 +30,7 @@ FILE* getFilePointer(char* fileName, char* readMode);
 
 bool hasDeckBeenLoaded(Pile* coloumns[]);
 
-
+void clearFoundations(Pile* foundations[]);
 
 COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],char* response[]);
 
