@@ -10,7 +10,7 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-char** runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command)
+char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command)
 {
     // response is currently not used
     char* response[50] = {0};
@@ -71,7 +71,11 @@ char** runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* stat
             populateColoumns(state,deck,coloumns);
         }
     }
-    return response;
+    else
+    {
+        response[0] = "Invalid Command";
+    }
+    return *response;
 }
 
 
