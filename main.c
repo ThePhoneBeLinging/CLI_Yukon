@@ -66,7 +66,7 @@ int main (void)
                 *response = "Invalid Command";
                 continue;
             }
-            *response = *runCommand(&deck,coloumns,foundations,&state,command);
+            if (command != MOVEDCARD) *response = *runCommand(&deck,coloumns,foundations,&state,command);
             //break;
         }
     }
