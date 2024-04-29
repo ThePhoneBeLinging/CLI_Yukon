@@ -49,9 +49,10 @@ int main (void)
         int amountOfButtons = 9;
         Button* buttons[amountOfButtons];
         createButtons(buttons,amountOfButtons);
+        int coloumnOfSelectedItems = -1;
         while (!WindowShouldClose())
         {
-            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons);
+            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,coloumnOfSelectedItems);
         }
         CloseWindow();
     }

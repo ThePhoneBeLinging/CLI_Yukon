@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int coloumnOfSelectedItems)
 {
     // Print board
     BeginDrawing();
