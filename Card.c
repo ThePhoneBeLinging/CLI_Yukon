@@ -298,10 +298,8 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
     }
 
     // Start from the bottom card
-    Card* currentCard = coloumns[sourceIndex]->firstCard;
-
-    // Iterate over the cards in the source column
-    while (currentCard != NULL) {
+    Card* currentCard = coloumns[sourceIndex]->lastCard;
+    
 
         // Check if the move is legal
         if (LegalMove(coloumns, currentCard, destIndex)) {
@@ -309,9 +307,7 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
             return currentCard;
         }
 
-        // Move to the next card in the source column
-        currentCard = currentCard->nextCard;
-    }
+
 
     // If no legal move is found, return NULL
     return NULL;
