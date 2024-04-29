@@ -66,8 +66,23 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && *state == PLAY)
     {
-        moveCardBetweenColoumns(coloumns,0,7,coloumns[0]->firstCard);
-        *coloumnOfSelectedItems = 0;
+        int coloumnOfCard = (GetMouseX() + 5) / 100;
+        int positionOfCardInColoumn = (GetMouseY() - 25) / 25;
+        if (coloumns[coloumnOfCard]->size + 2 >= positionOfCardInColoumn)
+        {
+            if (coloumns[coloumnOfCard]->size <= positionOfCardInColoumn)
+            {
+                positionOfCardInColoumn = coloumns[coloumnOfCard]->size;
+            }
+            Card* cardToTake = coloumns[coloumnOfCard]->firstCard;
+            for (int i = 0; i < positionOfCardInColoumn; i++)
+            {
+                if (cardToTake == NULL || cardToTake->nextCard == NULL) break;
+                cardToTake = cardToTake->nextCard;
+            }
+            moveCardBetweenColoumns(coloumns,coloumnOfCard,7,cardToTake);
+            *coloumnOfSelectedItems = coloumnOfCard;
+        }
     }
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && *state == PLAY)
     {
