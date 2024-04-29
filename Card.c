@@ -135,7 +135,8 @@ int getIntFromCardLetter (char letter)
     if (letter == 'J') return 11;
     if (letter == 'Q') return 12;
     if (letter == 'K') return 13;
-    return -1;
+
+    return letter- '0';
 }
 
 char getCharFromCardNumber (int cardNumber)

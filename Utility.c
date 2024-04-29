@@ -102,6 +102,25 @@ void handleInput(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state
                 }
             }
         }
+        else if(command[0]=='C'&&command[2]==':'&&command[5]=='-'&&command[6]=='>'&&(command[7]=='C'||command[7]=='F')){
+            int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            int destIndex = command[8] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            char str[2]={command[3],command[4]};
+            Card *cardToMove = getCardFromString(coloumns[sourceIndex], &str);
+            if(command[7]=='C'){
+            if(LegalMove(coloumns, cardToMove, destIndex)){
+                moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+            } else {
+                response[0] = "Illegal move";
+            }
+            } else if (command[7] == 'F') {
+                if(LegalMoveFoundation(foundations[destIndex], cardToMove)) {
+                    moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                } else {
+                    response[0] = "Illegal move";
+                }
+            }
+        }
     }
         if (*state == FIRSTPRINT) *state = NODECK;
         printUI(coloumns, foundations, state, command, response);
@@ -205,6 +224,20 @@ void populateColoumns (STATE* state, Pile* deck, Pile *coloumns[])
     {
         coloumns[i]->lastCard->nextCard = NULL;
     }
+}
+
+Card* getCardFromString(Pile* coloumn, char cardString[]){
+    Card* currentCard = coloumn->firstCard;
+
+    while (currentCard != NULL) {
+
+        if (currentCard->number == getIntFromCardLetter(cardString[0]) && currentCard->suit == cardString[1]) {
+            return currentCard;
+        }
+        currentCard = currentCard->nextCard;
+    }
+    return NULL;
+
 }
 
 Card* linkColoumnsToSingleLinkedList (Pile *coloumns[])
