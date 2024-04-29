@@ -352,22 +352,6 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
         return;
     }
 
-    // If the card is not the last card in the source column
-    if (prevCard != NULL) {
-        prevCard->nextCard = NULL;
-        coloumns[sourceIndex]->lastCard = prevCard;
-    } else {
-        coloumns[sourceIndex]->firstCard = NULL;
-        coloumns[sourceIndex]->lastCard = NULL;
-    }
-
-    // Decrease the size of the source column by the number of moved cards
-    Card* tempCard = currentCard;
-    while (tempCard != NULL) {
-        coloumns[sourceIndex]->size--;
-        tempCard = tempCard->nextCard;
-    }
-
     // Add the cards to the destination column
     if (coloumns[destIndex]->size == 0) {
         // If the destination column is empty
@@ -380,12 +364,20 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
     }
 
     // Increase the size of the destination column by the number of moved cards
-    tempCard = currentCard;
+    Card* tempCard = currentCard;
     while (tempCard != NULL) {
         coloumns[destIndex]->size++;
+        coloumns[sourceIndex]->size--;
         tempCard = tempCard->nextCard;
     }
-
+    // If the card is not the last card in the source column
+    if (prevCard != NULL) {
+        prevCard->nextCard = NULL;
+        coloumns[sourceIndex]->lastCard = prevCard;
+    } else {
+        coloumns[sourceIndex]->firstCard = NULL;
+        coloumns[sourceIndex]->lastCard = NULL;
+    }
 }
 
 void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation) {
