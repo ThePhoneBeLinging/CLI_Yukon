@@ -42,7 +42,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
             {
                 x += 100;
                 if (foundations[foundationsDrawn]->lastCard == NULL) DrawRectangleLines(x,y,faceDownCard.width,faceDownCard.height,BLACK);
-                else DrawText(TextFormat("%c%c", getCharFromCardNumber(foundations[foundationsDrawn]->lastCard->number),foundations[foundationsDrawn]->lastCard->suit),x,y,15,BLACK);
+                else DrawTexture(cardToTexture(*foundations[foundationsDrawn]->lastCard,textures),x,y,WHITE);
                 x += faceDownCard.width + 5;
                 DrawText(TextFormat("F%d",foundationsDrawn+1),x,y,15,BLACK);
                 addedToPrint = true;
@@ -70,26 +70,33 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && *state == PLAY)
     {
         int coloumnOfCard = (GetMouseX() + 5) / 100;
-        if (coloumnOfCard > 6) coloumnOfCard = 6;
         int positionOfCardInColoumn = (GetMouseY() - 30) / 25;
-        if (coloumns[coloumnOfCard]->size + 2 >= positionOfCardInColoumn)
-        {
-            if (coloumns[coloumnOfCard]->size <= positionOfCardInColoumn)
-            {
-                positionOfCardInColoumn = coloumns[coloumnOfCard]->size;
-            }
-            Card* cardToTake = coloumns[coloumnOfCard]->firstCard;
-            for (int i = 0; i < positionOfCardInColoumn; i++)
-            {
-                if (cardToTake == NULL || cardToTake->nextCard == NULL) break;
-                cardToTake = cardToTake->nextCard;
-            }
-            if (cardToTake->faceUp)
-            {
-                moveCardBetweenColoumns(coloumns,coloumnOfCard,7,cardToTake);
-                *coloumnOfSelectedItems = coloumnOfCard;
-            }
 
+        if (coloumnOfCard > 6)
+        {
+            positionOfCardInColoumn /= 4;
+        }
+        else
+        {
+            if (coloumns[coloumnOfCard]->size + 2 >= positionOfCardInColoumn)
+            {
+                if (coloumns[coloumnOfCard]->size <= positionOfCardInColoumn)
+                {
+                    positionOfCardInColoumn = coloumns[coloumnOfCard]->size;
+                }
+                Card *cardToTake = coloumns[coloumnOfCard]->firstCard;
+                for (int i = 0; i < positionOfCardInColoumn; i ++)
+                {
+                    if (cardToTake == NULL || cardToTake->nextCard == NULL) break;
+                    cardToTake = cardToTake->nextCard;
+                }
+                if (cardToTake->faceUp)
+                {
+                    moveCardBetweenColoumns(coloumns, coloumnOfCard, 7, cardToTake);
+                    *coloumnOfSelectedItems = coloumnOfCard;
+                }
+
+            }
         }
     }
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && *state == PLAY)
@@ -97,7 +104,18 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         if (*coloumnOfSelectedItems != -1)
         {
             int coloumnOfCard = (GetMouseX() + 5) / 100;
-            if (coloumnOfCard > 6) coloumnOfCard = 6;
+            if (coloumnOfCard > 6)
+            {
+                int positionOfCardInColoumn = (GetMouseY() - 30) / 25;
+                positionOfCardInColoumn /= 4;
+                if (coloumns[7]->size == 1)
+                {
+                    if (LegalMoveFoundation(foundations[positionOfCardInColoumn],coloumns[7]->firstCard))
+                    {
+                        moveBottomCardToFoundation(coloumns[coloumnOfCard],foundations[positionOfCardInColoumn]);
+                    }
+                }
+            }
 
             if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
