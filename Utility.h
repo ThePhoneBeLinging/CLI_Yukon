@@ -16,7 +16,7 @@ typedef struct
 
 bool stringsAreEqual(char* firstString, char* secondsString);
 
-char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command);
+char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command,char argument[]);
 
 void printBoard(Pile* coloumns[], Pile* foundations[], STATE* state);
 
@@ -32,7 +32,7 @@ bool hasDeckBeenLoaded(Pile* coloumns[]);
 
 void clearFoundations(Pile* foundations[]);
 
-COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],char* response[]);
+COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], STATE* state, char inputStr[],char* response[], char argument[]);
 
 void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove);
 

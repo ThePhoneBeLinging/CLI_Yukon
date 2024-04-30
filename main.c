@@ -50,6 +50,7 @@ int main (void)
         Button* buttons[amountOfButtons];
         createButtons(buttons,amountOfButtons);
         int coloumnOfSelectedItems = -1;
+
         while (!WindowShouldClose())
         {
             drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems);
@@ -60,13 +61,14 @@ int main (void)
     {
         while (true)
         {
-            COMMAND command = getInputFromTerminal(&deck, coloumns, foundations, &state, inputStr, response);
+            char argument[50]= {0};
+            COMMAND command = getInputFromTerminal(&deck, coloumns, foundations, &state, inputStr, response, argument);
             if (command == INVALID_COMMAND)
             {
                 *response = "Invalid Command";
                 continue;
             }
-            if (command != MOVEDCARD) *response = runCommand(&deck,coloumns,foundations,&state,command);
+            if (command != MOVEDCARD) *response = runCommand(&deck,coloumns,foundations,&state,command,argument);
             //break;
         }
     }

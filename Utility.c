@@ -10,11 +10,10 @@ bool stringsAreEqual(char* firstString, char* secondString)
     return strcmp(firstString,secondString) == 0;
 }
 
-char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command)
+char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state, COMMAND command, char argument[])
 {
     // response is currently not used
     char* response[50] = {0};
-    char* argument = "";
     if (*state == NODECK || *state == STARTUP)
     {
         if (command == LOADDECK)
@@ -241,12 +240,11 @@ bool hasDeckBeenLoaded (Pile **coloumns)
     return true;
 }
 
-COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *state, char *inputStr, char **response)
+COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, STATE *state, char *inputStr, char **response,char argument[])
 {
 
     //The scanf function adds all given characters to the char arr, until a next line is given.
     char command[50] = {0};
-    char argument[50]= {0};
     printUI(coloumns,foundations,state,command,response);
     scanf(" %[^\n]s",inputStr);
     int indexOfFirstSpace = 0;

@@ -142,7 +142,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         DrawText(buttons[i]->text, textX,textY,20,RED);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && buttons[i]->x < GetMouseX() && buttons[i]->x + buttons[i]->width > GetMouseX() && buttons[i]->y < GetMouseY() && buttons[i]->y + buttons[i]->height > GetMouseY())
         {
-            runCommand(deck, coloumns, foundations, state, buttons[i]->commandToExecute);
+            runCommand(deck, coloumns, foundations, state, buttons[i]->commandToExecute,"");
             if (i == 0) buttons[i]->state = STARTUP;
         }
     }
