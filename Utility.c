@@ -516,4 +516,5 @@ void moveTerminalOneLineUp (char terminalText[26][50], int* positionOfLine)
     {
         terminalText[25][i] = '\0';
     }
+    *positionOfLine = 0;
 }
