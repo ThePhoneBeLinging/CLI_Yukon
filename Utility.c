@@ -283,26 +283,40 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
     if (stringsAreEqual(commandToExectute, "Q")) return QUITGAME;
     if (stringsAreEqual(commandToExectute,"QQ")) return EXIT;
         // Extract the source and destination indices
-        int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
-        int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+        int sourceIndex;
+        int destIndex;
 
         // Call the function to move the card if the move is legal
-        if (command[0] == 'C' && command[2] == '-' && command[3] == '>' && (command[4] == 'C'||command[4] == 'F')) {
+        if ((command[0] == 'C' ||command[0]=='F')&& command[2] == '-' && command[3] == '>' && (command[4] == 'C'||command[4] == 'F')) {
             // Extract the source and destination indices
-            int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
-            int destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+
             if (command[4] == 'C') {
-                Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
-                if (cardToMove == NULL) {
-                    response[0] = "Illegal move";
-                } else {
-                    moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
-                    turnOverLastCard(coloumns[sourceIndex]);
-                    *response = TextFormat("Moved %c%c to C%d from C%d", getCharFromCardNumber(cardToMove->number),cardToMove->suit,destIndex+1,sourceIndex+1);
+                if(command[0]=='C') {
+                    Card *cardToMove = getLegalMove(coloumns, sourceIndex, destIndex);
+                    if (cardToMove == NULL) {
+                        response[0] = "Illegal move";
+                    } else {
+                        moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
+                        turnOverLastCard(coloumns[sourceIndex]);
+                        *response = TextFormat("Moved %c%c to C%d from C%d", getCharFromCardNumber(cardToMove->number),
+                                               cardToMove->suit, destIndex + 1, sourceIndex + 1);
+                    }
+                }else{
+                    Card *cardToMove = foundations[sourceIndex]->lastCard;
+                    if(cardToMove==NULL){
+                        response[0] = "Illegal move";
+                }else if(LegalMove(coloumns, cardToMove, destIndex)){
+                    moveCardFoundation(coloumns[destIndex], foundations[sourceIndex], false);
+                    turnOverLastCard(coloumns[destIndex]);
+                    *response = TextFormat("Moved %c%c to C%d from F%d", getCharFromCardNumber(cardToMove->number),
+                                           cardToMove->suit, destIndex + 1, sourceIndex + 1);
+                }
                 }
             } else if (command[4] == 'F') {
                 if (LegalMoveFoundation(foundations[destIndex], coloumns[sourceIndex]->lastCard)) {
-                    moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                    moveCardFoundation(coloumns[sourceIndex], foundations[destIndex], true);
                     turnOverLastCard(coloumns[sourceIndex]);
                     *response = TextFormat("Moved %c%c to F%d from C%d", getCharFromCardNumber(foundations[destIndex]->lastCard->number),foundations[destIndex]->lastCard->suit,destIndex+1,sourceIndex+1);
 
@@ -311,8 +325,8 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                 }
             }
         }else if(command[0]=='C'&&command[2]==':'&&command[5]=='-'&&command[6]=='>'&&(command[7]=='C'||command[7]=='F')){
-            int sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
-            int destIndex = command[8] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            destIndex = command[8] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             char str[2]={command[3],command[4]};
             Card *cardToMove = getCardFromString(coloumns[sourceIndex], &str);
             if(command[7]=='C'){
@@ -325,7 +339,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                 }
             } else if (command[7] == 'F') {
                 if(LegalMoveFoundation(foundations[destIndex], cardToMove)) {
-                    moveBottomCardToFoundation(coloumns[sourceIndex], foundations[destIndex]);
+                    moveCardFoundation(coloumns[sourceIndex], foundations[destIndex], true);
                     turnOverLastCard(coloumns[sourceIndex]);
                     *response = TextFormat("Moved %c%c to F%d from C%d", getCharFromCardNumber(cardToMove->number),cardToMove->suit,destIndex+1,sourceIndex+1);
 
@@ -390,7 +404,8 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
     }
 }
 
-void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation) {
+void moveCardFoundation(Pile* coloumn, Pile* foundation, bool toFoundation) {
+    if(toFoundation){
     // Check if the column is empty
     if (coloumn->size == 0) {
         printf("Column is empty. No card to move.\n");
@@ -432,6 +447,50 @@ void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation) {
     // If the last card in the source column is facedown, turn it face up
     if (coloumn->lastCard != NULL && !coloumn->lastCard->faceUp) {
         coloumn->lastCard->faceUp = true;
+    }
+    } else {
+        // Check if the foundation is empty
+        if (foundation->size == 0) {
+            printf("Foundation is empty. No card to move.\n");
+            return;
+        }
+
+        // Get the last card from the foundation
+        Card* cardToMove = foundation->lastCard;
+
+        // Remove the last card from the foundation
+        if (foundation->size == 1) {
+            // If the foundation has only one card
+            foundation->firstCard = NULL;
+            foundation->lastCard = NULL;
+        } else {
+            // If the foundation has more than one card
+            Card* currentCard = foundation->firstCard;
+            while (currentCard->nextCard != cardToMove) {
+                currentCard = currentCard->nextCard;
+            }
+            currentCard->nextCard = NULL;
+            foundation->lastCard = currentCard;
+        }
+        foundation->size--;
+
+        // Add the card to the column pile
+        if (coloumn->size == 0) {
+            // If the column pile is empty
+            coloumn->firstCard = cardToMove;
+            coloumn->lastCard = cardToMove;
+        } else {
+            // If the column pile is not empty
+            coloumn->lastCard->nextCard = cardToMove;
+            coloumn->lastCard = cardToMove;
+        }
+        coloumn->size++;
+        cardToMove->nextCard = NULL;
+
+        // If the last card in the source foundation is facedown, turn it face up
+        if (foundation->lastCard != NULL && !foundation->lastCard->faceUp) {
+            foundation->lastCard->faceUp = true;
+        }
     }
 }
 

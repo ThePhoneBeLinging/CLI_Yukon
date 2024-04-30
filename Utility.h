@@ -36,7 +36,7 @@ COMMAND getInputFromTerminal(Pile* deck, Pile* coloumns[], Pile* foundations[], 
 
 void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove);
 
-void moveBottomCardToFoundation(Pile* coloumn, Pile* foundation);
+void moveCardFoundation(Pile* coloumn, Pile* foundation, bool toFoundation);
 
 Card* getCardFromString(Pile* coloumn, char cardString[]);
 
