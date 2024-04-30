@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char* terminalText)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char* terminalText[26][50], int* drawLine)
 {
     // Print board
     BeginDrawing();
@@ -60,7 +60,30 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         y = 30;
     DrawRectangle(x,y,500,400, ColorAlpha(BLACK,0.7f));
     x += 5;
-    DrawText(terminalText,x,y,15,WHITE);
+    if (*drawLine == 40)
+    {
+        *drawLine = 0;
+        if (stringsAreEqual(terminalText[25][0],""))
+        {
+            terminalText[25][0] = "|";
+        }
+        else
+        {
+            terminalText[25][0] = "";
+        }
+    }
+    else
+    {
+        *drawLine = *drawLine + 1;
+    }
+    for (int i = 0; i < 26; i++)
+    {
+        DrawText(terminalText[i][0],x,y,15,WHITE);
+        y+= 15;
+    }
+
+
+
 
         x = 5;
         y += 25;
