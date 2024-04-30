@@ -112,7 +112,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                 {
                     if (LegalMoveFoundation(foundations[positionOfCardInColoumn],coloumns[7]->firstCard))
                     {
-                        moveBottomCardToFoundation(coloumns[coloumnOfCard],foundations[positionOfCardInColoumn]);
+                        moveCardFoundation(coloumns[coloumnOfCard], foundations[positionOfCardInColoumn], true);
                     }
                 }
             }
