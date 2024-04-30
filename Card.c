@@ -6,6 +6,7 @@
 #include "Utility.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <strings.h>
 #include <time.h>
 
@@ -55,10 +56,9 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName, char* response
 void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
 {
     char fileToLoad[50];
-    strcpy(fileToLoad, "../");
+    strcpy(fileToLoad, "../Decks/");
     if (*fileName != '\0')
     {
-        strcat(fileToLoad,"Decks/");
         strcat(fileToLoad,fileName);
     }
     else
@@ -104,12 +104,23 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
         }
         i++;
     }
-    //TODO insert check if deck is complete
-    if (true)
+    // Check if deck is complete
+    if (isDeckValid(fileName))
     {
         response[0] = "Successfully loaded deck";
     }
-
+    else
+    {
+        response[0] = "Invalid deck";
+        // Free the memory allocated for the cards and stop the loading process
+        for (int i = 0; i < 52; i++)
+        {
+            free(cards[i]);
+        }
+        deck->firstCard = NULL;
+        deck->lastCard = NULL;
+        return;
+    }
 }
 
 void showDeck (Pile* coloumns[], char* response[])
@@ -330,4 +341,72 @@ bool LegalMoveFoundation(Pile* foundation, Card* cardToMove) {
         // has to be 1 higher in number and of the same suit as the last card in the foundation
         return cardToMove->number == foundation->lastCard->number + 1 && cardToMove->suit == foundation->lastCard->suit;
     }
+}
+
+int cardToIndex(char* card) {
+
+
+    int number;
+    switch (card[0]) {
+        case 'T': number = 10; break;
+        case 'J': number = 11; break;
+        case 'Q': number = 12; break;
+        case 'K': number = 13; break;
+        case 'A': number = 1; break;
+        default: number = card[0] - '0';
+    }
+
+    int suit;
+    switch (card[1]) {
+        case 'C': suit = 0; break;
+        case 'D': suit = 1; break;
+        case 'H': suit = 2; break;
+        case 'S': suit = 3; break;
+        default:
+            printf("Error: invalid suit character\n");
+            return -1;
+    }
+
+    return (number - 1) + suit * 13;
+}
+
+bool isDeckValid(char* filename) {
+    char fileToLoad[50];
+    strcpy(fileToLoad, "../Decks/");
+    if (filename[0] != '\0')
+    {
+        strcat(fileToLoad,filename);
+    }
+    else
+    {
+        strcat(fileToLoad,"unshuffledDeck");
+    }
+    strcat(fileToLoad,".txt");
+    FILE* file = fopen(fileToLoad, "r");
+    if (file == NULL) {
+        printf("Could not open file %s\n", filename);
+        return false;
+    }
+
+    bool cardsFound[52] = {false};
+    char card[3];
+
+    while (fgets(card, sizeof(card), file) != NULL) {
+        int index = cardToIndex(card);
+        if (cardsFound[index]) {
+            fclose(file);
+            return false;
+        }
+        cardsFound[index] = true;
+    }
+
+    fclose(file);
+
+    for (int i = 0; i < 52; i++) {
+        if (!cardsFound[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
