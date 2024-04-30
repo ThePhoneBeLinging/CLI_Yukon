@@ -512,4 +512,8 @@ void moveTerminalOneLineUp (char terminalText[26][50])
         }
         strcpy(terminalText[i-1],terminalText[i]);
     }
+    for (int i = 0; i < 50; i++)
+    {
+        terminalText[25][i] = '\0';
+    }
 }

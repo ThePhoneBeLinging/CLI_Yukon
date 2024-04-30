@@ -89,7 +89,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         DrawText(terminalText[i],x,y,15,WHITE);
         y+= 15;
     }
-    if (IsKeyPressed(KEY_ENTER)) moveTerminalOneLineUp(terminalText);
+    if (IsKeyPressed(KEY_ENTER))
+    {
+        moveTerminalOneLineUp(terminalText);
+        *positionOfLine = 0;
+    }
+
 
     char pressedChar = GetCharPressed();
 
