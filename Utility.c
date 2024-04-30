@@ -502,7 +502,7 @@ void turnOverLastCard (Pile *coloumn)
     if (coloumn->lastCard != NULL) coloumn->lastCard->faceUp = true;
 }
 
-void moveTerminalOneLineUp (char terminalText[26][50])
+void moveTerminalOneLineUp (char terminalText[26][50], int* positionOfLine)
 {
     for (int i = 1; i < 26; i++)
     {

@@ -42,4 +42,4 @@ Card* getCardFromString(Pile* coloumn, char cardString[]);
 
 void turnOverLastCard(Pile* coloumn);
 
-void moveTerminalOneLineUp(char terminalText[26][50]);
+void moveTerminalOneLineUp(char terminalText[26][50], int* positionOfLine);
