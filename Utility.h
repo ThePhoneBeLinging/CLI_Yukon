@@ -41,3 +41,5 @@ void moveCardFoundation(Pile* coloumn, Pile* foundation, bool toFoundation);
 Card* getCardFromString(Pile* coloumn, char cardString[]);
 
 void turnOverLastCard(Pile* coloumn);
+
+void moveTerminalOneLineUp(char terminalText[26][50]);

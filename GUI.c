@@ -1,6 +1,14 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char* terminalText[26][50], int* drawLine)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char terminalText[26][50], int* drawLine, int* positionOfLine)
 {
+    if (*positionOfLine > 49)
+    {
+        *positionOfLine = 49;
+    }
+    if (*positionOfLine < 0)
+    {
+        *positionOfLine = 0;
+    }
     // Print board
     BeginDrawing();
     ClearBackground(GetColor(0x34A249FF));
@@ -63,13 +71,13 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     if (*drawLine == 40)
     {
         *drawLine = 0;
-        if (stringsAreEqual(terminalText[25][0],""))
+        if (terminalText[25][*positionOfLine] == '\0')
         {
-            terminalText[25][0] = "|";
+            terminalText[25][*positionOfLine] = '|';
         }
         else
         {
-            terminalText[25][0] = "";
+            terminalText[25][*positionOfLine] = '\0';
         }
     }
     else
@@ -78,9 +86,26 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     }
     for (int i = 0; i < 26; i++)
     {
-        DrawText(terminalText[i][0],x,y,15,WHITE);
+        DrawText(terminalText[i],x,y,15,WHITE);
         y+= 15;
     }
+    if (IsKeyPressed(KEY_ENTER)) moveTerminalOneLineUp(terminalText);
+
+    char pressedChar = GetCharPressed();
+
+    while (pressedChar != 0)
+    {
+        printf("%c",pressedChar);
+        terminalText[25][*positionOfLine] = pressedChar;
+         pressedChar = GetCharPressed();
+         *positionOfLine += 1;
+    }
+    if (IsKeyPressed(KEY_BACKSPACE))
+    {
+        terminalText[25][*positionOfLine] = '\0';
+        *positionOfLine -= 1;
+    }
+
 
 
 

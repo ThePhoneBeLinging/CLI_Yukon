@@ -52,12 +52,12 @@ int main (void)
         int coloumnOfSelectedItems = -1;
         bool takenFromColoumn = true;
         int drawLine = 0;
-        char* terminalText[26][50] = {0};
-        terminalText[0][0] = "Welcome To Yukon - Solitarie";
-        terminalText[25][0] = "|";
+        int positionOfLine = 0;
+        char terminalText[26][50] = {0};
+        strcpy(terminalText[0],"Welcome To Yukon - Solitarie");
         while (!WindowShouldClose())
         {
-            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn,terminalText, &drawLine);
+            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn,terminalText, &drawLine,&positionOfLine);
         }
         CloseWindow();
     }

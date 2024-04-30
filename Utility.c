@@ -501,3 +501,15 @@ void turnOverLastCard (Pile *coloumn)
 {
     if (coloumn->lastCard != NULL) coloumn->lastCard->faceUp = true;
 }
+
+void moveTerminalOneLineUp (char terminalText[26][50])
+{
+    for (int i = 1; i < 26; i++)
+    {
+        for (int k = 0; k < 50;  k++)
+        {
+            if (terminalText[i][k] == '|') terminalText[i][k] = '\0';
+        }
+        strcpy(terminalText[i-1],terminalText[i]);
+    }
+}
