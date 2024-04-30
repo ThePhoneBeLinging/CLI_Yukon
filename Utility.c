@@ -66,6 +66,9 @@ char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state
         {
             *state = STARTUP;
             clearFoundations(foundations);
+            coloumns[7]->size = 0;
+            coloumns[7]->firstCard = NULL;
+            coloumns[7]->lastCard = NULL;
             loadDeckFromFile(deck,"temp/temp",response);
             populateColoumns(state,deck,coloumns);
         }

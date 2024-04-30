@@ -50,10 +50,10 @@ int main (void)
         Button* buttons[amountOfButtons];
         createButtons(buttons,amountOfButtons);
         int coloumnOfSelectedItems = -1;
-
+        bool takenFromColoumn = true;
         while (!WindowShouldClose())
         {
-            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems);
+            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn);
         }
         CloseWindow();
     }

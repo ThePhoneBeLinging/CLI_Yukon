@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn)
 {
     // Print board
     BeginDrawing();
@@ -75,6 +75,11 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         if (coloumnOfCard > 6)
         {
             positionOfCardInColoumn /= 4;
+            moveCardFoundation(coloumns[7],foundations[positionOfCardInColoumn],false);
+            *coloumnOfSelectedItems = positionOfCardInColoumn;
+            *takenFromColoumn = false;
+
+
         }
         else
         {
@@ -94,6 +99,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                 {
                     moveCardBetweenColoumns(coloumns, coloumnOfCard, 7, cardToTake);
                     *coloumnOfSelectedItems = coloumnOfCard;
+                    *takenFromColoumn = true;
                 }
 
             }
@@ -116,13 +122,13 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                     }
                 }
             }
-
-            if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
+            else if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
                 turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
                 *coloumnOfSelectedItems = coloumnOfCard;
             }
-            moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
+            if (*takenFromColoumn) moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
+            else moveCardFoundation(coloumns[7],foundations[*coloumnOfSelectedItems],true);
             *coloumnOfSelectedItems = -1;
         }
     }
