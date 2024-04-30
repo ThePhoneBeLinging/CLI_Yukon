@@ -99,7 +99,6 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
 
     while (pressedChar != 0)
     {
-        printf("%c",pressedChar);
         terminalText[25][*positionOfLine] = pressedChar;
          pressedChar = GetCharPressed();
          *positionOfLine += 1;
