@@ -51,9 +51,10 @@ int main (void)
         createButtons(buttons,amountOfButtons);
         int coloumnOfSelectedItems = -1;
         bool takenFromColoumn = true;
+        char* terminalText = "Welcome To Yukon Solitarie\n";
         while (!WindowShouldClose())
         {
-            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn);
+            drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn,terminalText);
         }
         CloseWindow();
     }

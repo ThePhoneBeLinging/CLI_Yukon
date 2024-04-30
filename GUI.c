@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char* terminalText)
 {
     // Print board
     BeginDrawing();
@@ -55,6 +55,13 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                 y += 25;
             }
         }
+        // Draw terminal box
+        x = 850;
+        y = 30;
+    DrawRectangle(x,y,500,400, ColorAlpha(BLACK,0.7f));
+    x += 5;
+    DrawText(terminalText,x,y,15,WHITE);
+
         x = 5;
         y += 25;
         //Draw coloumn 7 on cursor
@@ -79,8 +86,6 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
             moveCardFoundation(coloumns[7],foundations[positionOfCardInColoumn],false);
             *coloumnOfSelectedItems = positionOfCardInColoumn;
             *takenFromColoumn = false;
-
-
         }
         else
         {
