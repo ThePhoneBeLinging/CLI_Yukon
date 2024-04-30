@@ -57,9 +57,10 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         }
         x = 5;
         y += 25;
+        //Draw coloumn 7 on cursor
         Card* drawOnCursor = coloumns[7]->firstCard;
-        int xToDrawOnCursor = GetMouseX();
-        int yToDrawOnCursor = GetMouseY();
+        int xToDrawOnCursor = GetMouseX() - (faceDownCard.width / 2);
+        int yToDrawOnCursor = GetMouseY() - (faceDownCard.height / 2);
         while(drawOnCursor != NULL)
         {
             DrawTexture(cardToTexture(*drawOnCursor,textures),xToDrawOnCursor,yToDrawOnCursor,WHITE);
