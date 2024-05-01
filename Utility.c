@@ -507,11 +507,15 @@ void moveTerminalOneLineUp (char terminalText[26][50], int* positionOfLine)
 {
     for (int i = 1; i < 26; i++)
     {
-        for (int k = 0; k < 50;  k++)
+        if (i == 25)
         {
-            if (terminalText[i][k] == '|') terminalText[i][k] = '\0';
+            for (int k = 0; k < 50;  k++)
+            {
+                if (terminalText[i][k] == '|') terminalText[i][k] = '\0';
+            }
         }
-        strcpy(terminalText[i-1],terminalText[i]);
+
+        strcpy(terminalText[(i-1)],terminalText[i]);
     }
     for (int i = 0; i < 50; i++)
     {

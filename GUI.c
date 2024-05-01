@@ -94,7 +94,8 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         moveTerminalOneLineUp(terminalText,positionOfLine);
         if (*commandToExectue != INVALID_COMMAND)
         {
-            terminalText[25][0] = *runCommand(deck,coloumns,foundations,state,*commandToExectue,terminalText[24]);
+            strcpy(terminalText[25],runCommand(deck,coloumns,foundations,state,*commandToExectue,terminalText[24]));
+            moveTerminalOneLineUp(terminalText,positionOfLine);
             *commandToExectue = INVALID_COMMAND;
         }
 
@@ -217,12 +218,16 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                 strcpy(terminalText[25],"Please enter a filename:");
                 moveTerminalOneLineUp(terminalText,positionOfLine);
             }
+            else if (*commandToExectue == SPLITDECK)
+            {
+                strcpy(terminalText[25],"Please enter an integer");
+                moveTerminalOneLineUp(terminalText,positionOfLine);
+            }
             else
             {
                 runCommand(deck, coloumns, foundations, state, *commandToExectue,argument);
                 *commandToExectue = INVALID_COMMAND;
             }
-            if (i == 0) buttons[i]->state = STARTUP;
         }
     }
 
@@ -327,6 +332,14 @@ void createButtons (Button *buttons[], int amountOfButtons)
     buttons[0]->y = y;
     buttons[0]->state = NODECK;
 
+    buttons[9]->height = buttonHeight;
+    buttons[9]->width = buttonWidth;
+    buttons[9]->text = "Load";
+    buttons[9]->commandToExecute = LOADDECK;
+    buttons[9]->x = x;
+    buttons[9]->y = y;
+    buttons[9]->state = STARTUP;
+
     x += buttonWidth + 50;
 
     buttons[1]->height = buttonHeight;
@@ -402,4 +415,6 @@ void createButtons (Button *buttons[], int amountOfButtons)
     buttons[8]->x = x;
     buttons[8]->y = y;
     buttons[8]->state = PLAY;
+
+
 }
