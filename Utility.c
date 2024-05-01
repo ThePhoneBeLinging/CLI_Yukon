@@ -302,7 +302,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
             // Extract the source and destination indices
             sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
-            if(destIndex>6||sourceIndex>6){
+            if(destIndex>6||sourceIndex>6||destIndex<0||sourceIndex<0){
                 response[0] = "Illegal move";
                 return INVALID_COMMAND;
             }
