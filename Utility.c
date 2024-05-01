@@ -20,14 +20,13 @@ char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state
         {
             loadDeckFromFile(deck,argument, response);
             if (stringsAreEqual(*response,"File not found")) return response[0];
-            if(isDeckValid(*deck))
+            if(isDeckValid(*deck,response))
             {
                 populateColoumns(state, deck, coloumns);
                 *state = STARTUP;
             }
             else
             {
-                response[0] = "Invalid deck";
                 return *response;
             }
         }

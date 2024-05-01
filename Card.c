@@ -105,13 +105,12 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
         i++;
     }
     // Check if deck is complete
-    if (isDeckValid(*deck))
+    if (isDeckValid(*deck,response))
     {
         response[0] = "OK";
     }
     else
     {
-        response[0] = "Invalid deck";
         // Free the memory allocated for the cards and stop the loading process
         for (int i = 0; i < 52; i++)
         {
@@ -119,7 +118,6 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
         }
         deck->firstCard = NULL;
         deck->lastCard = NULL;
-        return;
     }
 }
 
@@ -363,20 +361,23 @@ int cardToIndex(Card card) {
     return (number - 1) + suit * 13;
 }
 
-bool isDeckValid(Pile deck) {
-
+bool isDeckValid(Pile deck, char* response[])
+{
     bool cardsFound[52] = {false};
     char card[3];
     Card* currentCard = deck.firstCard;
+    int i = 1;
     while (currentCard != NULL)
     {
         int index = cardToIndex(*currentCard);
         if (cardsFound[index])
         {
+            response[0] = TextFormat("Duplicate card on line: %d",i);
             return false;
         }
         cardsFound[index] = true;
         currentCard = currentCard->nextCard;
+        i++;
     }
 
     for (int i = 0; i < 52; i++) {
