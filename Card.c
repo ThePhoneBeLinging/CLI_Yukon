@@ -82,6 +82,11 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
     int i = 0;
     while (fgets(readDeck,50,filePTR))
     {
+        if (i == 52)
+        {
+            response[0] = "Deck contains more than 52 cards";
+            return;
+        }
         int cardNumber = getIntFromCardLetter(readDeck[0]);
         if (cardNumber == -1)
         {
@@ -366,22 +371,28 @@ bool isDeckValid(Pile deck, char* response[])
     bool cardsFound[52] = {false};
     char card[3];
     Card* currentCard = deck.firstCard;
-    int i = 1;
+    int lineChecking = 1;
     while (currentCard != NULL)
     {
         int index = cardToIndex(*currentCard);
+        if (index > 51 || index < 0)
+        {
+            response[0] = TextFormat("Invalid card on line: %d",lineChecking);
+            return false;
+        }
         if (cardsFound[index])
         {
-            response[0] = TextFormat("Duplicate card on line: %d",i);
+            response[0] = TextFormat("Duplicate card on line: %d",lineChecking);
             return false;
         }
         cardsFound[index] = true;
         currentCard = currentCard->nextCard;
-        i++;
+        lineChecking++;
     }
 
     for (int i = 0; i < 52; i++) {
         if (!cardsFound[i]) {
+            response[0] = "Deck does not contain 52 cards";
             return false;
         }
     }
