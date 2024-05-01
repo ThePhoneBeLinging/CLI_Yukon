@@ -20,7 +20,7 @@ char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state
         {
             loadDeckFromFile(deck,argument, response);
             if (stringsAreEqual(*response,"File not found") || stringsAreEqual(*response,"Deck contains more than 52 cards")) return response[0];
-            if(isDeckValid(*deck,response))
+            if(stringsAreEqual(*response,"OK"))
             {
                 populateColoumns(state, deck, coloumns);
                 *state = STARTUP;
