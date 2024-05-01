@@ -330,6 +330,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                     response[0] = "Illegal move";
                 }
             }
+            return MOVEDCARD;
         }else if(command[0]=='C'&&command[2]==':'&&command[5]=='-'&&command[6]=='>'&&(command[7]=='C'||command[7]=='F')){
             sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             destIndex = command[8] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
@@ -351,9 +352,10 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                     response[0] = "Illegal move";
                 }
             }
+            return MOVEDCARD;
         }
 
-        return MOVEDCARD;
+
 
     return INVALID_COMMAND;
 }
