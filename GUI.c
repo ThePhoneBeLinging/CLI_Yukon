@@ -1,5 +1,5 @@
 #include "GUI.h"
-void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char terminalText[26][50], int* drawLine, int* positionOfLine)
+void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,Texture2D* textures[13][4], Texture2D faceDownCard, Button* buttons[], int amountOfButtons, int* coloumnOfSelectedItems, bool* takenFromColoumn, char terminalText[26][50], int* drawLine, int* positionOfLine, char argument[], COMMAND* commandToExectue)
 {
     if (*positionOfLine > 49)
     {
@@ -92,6 +92,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     if (IsKeyPressed(KEY_ENTER))
     {
         moveTerminalOneLineUp(terminalText,positionOfLine);
+        if (*commandToExectue != INVALID_COMMAND)
+        {
+            terminalText[25][0] = *runCommand(deck,coloumns,foundations,state,*commandToExectue,terminalText[24]);
+            *commandToExectue = INVALID_COMMAND;
+        }
+
     }
 
 
@@ -205,7 +211,17 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         DrawText(buttons[i]->text, textX,textY,20,RED);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && buttons[i]->x < GetMouseX() && buttons[i]->x + buttons[i]->width > GetMouseX() && buttons[i]->y < GetMouseY() && buttons[i]->y + buttons[i]->height > GetMouseY())
         {
-            runCommand(deck, coloumns, foundations, state, buttons[i]->commandToExecute,"");
+            *commandToExectue = buttons[i]->commandToExecute;
+            if (*commandToExectue == LOADDECK || *commandToExectue == SAVEDECK)
+            {
+                strcpy(terminalText[25],"Please enter a filename:");
+                moveTerminalOneLineUp(terminalText,positionOfLine);
+            }
+            else
+            {
+                runCommand(deck, coloumns, foundations, state, *commandToExectue,argument);
+                *commandToExectue = INVALID_COMMAND;
+            }
             if (i == 0) buttons[i]->state = STARTUP;
         }
     }
