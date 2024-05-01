@@ -419,7 +419,6 @@ void moveCardFoundation(Pile* coloumn, Pile* foundation, bool toFoundation) {
     if(toFoundation){
     // Check if the column is empty
     if (coloumn->size == 0) {
-        printf("Column is empty. No card to move.\n");
         return;
     }
 

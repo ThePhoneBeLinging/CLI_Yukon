@@ -61,7 +61,7 @@ int main (void)
         while (!WindowShouldClose())
         {
             drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn,terminalText, &drawLine,&positionOfLine, argument, &commandToExecute);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 if (coloumns[i]->size != 0) break;
                 if (i == 6 && state == PLAY) hasWon = true;
@@ -82,7 +82,7 @@ int main (void)
                 continue;
             }
             if (command != MOVEDCARD) *response = runCommand(&deck,coloumns,foundations,&state,command,argument);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 if (coloumns[i]->size != 0) break;
                 if (i == 6 && state == PLAY) hasWon = true;
