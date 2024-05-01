@@ -417,51 +417,50 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
 
 void moveCardFoundation(Pile* coloumn, Pile* foundation, bool toFoundation) {
     if(toFoundation){
-    // Check if the column is empty
-    if (coloumn->size == 0) {
-        return;
-    }
-
-    // Get the last card from the column
-    Card* cardToMove = coloumn->lastCard;
-
-    // Remove the last card from the column
-    if (coloumn->size == 1) {
-        // If the column has only one card
-        coloumn->firstCard = NULL;
-        coloumn->lastCard = NULL;
-    } else {
-        // If the column has more than one card
-        Card* currentCard = coloumn->firstCard;
-        while (currentCard->nextCard != cardToMove) {
-            currentCard = currentCard->nextCard;
+        // Check if the column is empty
+        if (coloumn->size == 0) {
+            return;
         }
-        currentCard->nextCard = NULL;
-        coloumn->lastCard = currentCard;
-    }
-    coloumn->size--;
 
-    // Add the card to the foundation pile
-    if (foundation->size == 0) {
-        // If the foundation pile is empty
-        foundation->firstCard = cardToMove;
-        foundation->lastCard = cardToMove;
-    } else {
-        // If the foundation pile is not empty
-        foundation->lastCard->nextCard = cardToMove;
-        foundation->lastCard = cardToMove;
-    }
-    foundation->size++;
-    cardToMove->nextCard = NULL;
+        // Get the last card from the column
+        Card* cardToMove = coloumn->lastCard;
 
-    // If the last card in the source column is facedown, turn it face up
-    if (coloumn->lastCard != NULL && !coloumn->lastCard->faceUp) {
-        coloumn->lastCard->faceUp = true;
-    }
+        // Remove the last card from the column
+        if (coloumn->size == 1) {
+            // If the column has only one card
+            coloumn->firstCard = NULL;
+            coloumn->lastCard = NULL;
+        } else {
+            // If the column has more than one card
+            Card* currentCard = coloumn->firstCard;
+            while (currentCard->nextCard != cardToMove) {
+                currentCard = currentCard->nextCard;
+            }
+            currentCard->nextCard = NULL;
+            coloumn->lastCard = currentCard;
+        }
+        coloumn->size--;
+
+        // Add the card to the foundation pile
+        if (foundation->size == 0) {
+            // If the foundation pile is empty
+            foundation->firstCard = cardToMove;
+            foundation->lastCard = cardToMove;
+        } else {
+            // If the foundation pile is not empty
+            foundation->lastCard->nextCard = cardToMove;
+            foundation->lastCard = cardToMove;
+        }
+        foundation->size++;
+        cardToMove->nextCard = NULL;
+
+        // If the last card in the source column is facedown, turn it face up
+        if (coloumn->lastCard != NULL && !coloumn->lastCard->faceUp) {
+            coloumn->lastCard->faceUp = true;
+        }
     } else {
         // Check if the foundation is empty
         if (foundation->size == 0) {
-            printf("Foundation is empty. No card to move.\n");
             return;
         }
 
