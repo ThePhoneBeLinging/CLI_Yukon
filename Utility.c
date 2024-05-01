@@ -20,8 +20,16 @@ char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state
         {
             loadDeckFromFile(deck,argument, response);
             if (stringsAreEqual(*response,"File not found")) return response[0];
-            populateColoumns(state,deck,coloumns);
-            *state = STARTUP;
+            if(isDeckValid(*deck))
+            {
+                populateColoumns(state, deck, coloumns);
+                *state = STARTUP;
+            }
+            else
+            {
+                response[0] = "Invalid deck";
+                return *response;
+            }
         }
         if (command == EXIT)
         {
@@ -278,7 +286,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
 
     char* commandToExectute = &command[0];
 
-    if (stringsAreEqual(commandToExectute,"LD")) return LOADDECK;
+    if (stringsAreEqual(commandToExectute,"LD")) {return LOADDECK;}
     if (stringsAreEqual(commandToExectute,"SW")) return SHOWDECK;
     if (stringsAreEqual(commandToExectute,"SI")) return SPLITDECK;
     if (stringsAreEqual(commandToExectute,"SR")) return SHUFFLEDECK;

@@ -30,3 +30,5 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char fileName[],char* response
 bool LegalMove(Pile* coloumns[], Card* cardToMove, int destIndex);
 Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex);
 bool LegalMoveFoundation(Pile* foundation, Card* cardToMove);
+bool isDeckValid(Pile pile);
+int cardToIndex(Card card);

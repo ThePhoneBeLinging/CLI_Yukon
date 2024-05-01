@@ -6,6 +6,7 @@
 #include "Utility.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <strings.h>
 #include <time.h>
 
@@ -55,10 +56,9 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName, char* response
 void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
 {
     char fileToLoad[50];
-    strcpy(fileToLoad, "../");
+    strcpy(fileToLoad, "../Decks/");
     if (*fileName != '\0')
     {
-        strcat(fileToLoad,"Decks/");
         strcat(fileToLoad,fileName);
     }
     else
@@ -104,12 +104,23 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
         }
         i++;
     }
-    //TODO insert check if deck is complete
-    if (true)
+    // Check if deck is complete
+    if (isDeckValid(*deck))
     {
         response[0] = "Successfully loaded deck";
     }
-
+    else
+    {
+        response[0] = "Invalid deck";
+        // Free the memory allocated for the cards and stop the loading process
+        for (int i = 0; i < 52; i++)
+        {
+            free(cards[i]);
+        }
+        deck->firstCard = NULL;
+        deck->lastCard = NULL;
+        return;
+    }
 }
 
 void showDeck (Pile* coloumns[], char* response[])
@@ -330,4 +341,49 @@ bool LegalMoveFoundation(Pile* foundation, Card* cardToMove) {
         // has to be 1 higher in number and of the same suit as the last card in the foundation
         return cardToMove->number == foundation->lastCard->number + 1 && cardToMove->suit == foundation->lastCard->suit;
     }
+}
+
+int cardToIndex(Card card) {
+
+
+    int number = card.number;
+
+
+    int suit;
+    switch (card.suit) {
+        case 'C': suit = 0; break;
+        case 'D': suit = 1; break;
+        case 'H': suit = 2; break;
+        case 'S': suit = 3; break;
+        default:
+            printf("Error: invalid suit character\n");
+            return -1;
+    }
+
+    return (number - 1) + suit * 13;
+}
+
+bool isDeckValid(Pile deck) {
+
+    bool cardsFound[52] = {false};
+    char card[3];
+    Card* currentCard = deck.firstCard;
+    while (currentCard != NULL)
+    {
+        int index = cardToIndex(*currentCard);
+        if (cardsFound[index])
+        {
+            return false;
+        }
+        cardsFound[index] = true;
+        currentCard = currentCard->nextCard;
+    }
+
+    for (int i = 0; i < 52; i++) {
+        if (!cardsFound[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
