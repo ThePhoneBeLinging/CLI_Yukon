@@ -236,8 +236,8 @@ void
 printUI (Pile *coloumns[], Pile *foundations[], STATE *state, char * command, char * response[])
 {
     printBoard(coloumns,foundations,state);
-    printf("Last Command > %s\n",command);
-    printf("Response > ");
+    printf("LAST Command: %s\n",command);
+    printf("Message: ");
     if (*response != NULL) printf("%s",*response);
     printf("\n");
     printf("Input > ");
@@ -312,9 +312,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                     } else {
                         moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
                         turnOverLastCard(coloumns[sourceIndex]);
-                        *response = TextFormat("Moved %c%c to C%d from C%d", getCharFromCardNumber(cardToMove->number),
-                                               cardToMove->suit, destIndex + 1, sourceIndex + 1);
-                    }
+                        *response = "OK";                    }
                 }else{
                     Card *cardToMove = foundations[sourceIndex]->lastCard;
                     if(cardToMove==NULL){
@@ -322,16 +320,14 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                 }else if(LegalMove(coloumns, cardToMove, destIndex)){
                     moveCardFoundation(coloumns[destIndex], foundations[sourceIndex], false);
                     turnOverLastCard(coloumns[destIndex]);
-                    *response = TextFormat("Moved %c%c to C%d from F%d", getCharFromCardNumber(cardToMove->number),
-                                           cardToMove->suit, destIndex + 1, sourceIndex + 1);
+                    *response = "OK";
                 }
                 }
             } else if (command[4] == 'F') {
                 if (LegalMoveFoundation(foundations[destIndex], coloumns[sourceIndex]->lastCard)) {
                     moveCardFoundation(coloumns[sourceIndex], foundations[destIndex], true);
                     turnOverLastCard(coloumns[sourceIndex]);
-                    *response = TextFormat("Moved %c%c to F%d from C%d", getCharFromCardNumber(foundations[destIndex]->lastCard->number),foundations[destIndex]->lastCard->suit,destIndex+1,sourceIndex+1);
-
+                    *response = "OK";
                 } else {
                     response[0] = "Illegal move";
                 }
@@ -345,16 +341,14 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                 if(LegalMove(coloumns, cardToMove, destIndex)){
                     moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
                     turnOverLastCard(coloumns[sourceIndex]);
-                    *response = TextFormat("Moved %c%c to C%d from C%d", getCharFromCardNumber(cardToMove->number),cardToMove->suit,destIndex+1,sourceIndex+1);
-                } else {
+                    *response = "OK";                } else {
                     response[0] = "Illegal move";
                 }
             } else if (command[7] == 'F') {
                 if(LegalMoveFoundation(foundations[destIndex], cardToMove)) {
                     moveCardFoundation(coloumns[sourceIndex], foundations[destIndex], true);
                     turnOverLastCard(coloumns[sourceIndex]);
-                    *response = TextFormat("Moved %c%c to F%d from C%d", getCharFromCardNumber(cardToMove->number),cardToMove->suit,destIndex+1,sourceIndex+1);
-
+                    *response = "OK";
                 } else {
                     response[0] = "Illegal move";
                 }
