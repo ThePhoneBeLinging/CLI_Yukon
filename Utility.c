@@ -369,7 +369,6 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
 void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, Card* cardToMove) {
     // Check if the source column is empty
     if (coloumns[sourceIndex]->size == 0) {
-        printf("Source column is empty. No card to move.\n");
         return;
     }
 
@@ -383,7 +382,6 @@ void moveCardBetweenColoumns(Pile* coloumns[], int sourceIndex, int destIndex, C
 
     // If the card is not found in the source column
     if (currentCard == NULL) {
-        printf("Card not found in source column.\n");
         return;
     }
 
