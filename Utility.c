@@ -223,6 +223,7 @@ Card* linkColoumnsToSingleLinkedList (Pile *coloumns[])
     }
     return firstCard;
 }
+
 FILE* getFilePointer(char* fileName, char* readMode)
 {
     FILE* filePTR = malloc(sizeof (FILE));
@@ -301,6 +302,10 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
             // Extract the source and destination indices
             sourceIndex = command[1] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
             destIndex = command[5] - '1'; // Subtract '1' to convert from char to int and adjust for 0-indexing
+            if(destIndex>6||sourceIndex>6){
+                response[0] = "Illegal move";
+                return INVALID_COMMAND;
+            }
 
             if (command[4] == 'C') {
                 if(command[0]=='C') {
