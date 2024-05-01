@@ -183,6 +183,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                     if (LegalMoveFoundation(foundations[positionOfCardInColoumn],coloumns[7]->firstCard))
                     {
                         moveCardFoundation(coloumns[coloumnOfCard], foundations[positionOfCardInColoumn], true);
+                        turnOverLastCard(coloumns[coloumnOfCard]);
                     }
                 }
             }
