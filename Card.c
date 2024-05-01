@@ -381,7 +381,7 @@ bool isDeckValid(Pile deck, char* response[])
         }
         if (cardsFound[index])
         {
-            response[0] = TextFormat("Duplicate card on line: %d",lineChecking);
+            response[0] = TextFormat("Duplicate card on line: %d. The card is %c%c",lineChecking, getCharFromCardNumber(currentCard->number), currentCard->suit);
             return false;
         }
         cardsFound[index] = true;
