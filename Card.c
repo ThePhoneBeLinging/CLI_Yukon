@@ -39,7 +39,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName, char* response
     FILE* filePTR = getFilePointer(fileToLoad,"w");
     if (filePTR == NULL)
     {
-        response = "File not found";
+        if (response != NULL) *response = "File not found";
         return;
     }
 
@@ -50,7 +50,7 @@ void saveDeckFromColoumnsToFile(Pile* coloumns[], char *fileName, char* response
         iterationCard = iterationCard->nextCard;
     }
     fclose(filePTR);
-    if (response != NULL) response[0] = "File saved successfully";
+    if (response != NULL) response[0] = "OK";
 }
 
 void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
@@ -107,7 +107,7 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
     // Check if deck is complete
     if (isDeckValid(*deck))
     {
-        response[0] = "Successfully loaded deck";
+        response[0] = "OK";
     }
     else
     {
@@ -135,7 +135,7 @@ void showDeck (Pile* coloumns[], char* response[])
         }
     }
 
-    if (hasDeckBeenLoaded(coloumns)) response[0] = "Cards shown successfully";
+    if (hasDeckBeenLoaded(coloumns)) response[0] = "OK";
     else response[0] = "No deck has been loaded";
 }
 
@@ -286,7 +286,7 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
 
     *deck = *shuffledDeck;
     free(shuffledDeck);
-    response[0] = "Deck has been shuffled";
+    response[0] = "OK";
 }
 
 bool LegalMove(Pile* coloumns[], Card* cardToMove, int destIndex)

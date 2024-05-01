@@ -65,7 +65,7 @@ char* runCommand(Pile* deck, Pile *coloumns[], Pile *foundations[], STATE* state
             clearFoundations(foundations);
             saveDeckFromColoumnsToFile(coloumns,"temp/temp",NULL);
             populateColoumns(state,deck,coloumns);
-            response[0] = "Let the games begin...";
+            response[0] = "OK";
         }
 
     }
