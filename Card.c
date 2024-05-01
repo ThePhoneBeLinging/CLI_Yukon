@@ -63,7 +63,7 @@ void loadDeckFromFile (Pile *deck, char *fileName, char * response[])
     }
     else
     {
-        strcat(fileToLoad,"unshuffledDeck");
+        strcat(fileToLoad,"default");
     }
     strcat(fileToLoad,".txt");
     FILE* filePTR = getFilePointer(fileToLoad,"r");
