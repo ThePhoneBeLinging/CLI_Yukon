@@ -12,6 +12,8 @@ int main (void)
     int screenWidth = 1400;
     char inputStr[50] = {};
     char* response[50] = {0};
+    bool hasWon = false;
+
 
     while (! stringsAreEqual(inputStr,"CLI") && ! stringsAreEqual(inputStr,"GUI"))
     {
@@ -60,6 +62,12 @@ int main (void)
         while (!WindowShouldClose())
         {
             drawFrame(&deck,coloumns,foundations,&state,textures,faceDownCard,buttons,amountOfButtons,&coloumnOfSelectedItems,&takenFromColoumn,terminalText, &drawLine,&positionOfLine, argument, &commandToExecute);
+            for (int i = 0; i < 7; i++)
+            {
+                if (coloumns[i]->size != 0) continue;
+                if (i == 6) hasWon = true;
+            }
+            if (hasWon) break;
         }
         CloseWindow();
     }
@@ -75,9 +83,16 @@ int main (void)
                 continue;
             }
             if (command != MOVEDCARD) *response = runCommand(&deck,coloumns,foundations,&state,command,argument);
-            //break;
+            for (int i = 0; i < 7; i++)
+            {
+                if (coloumns[i]->size != 0) continue;
+                if (i == 6) hasWon = true;
+            }
+            if (hasWon) break;
+
         }
     }
-
+    printf("CONGRATULATIONS, YOU HAVE WON");
+    scanf("");
     return 0;
 }
