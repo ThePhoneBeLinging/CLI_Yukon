@@ -71,7 +71,7 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
     if (*drawLine == 40)
     {
         *drawLine = 0;
-        if (terminalText[25][*positionOfLine] == '\0')
+        if (terminalText[25][*positionOfLine] == '\0' && *commandToExectue != INVALID_COMMAND)
         {
             terminalText[25][*positionOfLine] = '|';
         }
