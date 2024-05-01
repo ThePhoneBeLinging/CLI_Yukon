@@ -189,10 +189,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
             }
             else if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
+                moveCardBetweenColoumns(coloumns,7,coloumnOfCard,coloumns[7]->firstCard);
                 turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
                 *coloumnOfSelectedItems = coloumnOfCard;
+                *takenFromColoumn = false;
             }
-            if (*takenFromColoumn) moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
+            else if (*takenFromColoumn) moveCardBetweenColoumns(coloumns,7,*coloumnOfSelectedItems,coloumns[7]->firstCard);
             else moveCardFoundation(coloumns[7],foundations[*coloumnOfSelectedItems],true);
             *coloumnOfSelectedItems = -1;
         }
