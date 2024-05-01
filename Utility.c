@@ -315,7 +315,7 @@ COMMAND getInputFromTerminal (Pile *deck, Pile **coloumns, Pile **foundations, S
                     } else {
                         moveCardBetweenColoumns(coloumns, sourceIndex, destIndex, cardToMove);
                         turnOverLastCard(coloumns[sourceIndex]);
-                        *response = "OK";                    }
+                        *response = "OK";}
                 }else{
                     Card *cardToMove = foundations[sourceIndex]->lastCard;
                     if(cardToMove==NULL){

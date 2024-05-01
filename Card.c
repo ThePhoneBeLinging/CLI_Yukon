@@ -314,7 +314,6 @@ Card* getLegalMove(Pile* coloumns[], int sourceIndex, int destIndex)
 {
     // Check if the source column is empty
     if (coloumns[sourceIndex]->size == 0) {
-        printf("Source column is empty. No card to move.\n");
         return NULL;
     }
 
