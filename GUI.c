@@ -141,9 +141,16 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         if (coloumnOfCard > 6)
         {
             positionOfCardInColoumn /= 4;
-            moveCardFoundation(coloumns[7],foundations[positionOfCardInColoumn],false);
-            *coloumnOfSelectedItems = positionOfCardInColoumn;
-            *takenFromColoumn = false;
+            if (coloumnOfCard == 7)
+            {
+                if (positionOfCardInColoumn < 4)
+                {
+                    moveCardFoundation(coloumns[7],foundations[positionOfCardInColoumn],false);
+                    *coloumnOfSelectedItems = positionOfCardInColoumn;
+                    *takenFromColoumn = false;
+                }
+
+            }
         }
         else
         {
