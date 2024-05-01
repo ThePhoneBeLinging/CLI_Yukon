@@ -92,7 +92,11 @@ int main (void)
 
         }
     }
-    printf("CONGRATULATIONS, YOU HAVE WON");
-    scanf("");
+    if (hasWon)
+    {
+        printf("CONGRATULATIONS, YOU HAVE WON");
+        scanf("");
+    }
+
     return 0;
 }
