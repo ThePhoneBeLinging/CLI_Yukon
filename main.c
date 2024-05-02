@@ -94,8 +94,7 @@ int main (void)
     if (hasWon)
     {
         printf("CONGRATULATIONS, YOU HAVE WON");
-        scanf("");
+        scanf(" %[^\n]s", inputStr);
     }
-
     return 0;
 }
