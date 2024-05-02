@@ -64,7 +64,7 @@ int main (void)
             for (int i = 0; i < 8; i++)
             {
                 if (coloumns[i]->size != 0) break;
-                if (i == 6 && state == PLAY) hasWon = true;
+                if (i == 7 && state == PLAY) hasWon = true;
             }
             if (hasWon) break;
         }
@@ -85,7 +85,7 @@ int main (void)
             for (int i = 0; i < 8; i++)
             {
                 if (coloumns[i]->size != 0) break;
-                if (i == 6 && state == PLAY) hasWon = true;
+                if (i == 7 && state == PLAY) hasWon = true;
             }
             if (hasWon) break;
 
