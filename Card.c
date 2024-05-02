@@ -295,6 +295,7 @@ void shuffleDeck(Pile* deck, Pile * coloumns[], char* response[]){
 bool LegalMove(Pile* coloumns[], Card* cardToMove, int destIndex)
 {
     if (cardToMove==NULL) return false;
+    if (destIndex > 6) return false;
     if(coloumns[destIndex]->size == 0) {
         if(cardToMove->number != 13) {
             return false;
