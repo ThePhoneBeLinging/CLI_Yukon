@@ -149,7 +149,6 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
                     *coloumnOfSelectedItems = positionOfCardInColoumn;
                     *takenFromColoumn = false;
                 }
-
             }
         }
         else
@@ -181,18 +180,12 @@ void drawFrame (Pile* deck, Pile *coloumns[], Pile *foundations[], STATE *state,
         if (*coloumnOfSelectedItems != -1)
         {
             int coloumnOfCard = (GetMouseX() + 5) / 100;
-            if (coloumnOfCard > 6)
+            int positionOfCardInColoumn = (GetMouseY() - 30) / 25;
+            positionOfCardInColoumn /= 4;
+            if (coloumnOfCard == 7 && LegalMoveFoundation(foundations[positionOfCardInColoumn],coloumns[7]->firstCard))
             {
-                int positionOfCardInColoumn = (GetMouseY() - 30) / 25;
-                positionOfCardInColoumn /= 4;
-                if (coloumns[7]->size == 1)
-                {
-                    if (LegalMoveFoundation(foundations[positionOfCardInColoumn],coloumns[7]->firstCard))
-                    {
-                        moveCardFoundation(coloumns[coloumnOfCard], foundations[positionOfCardInColoumn], true);
-                        turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
-                    }
-                }
+                moveCardFoundation(coloumns[coloumnOfCard], foundations[positionOfCardInColoumn], true);
+                turnOverLastCard(coloumns[*coloumnOfSelectedItems]);
             }
             else if (LegalMove(coloumns,coloumns[7]->firstCard,coloumnOfCard))
             {
